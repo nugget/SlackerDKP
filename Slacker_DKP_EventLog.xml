@@ -1,0 +1,179 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xsi:schemaLocation="http://www.blizzard.com/wow/ui/ ..\FrameXML\UI.xsd">
+
+ 	<Button name = "EventLogTemplate" virtual="true">
+		<Size>
+			<AbsDimension x="120" y="14" />
+		</Size>
+		<Layers>
+			<Layer level="BORDER">
+				<FontString name="$parent_Text" inherits="Slacker_BodyFont" wraponspaces="false" justifyH="LEFT" text="entry" />
+			</Layer>
+		</Layers>
+		<Scripts>
+			<OnLoad>
+				this:RegisterForClicks("LeftButtonUp", "RightButtonUp");
+			</OnLoad>
+			<OnClick>
+				Slacker_DKP_EventLogOnClick(arg1);
+			</OnClick>
+			<OnEnter>
+				this:SetBackdropColor(1,0,0,0.75);
+			</OnEnter>
+			<OnLeave>
+				this:SetBackdropColor(0,0,0,0.75);
+			</OnLeave>
+		</Scripts>
+	</Button>
+
+	<Frame name="Slacker_DKP_EventLogFrame" frameStrata="BACKGROUND" parent="UIParent" movable="true" enableMouse="true" hidden="true">
+		<Size>
+			<AbsDimension x="256" y="166"/>
+		</Size>
+		<Anchors>
+			<Anchor point="CENTER">
+				<Offset>
+					<AbsDimension x="0" y="0"/>
+				</Offset>
+			</Anchor>
+		</Anchors>
+		<Backdrop name="$parentBackdrop" bgFile="Interface\Tooltips\UI-Tooltip-Background" edgeFile="Interface\Tooltips\UI-Tooltip-Border" tile="true">
+			<EdgeSize>
+				<AbsValue val="16"/>
+			</EdgeSize>
+			<TileSize>
+				<AbsValue val="16"/>
+			</TileSize>
+			<BackgroundInsets>
+				<AbsInset left="5" right="5" top="5" bottom="5"/>
+			</BackgroundInsets>
+		</Backdrop>
+		<Layers>
+			<Layer level="HEADER">
+				<FontString name="$parentTitle" inherits="Slacker_TitleFont" justifyH="LEFT" text="Slacker DKP">
+					<Size>
+						<AbsDimension x="246" y="11"/>
+					</Size>
+					<Anchors>
+						<Anchor point="TOP">
+							<Offset>
+								<AbsDimension x="0" y="-5"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+			</Layer>
+		</Layers>
+		<Frames>
+			<Button name="$parentCloseButton" inherits="UIPanelCloseButton">
+				<Size>
+					<AbsDimension x="22" y="22"/>
+				</Size>
+				<Anchors>
+					<Anchor point="TOPRIGHT">
+						<Offset>
+							<AbsDimension x="0" y="0"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</Button>
+			
+		<ScrollFrame name="Slacker_DKP_EventLogBar" inherits="FauxScrollFrameTemplate">
+			<Anchors>
+				<Anchor point="TOPLEFT">
+					<Offset>
+						<AbsDimension x="8" y="-20"/>
+					</Offset>
+				</Anchor>
+				<Anchor point="BOTTOMRIGHT">
+					<Offset>
+						<AbsDimension x="-28" y="8"/>
+					</Offset>
+				</Anchor>
+			</Anchors>
+			<Scripts>
+				<OnVerticalScroll>
+					FauxScrollFrame_OnVerticalScroll(16, Slacker_DKP_EventLogBar_Update);
+				</OnVerticalScroll>
+				<OnShow>
+					Slacker_DKP_EventLogBar_Update();
+				</OnShow>
+			</Scripts>
+		</ScrollFrame>
+		
+		<Button name="EventLog1" inherits="EventLogTemplate" id="1">
+			<Anchors>
+				<Anchor point="TOPLEFT" relativeTo="Slacker_DKP_EventLogBar" relativePoint="TOPLEFT">
+					<Offset>
+						<AbsDimension x="0" y="0" />
+					</Offset>
+				</Anchor>
+			</Anchors>
+		</Button>
+		<Button name="EventLog2" inherits="EventLogTemplate" id="2">
+			<Anchors>
+				<Anchor point="TOPLEFT" relativeTo="EventLog1" relativePoint="BOTTOMLEFT" />
+			</Anchors>
+		</Button>
+		<Button name="EventLog3" inherits="EventLogTemplate" id="3">
+			<Anchors>
+				<Anchor point="TOPLEFT" relativeTo="EventLog2" relativePoint="BOTTOMLEFT" />
+			</Anchors>
+		</Button>
+		<Button name="EventLog4" inherits="EventLogTemplate" id="4">
+			<Anchors>
+				<Anchor point="TOPLEFT" relativeTo="EventLog3" relativePoint="BOTTOMLEFT" />
+			</Anchors>
+		</Button>
+		<Button name="EventLog5" inherits="EventLogTemplate" id="5">
+			<Anchors>
+				<Anchor point="TOPLEFT" relativeTo="EventLog4" relativePoint="BOTTOMLEFT" />
+			</Anchors>
+		</Button>
+		<Button name="EventLog6" inherits="EventLogTemplate" id="6">
+			<Anchors>
+				<Anchor point="TOPLEFT" relativeTo="EventLog5" relativePoint="BOTTOMLEFT" />
+			</Anchors>
+		</Button>
+		<Button name="EventLog7" inherits="EventLogTemplate" id="7">
+			<Anchors>
+				<Anchor point="TOPLEFT" relativeTo="EventLog6" relativePoint="BOTTOMLEFT" />
+			</Anchors>
+		</Button>
+		<Button name="EventLog8" inherits="EventLogTemplate" id="8">
+			<Anchors>
+				<Anchor point="TOPLEFT" relativeTo="EventLog7" relativePoint="BOTTOMLEFT" />
+			</Anchors>
+		</Button>
+		<Button name="EventLog9" inherits="EventLogTemplate" id="9">
+			<Anchors>
+				<Anchor point="TOPLEFT" relativeTo="EventLog8" relativePoint="BOTTOMLEFT" />
+			</Anchors>
+		</Button>
+		<Button name="EventLog10" inherits="EventLogTemplate" id="10">
+			<Anchors>
+				<Anchor point="TOPLEFT" relativeTo="EventLog9" relativePoint="BOTTOMLEFT" />
+			</Anchors>
+		</Button>
+		</Frames>
+		
+		<Scripts>
+			<OnLoad>
+				this:SetBackdropColor(0, 0, 0, 0.75);
+				this:RegisterForDrag("LeftButton");
+			</OnLoad>
+			<OnDragStart>
+				if (IsAltKeyDown()) then
+					this:StartMoving();
+				end
+			</OnDragStart>
+			<OnDragStop>
+				this:StopMovingOrSizing();
+			</OnDragStop>
+			<OnEscapePressed>
+				this:ClearFocus();
+			</OnEscapePressed>
+		</Scripts>
+	</Frame>
+</Ui>

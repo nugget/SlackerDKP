@@ -1,5 +1,5 @@
 <Bindings>
 	<Binding name="SLACKERDKP" description="Toggle Slacker DKP Main Window" header="SLACKERDKPHEADER">
-		ShowUIPanel(Slacker_DKPFrame);
+		Slacker_DKP_ToggleFrame();
 	</Binding>
 </Bindings>

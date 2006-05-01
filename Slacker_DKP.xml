@@ -12,6 +12,20 @@ C:\Projects\WoW\Bin\Interface\FrameXML\UI.xsd">
 			<OnEvent>
 				Slacker_DKP_OnEvent(event);
 			</OnEvent>
-		</Scripts>
+		</Scripts>		
 	</Frame>
+	
+	<FontString name="Slacker_TitleFont" font="Fonts\ARIALN.TTF" virtual="true">
+		<FontHeight>
+			<AbsValue val="12"/>
+		</FontHeight>
+		<Color r="1.0" g="1.0" b="0.0"/>
+	</FontString>
+
+	<FontString name="Slacker_BodyFont" font="Fonts\ARIALN.TTF" virtual="true">
+		<FontHeight>
+			<AbsValue val="10"/>
+		</FontHeight>
+		<Color r="0.9" g="0.9" b="0.9"/>
+	</FontString>	
 </Ui>
