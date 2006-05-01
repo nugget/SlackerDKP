@@ -1,0 +1,17 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/
+C:\Projects\WoW\Bin\Interface\FrameXML\UI.xsd">
+	<GameTooltip name="Nurfed_DKPToolTip" frameStrata="LOW" toplevel="true" movable="true" parent="UIParent" inherits="GameTooltipTemplate"/>
+	<Script file="localization.lua"/>
+	<Script file="Slacker_DKP.lua"/>
+
+	<Frame name="Slacker_DKPFrame">
+		<Scripts>
+			<OnLoad>
+				Slacker_DKP_OnLoad();
+			</OnLoad>
+			<OnEvent>
+				Slacker_DKP_OnEvent(event);
+			</OnEvent>
+		</Scripts>
+	</Frame>
+</Ui>
