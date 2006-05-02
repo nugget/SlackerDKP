@@ -75,7 +75,7 @@ function Slacker_DKP_EventLogBar_Update()
 	entries = getn (SLACKER_SAVED_EVENTLOG);
 	if(entries <= 10) then
 		Slacker_DKP_EventLogBar:Hide();
-	else/console 
+	else 
 		Slacker_DKP_EventLogBar:Show();
 	end
 		
@@ -121,7 +121,7 @@ end
 function Slacker_DKP_ToggleFrame()
 	if (Slacker_DKP_EventLogFrame:IsVisible()) then
 		Slacker_DKP_EventLogFrame:Hide();
-		selected_eid = 0;````
+		selected_eid = 0;
 	else
 		Slacker_DKP_EventLogFrame:Show();
 	end

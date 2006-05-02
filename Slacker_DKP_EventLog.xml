@@ -187,6 +187,62 @@
 				<Anchor point="TOPLEFT" relativeTo="EventLog9" relativePoint="BOTTOMLEFT" />
 			</Anchors>
 		</Button>
+		
+		<Button name="Event_DeleteEntry" inherits="UIPanelButtonTemplate" text="DELETE" hidden="true">
+			<Size>
+				<AbsDimension x="60" y="18"/>
+			</Size>
+			<Anchors>
+				<Anchor point="BOTTOMLEFT">
+					<Offset>
+						<AbsDimension x="8" y="-8" />
+					</Offset>
+				</Anchor>
+			</Anchors>
+			<Scripts>
+				<OnClick>
+					Slacker_DKP_EventLog_DeleteEntry();
+				</OnClick>
+			</Scripts>
+		</Button>
+				
+		<Button name="Event_DEItem" inherits="UIPanelButtonTemplate" text="Disenchant" hidden="true">
+			<Size>
+				<AbsDimension x="90" y="18"/>
+			</Size>
+			<Anchors>
+				<Anchor point="TOPLEFT" relativeTo="Event_DeleteEntry" relativePoint="TOPRIGHT">
+					<Offset>
+						<AbsDimension x="2" y="0"/>
+					</Offset>
+				</Anchor>
+			</Anchors>
+			<Scripts>
+				<OnClick>
+					Slacker_DKP_EventLog_Disenchant();
+				</OnClick>
+			</Scripts>
+		</Button>
+		
+		<Button name="Event_Edit" inherits="UIPanelButtonTemplate" text="Edit" hidden="true">
+			<Size>
+				<AbsDimension x="60" y="18"/>
+			</Size>
+			<Anchors>
+				<Anchor point="TOPLEFT" relativeTo="Event_DEItem" relativePoint="TOPRIGHT">
+					<Offset>
+						<AbsDimension x="2" y="0"/>
+					</Offset>
+				</Anchor>
+			</Anchors>
+			<Scripts>
+				<OnClick>
+					Slacker_DKP_EventLog_Edit();
+				</OnClick>
+			</Scripts>
+		</Button>		
+		
+				
 		</Frames>
 		
 		<Scripts>
