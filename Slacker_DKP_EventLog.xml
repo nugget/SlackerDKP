@@ -4,13 +4,54 @@
 
  	<Button name = "EventLogTemplate" virtual="true">
 		<Size>
-			<AbsDimension x="120" y="14" />
+			<AbsDimension x="256" y="11" />
 		</Size>
-		<Layers>
-			<Layer level="BORDER">
-				<FontString name="$parent_Text" inherits="Slacker_BodyFont" wraponspaces="false" justifyH="LEFT" text="entry" />
-			</Layer>
-		</Layers>
+		<Frames>
+			<Frame name="$parentField" setAllPoints="true">
+				<Layers>
+					<Layer level="ARTWORK">
+						<Texture name="$parentHighlight" file="Interface\QuestFrame\UI-QuestTitleHighlight" alphaMode="ADD" setAllPoints="true" hidden="true">
+							<Size>
+								<AbsDimension x="240" y="11"/>
+							</Size>
+							<Anchors>
+								<Anchor point="TOP">
+									<Offset>
+										<AbsDimension x="-12" y="0"/>
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</Texture>
+					</Layer>
+					<Layer level="BACKGROUND">
+						<FontString name="$parentTime" inherits="Slacker_BodyFont" justifyH="RIGHT">
+							<Size>
+								<AbsDimension x="32" y="11"/>
+							</Size>
+							<Anchors>
+								<Anchor point="TOPLEFT" relativeTo="$parentHighlight" relativePoint="TOPLEFT">
+									<Offset>
+										<AbsDimension x="0" y="0"/>
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
+						<FontString name="$parentComments" inherits="Slacker_BodyFont" justifyH="LEFT">
+							<Size>
+								<AbsDimension x="190" y="11"/>
+							</Size>
+							<Anchors>
+								<Anchor point="TOPLEFT" relativeTo="$parentTime" relativePoint="TOPRIGHT">
+									<Offset>
+										<AbsDimension x="8" y="0"/>
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+			</Frame>
+		</Frames>
 		<Scripts>
 			<OnLoad>
 				this:RegisterForClicks("LeftButtonUp", "RightButtonUp");
@@ -18,18 +59,12 @@
 			<OnClick>
 				Slacker_DKP_EventLogOnClick(arg1);
 			</OnClick>
-			<OnEnter>
-				this:SetBackdropColor(1,0,0,0.75);
-			</OnEnter>
-			<OnLeave>
-				this:SetBackdropColor(0,0,0,0.75);
-			</OnLeave>
 		</Scripts>
 	</Button>
 
 	<Frame name="Slacker_DKP_EventLogFrame" frameStrata="BACKGROUND" parent="UIParent" movable="true" enableMouse="true" hidden="true">
 		<Size>
-			<AbsDimension x="256" y="166"/>
+			<AbsDimension x="256" y="140"/>
 		</Size>
 		<Anchors>
 			<Anchor point="CENTER">
@@ -51,7 +86,7 @@
 		</Backdrop>
 		<Layers>
 			<Layer level="HEADER">
-				<FontString name="$parentTitle" inherits="Slacker_TitleFont" justifyH="LEFT" text="Slacker DKP">
+				<FontString name="$parentTitle" inherits="Slacker_TitleFont" justifyH="LEFT" text="Slacker DKP Event Log">
 					<Size>
 						<AbsDimension x="246" y="11"/>
 					</Size>
@@ -104,11 +139,7 @@
 		
 		<Button name="EventLog1" inherits="EventLogTemplate" id="1">
 			<Anchors>
-				<Anchor point="TOPLEFT" relativeTo="Slacker_DKP_EventLogBar" relativePoint="TOPLEFT">
-					<Offset>
-						<AbsDimension x="0" y="0" />
-					</Offset>
-				</Anchor>
+				<Anchor point="TOPLEFT" relativeTo="Slacker_DKP_EventLogBar" relativePoint="TOPLEFT" />
 			</Anchors>
 		</Button>
 		<Button name="EventLog2" inherits="EventLogTemplate" id="2">

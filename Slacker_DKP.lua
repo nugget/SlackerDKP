@@ -6,6 +6,7 @@
 
 local version = "0.1";
 local builddate = "1-May-2006";
+local selected_eid = 0;
 
 SLACKER_SAVED_DKP = {};
 SLACKER_SAVED_GEAR = {};
@@ -68,43 +69,59 @@ function Slacker_DKP_Message(buf)
 end
 
 function Slacker_DKP_EventLogBar_Update()
-	local line;
-	local lineplusoffset;
+	local row;
 	local entries;
 	
 	entries = getn (SLACKER_SAVED_EVENTLOG);
 	if(entries <= 10) then
 		Slacker_DKP_EventLogBar:Hide();
-	else
+	else/console 
 		Slacker_DKP_EventLogBar:Show();
 	end
-	
-	Slacker_DKP_Message("There are "..entries.." entries in SLACKER_SAVED_EVENTLOG");
-	
+		
 	FauxScrollFrame_Update(Slacker_DKP_EventLogBar,entries,10,14);
-	for line=1,10 do
-		lineplusoffset = line + FauxScrollFrame_GetOffset(Slacker_DKP_EventLogBar);
-		if lineplusoffset <= entries then
-      		getglobal("EventLog"..line.."_Text"):SetText(SLACKER_SAVED_EVENTLOG[lineplusoffset]['description']);
-			getglobal("EventLog"..line):Show();
+	for row=1,10 do
+		local time = getglobal("EventLog"..row.."FieldTime");
+		local comments = getglobal("EventLog"..row.."FieldComments");
+		local highlight = getglobal("EventLog"..row.."FieldHighlight");
+		local eid = row + FauxScrollFrame_GetOffset(Slacker_DKP_EventLogBar);
+		local eventrow = getglobal("EventLog"..row);
+		
+		if eid <= entries then
+			local color = "|cffFFFFFF";
+		
+			if(SLACKER_SAVED_EVENTLOG[eid]['type'] == 'BOSSKILL') then
+				color = "|cffFF7F7F";
+			elseif(SLACKER_SAVED_EVENTLOG[eid]['type'] == 'LOOT') then
+				color = "|cff7FFF7F";		
+			end
+
+			time:SetText(date("%H:%M",SLACKER_SAVED_EVENTLOG[eid]['ts']));
+			comments:SetText(color..SLACKER_SAVED_EVENTLOG[eid]['description']);
+			eventrow:Show();
+			if(selected_eid == eid) then
+				highlight:Show();
+			else
+				highlight:Hide();
+			end
 		else
-			getglobal("EventLog"..line):Hide();
+			eventrow:Hide();
 		end
 	end
-	DEFAULT_CHAT_FRAME:AddMessage("We're at "..FauxScrollFrame_GetOffset(Slacker_DKP_EventLogBar));
 end
 
 function Slacker_DKP_EventLogOnClick(button)
 	local row = this:GetID();
-	local id = row + FauxScrollFrame_GetOffset(Slacker_DKP_EventLogBar);
-	this:SetBackdropColor(1,1,0,0.75);
+	local eid = row + FauxScrollFrame_GetOffset(Slacker_DKP_EventLogBar);
+	
+	selected_eid = eid;
+	Slacker_DKP_EventLogBar_Update();
 end
-
-
 
 function Slacker_DKP_ToggleFrame()
 	if (Slacker_DKP_EventLogFrame:IsVisible()) then
 		Slacker_DKP_EventLogFrame:Hide();
+		selected_eid = 0;````
 	else
 		Slacker_DKP_EventLogFrame:Show();
 	end
@@ -128,8 +145,9 @@ function Slacker_DKP_LogLoot(name,item,dkp,secdkp)
 
 	local entries = getn (SLACKER_SAVED_EVENTLOG);
 	SLACKER_SAVED_EVENTLOG[entries+1] = {
+		["ts"] = ts;
 		["type"] = 'LOOT';
-		["description"] = date("%H:%M")..' '..name..' looted '..item;
+		["description"] = name..' looted '..item;
 	}
 	
 	SLACKER_SAVED_LOOTLOG[ts] = {
@@ -145,9 +163,10 @@ function Slacker_DKP_AttendanceLog(parms)
 
 	local entries = getn (SLACKER_SAVED_EVENTLOG);
 	SLACKER_SAVED_EVENTLOG[entries+1] = {
-		["type"] = 'ATT';
-		["description"] = date("%H:%M")..' Attendance ('..parms..')';
-	}
+		["ts"] = ts,
+		["type"] = 'ATT',
+		["description"] = 'Attendance ('..parms..')',
+	};
 
 	SLACKER_SAVED_ATTLOG[ts] = {
 		["location"] = GetZoneText(),
@@ -178,9 +197,10 @@ function Slacker_DKP_BossKillLog(parms)
 
 	local entries = getn (SLACKER_SAVED_EVENTLOG);
 	SLACKER_SAVED_EVENTLOG[entries+1] = {
-		["type"] = 'BOSSKILL';
-		["description"] = date("%H:%M")..' Killed '..bossName;
-	}
+		["ts"] = ts,
+		["type"] = 'BOSSKILL',
+		["description"] = 'Killed '..bossName,
+	};
 
 	SLACKER_SAVED_BOSSKILLS[ts] = {
 		["bossname"] = bossName,
