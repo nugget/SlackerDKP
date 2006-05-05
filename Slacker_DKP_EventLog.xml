@@ -86,7 +86,7 @@
 		</Backdrop>
 		<Layers>
 			<Layer level="HEADER">
-				<FontString name="$parentTitle" inherits="Slacker_TitleFont" justifyH="LEFT" text="Slacker DKP Event Log">
+				<FontString name="Slacker_DKP_EventLogTitle" inherits="Slacker_TitleFont" justifyH="LEFT" text="SlackerDKP Event Log">
 					<Size>
 						<AbsDimension x="246" y="11"/>
 					</Size>
@@ -219,7 +219,7 @@
 			</Anchors>
 			<Scripts>
 				<OnClick>
-					Slacker_DKP_EventLog_Disenchant();
+					Slacker_DKP_EventLog_DeleteEntry();
 				</OnClick>
 			</Scripts>
 		</Button>

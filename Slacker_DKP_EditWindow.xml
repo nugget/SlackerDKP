@@ -1,0 +1,93 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xsi:schemaLocation="http://www.blizzard.com/wow/ui/ ..\FrameXML\UI.xsd">
+
+	<Frame name="Slacker_DKP_EditFrame" frameStrata="BACKGROUND" parent="UIParent" movable="true" enableMouse="true" hidden="true">
+		<Size>
+			<AbsDimension x="256" y="140"/>
+		</Size>
+		<Anchors>
+			<Anchor point="CENTER">
+				<Offset>
+					<AbsDimension x="0" y="0"/>
+				</Offset>
+			</Anchor>
+		</Anchors>
+		<Backdrop name="$parentBackdrop" bgFile="Interface\Tooltips\UI-Tooltip-Background" edgeFile="Interface\Tooltips\UI-Tooltip-Border" tile="true">
+			<EdgeSize>
+				<AbsValue val="16"/>
+			</EdgeSize>
+			<TileSize>
+				<AbsValue val="16"/>
+			</TileSize>
+			<BackgroundInsets>
+				<AbsInset left="5" right="5" top="5" bottom="5"/>
+			</BackgroundInsets>
+		</Backdrop>
+		<Layers>
+			<Layer level="HEADER">
+				<FontString name="$parentTitle" inherits="Slacker_TitleFont" justifyH="LEFT" text="Edit Logged Event">
+					<Size>
+						<AbsDimension x="246" y="11"/>
+					</Size>
+					<Anchors>
+						<Anchor point="TOP">
+							<Offset>
+								<AbsDimension x="0" y="-5"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+			</Layer>
+		</Layers>
+		<Frames>
+			<EditBox name="$parentEditBox" letters="80">
+				<Size>
+					<AbsDimension x="100" y="32"></AbsDimension>
+				</Size>
+				<Anchors>
+					<Anchor point="LEFT">
+						<Offset>
+							<AbsDimension x="50" y="0"></AbsDimension>
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Layers>
+					<Layer level="BACKGROUND">
+						<Texture file="Interface\ChatFrame\UI-ChatInputBorder-Left">
+							<Size>
+								<AbsDimension x="75" y="32"></AbsDimension>
+							</Size>
+							<Anchors>
+								<Anchor point="LEFT">
+									<Offset>
+										<AbsDimension x="-10" y="0"></AbsDimension>
+									</Offset>
+								</Anchor>
+							</Anchors>
+							<TexCoords left="0" right="0.2" top="0" bottom="1.0"></TexCoords>
+						</Texture>
+						<Texture file="Interface\ChatFrame\UI-ChatInputBorder-Right">
+							<Size>
+								<AbsDimension x="75" y="32"></AbsDimension>
+							</Size>
+							<Anchors>
+								<Anchor point="RIGHT">
+									<Offset>
+										<AbsDimension x="10" y="0"></AbsDimension>
+									</Offset>
+								</Anchor>
+							</Anchors>
+							<TexCoords left="0.7" right="1.0" top="0" bottom="1.0"></TexCoords>
+						</Texture>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnLoad></OnLoad>
+				</Scripts>
+				<FontString inherits="ChatFontNormal"></FontString>
+			</EditBox>
+		</Frames>
+	</Frame>
+
+</Ui>
