@@ -4,7 +4,7 @@
 
 	<Frame name="Slacker_DKP_EditFrame" frameStrata="BACKGROUND" parent="UIParent" movable="true" enableMouse="true" hidden="true">
 		<Size>
-			<AbsDimension x="256" y="140"/>
+			<AbsDimension x="384" y="512"/>
 		</Size>
 		<Anchors>
 			<Anchor point="CENTER">
@@ -40,54 +40,137 @@
 				</FontString>
 			</Layer>
 		</Layers>
+		
 		<Frames>
-			<EditBox name="$parentEditBox" letters="80">
+			<Button name="$parentCloseButton" inherits="UIPanelCloseButton">
 				<Size>
-					<AbsDimension x="100" y="32"></AbsDimension>
+					<AbsDimension x="22" y="22"/>
 				</Size>
 				<Anchors>
-					<Anchor point="LEFT">
+					<Anchor point="TOPRIGHT">
 						<Offset>
-							<AbsDimension x="50" y="0"></AbsDimension>
+							<AbsDimension x="0" y="0"/>
 						</Offset>
 					</Anchor>
 				</Anchors>
-				<Layers>
-					<Layer level="BACKGROUND">
-						<Texture file="Interface\ChatFrame\UI-ChatInputBorder-Left">
+			</Button>
+			
+			<ScrollFrame name="$parentScrollFrame" inherits="UIPanelScrollFrameTemplate">
+				<Anchors>
+					<Anchor point="TOPLEFT">
+						<Offset>
+							<AbsDimension x="8" y="-20"/>
+						</Offset>
+					</Anchor>
+					<Anchor point="BOTTOMRIGHT">
+						<Offset>
+							<AbsDimension x="-28" y="8"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+					<Layer level="ARTWORK">
+						<Texture name="$parentTop" file="Interface\PaperDollInfoFrame\UI-Character-ScrollBar">
 							<Size>
-								<AbsDimension x="75" y="32"></AbsDimension>
+								<AbsDimension x="30" y="256"/>
 							</Size>
 							<Anchors>
-								<Anchor point="LEFT">
+								<Anchor point="TOP" relativeTo="$parentScrollBarScrollUpButton">
 									<Offset>
-										<AbsDimension x="-10" y="0"></AbsDimension>
+										<AbsDimension x="0" y="5"/>
 									</Offset>
 								</Anchor>
 							</Anchors>
-							<TexCoords left="0" right="0.2" top="0" bottom="1.0"></TexCoords>
+							<!--<TexCoords left="0" right="0.484375" top="0" bottom="1.0"/>-->
+							<TexCoords left="1" right="1" top="1" bottom="1"/>
 						</Texture>
-						<Texture file="Interface\ChatFrame\UI-ChatInputBorder-Right">
+						<Texture file="Interface\PaperDollInfoFrame\UI-Character-ScrollBar">
 							<Size>
-								<AbsDimension x="75" y="32"></AbsDimension>
+								<AbsDimension x="31" y="106"/>
 							</Size>
 							<Anchors>
-								<Anchor point="RIGHT">
+								<Anchor point="BOTTOM" relativeTo="$parentScrollBarScrollDownButton">
 									<Offset>
-										<AbsDimension x="10" y="0"></AbsDimension>
+										<AbsDimension x="0" y="-2"/>
 									</Offset>
 								</Anchor>
 							</Anchors>
-							<TexCoords left="0.7" right="1.0" top="0" bottom="1.0"></TexCoords>
+							<!--<TexCoords left="0.515625" right="1.0" top="0" bottom="0.4140625"/>-->
+							<TexCoords left="1" right="1" top="1" bottom="1"/>
 						</Texture>
 					</Layer>
 				</Layers>
-				<Scripts>
-					<OnLoad></OnLoad>
-				</Scripts>
-				<FontString inherits="ChatFontNormal"></FontString>
-			</EditBox>
+				<ScrollChild>
+					<Frame name="$parentScrollChildFrame" enableMouse="true">
+						<Size>
+							<AbsDimension x="300" y="255"/>
+						</Size>
+						<Anchors>
+							<Anchor point="TOPLEFT">
+								<Offset>
+									<AbsDimension x="0" y="0"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Frames>
+							<EditBox name="$parentEditBox" letters="7500" multiLine="true" enableMouse="true" autoFocus="false">
+								<Size>
+									<AbsDimension x="270" y="200"/>
+								</Size>
+								<Anchors>
+									<Anchor point="TOPLEFT">
+										<Offset>
+											<AbsDimension x="20" y="-10"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+								<Scripts>
+									<OnTextChanged>
+										local scrollBar = getglobal(this:GetParent():GetParent():GetName().."ScrollBar")
+										this:GetParent():GetParent():UpdateScrollChildRect();
+										local min;
+										local max;
+										min, max = scrollBar:GetMinMaxValues();
+										if ( max > 0 and (this.max ~= max) ) then
+											this.max = max;
+											scrollBar:SetValue(max);
+										end
+									</OnTextChanged>
+									<OnClick>
+										this:SetFocus();
+									</OnClick>
+								</Scripts>
+								<FontString inherits="Slacker_BodyFont"/>
+							</EditBox>
+						</Frames>
+						<Scripts>
+							<OnMouseUp>
+								this:SetFocus();
+							</OnMouseUp>
+						</Scripts>
+					</Frame>
+				</ScrollChild>
+			</ScrollFrame>
+	        
 		</Frames>
+		
+		<Scripts>
+			<OnLoad>
+				this:SetBackdropColor(0, 0, 0, 0.75);
+				this:RegisterForDrag("LeftButton");
+			</OnLoad>
+			<OnDragStart>
+				if (IsAltKeyDown()) then
+					this:StartMoving();
+				end
+			</OnDragStart>
+			<OnDragStop>
+				this:StopMovingOrSizing();
+			</OnDragStop>
+			<OnEscapePressed>
+				this:ClearFocus();
+			</OnEscapePressed>
+		</Scripts>
+		
 	</Frame>
 
 </Ui>
