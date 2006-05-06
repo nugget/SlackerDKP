@@ -130,7 +130,7 @@
 						this:RegisterForClicks("LeftButtonUp", "RightButtonUp");
 					</OnLoad>
 					<OnClick>
-						NurfedDKPRollOnClick(arg1);
+						Slacker_DKP_HelpOnClick(arg1);
 					</OnClick>
 					<OnEnter>
 						GameTooltip:SetOwner(this, "ANCHOR_RIGHT");
@@ -162,7 +162,7 @@
 						this:RegisterForClicks("LeftButtonUp", "RightButtonUp");
 					</OnLoad>
 					<OnClick>
-						NurfedDKPRollOnClick(arg1);
+						Slacker_DKP_AddAttendanceOnClick(arg1);
 					</OnClick>
 					<OnEnter>
 						GameTooltip:SetOwner(this, "ANCHOR_RIGHT");
@@ -193,7 +193,7 @@
 						this:RegisterForClicks("LeftButtonUp", "RightButtonUp");
 					</OnLoad>
 					<OnClick>
-						NurfedDKPRollOnClick(arg1);
+						Slacker_DKP_BossKillOnClick(arg1);
 					</OnClick>
 					<OnEnter>
 						GameTooltip:SetOwner(this, "ANCHOR_RIGHT");

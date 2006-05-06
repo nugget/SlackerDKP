@@ -83,6 +83,15 @@ function Slacker_DKP_Version()
 	Slacker_DKP_Message("Slacker DKP v"..version.." ("..builddate..") loaded.");
 end
 
+function Slacker_DKP_HelpOnClick()
+end
+
+function Slacker_DKP_AddAttendanceOnClick()
+end
+
+function Slacker_DKP_AddBossKillOnClick()
+end
+
 function Slacker_DKP_Message(buf)
 	if type(buf) == 'string' then
 		DEFAULT_CHAT_FRAME:AddMessage("|cffFFFFFF"..buf);
