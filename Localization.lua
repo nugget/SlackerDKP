@@ -2,6 +2,8 @@
 
 BINDING_HEADER_SLACKERDKPHEADER				= "Slacker DKP";
 BINDING_NAME_SLACKERDKP					= "Toggle Slacker DKP Window";
+BINDING_NAME_SLACKERDKPATT				= "Add new Attendance Snapshot";
+BINDING_NAME_SLACKERDKPBOSS				= "Add new Boss Kill";
 
 SLACKERDKP_CHAT_COMMAND_INFO				= "Controls Slacker DKP from the command line - /sdkp for usage.";
 
