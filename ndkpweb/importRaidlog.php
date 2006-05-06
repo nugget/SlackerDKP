@@ -282,7 +282,7 @@ function boss_exists($bossrec) {
 </table>
 </div>
 <div id="footer">
-	NDKP is a division of <a href="http://www.nurfed.com" target="_BLANK">Nurfed</a>
+	Brought to you by <a href="http://slacker.com/~nugget/projects/slackerdkp/">SlackerDKP</a>
 </div>
 </body>
 </html>
