@@ -52,6 +52,14 @@
 						</Offset>
 					</Anchor>
 				</Anchors>
+				<Scripts>
+				<OnEnterPressed>
+					Slacker_DKP_EditWindow_Save();
+				</OnEnterPressed>
+				<OnEscapePressed>
+					this:GetParent():Hide();
+				</OnEscapePressed>
+				</Scripts>
 				<FontString inherits="ChatFontNormal"></FontString>
 			</EditBox>
 			

@@ -141,11 +141,12 @@ function Slacker_DKP_EventLogBar_Update()
 		Event_Edit:Hide();
 	else
 		Event_DeleteEntry:Show();
-		Event_Edit:Show();
 		if(SLACKER_SAVED_EVENTLOG[selected_eid]['type'] == 'LOOT') then
 			Event_DEItem:Show();
+			Event_Edit:Hide();
 		else
 			Event_DEItem:Hide();
+			Event_Edit:Show();
 		end
 	end
 		
@@ -272,7 +273,9 @@ function Slacker_DKP_EventLog_DeleteEntry()
 	elseif(selected_eid == eid) then
 		selected_eid = 0;
 	end
-		
+
+	PlaySound("INTERFACESOUND_CURSORDROPOBJECT");
+	
 	Slacker_DKP_EventLogBar_Update();
 end
 
@@ -377,6 +380,8 @@ function Slacker_DKP_AttendanceLog(parms)
 		["comments"] = parms,
 		["playerlist"] = PlayerList
 	};
+	
+	PlaySound("GnomeExploration");
 	Slacker_DKP_EventLogBar_Update();
 	Slacker_DKP_Message("Raid Attendance recorded at "..date("%H:%M on %d-%b-%Y"));
 	
@@ -420,6 +425,7 @@ function Slacker_DKP_BossKillLog(parms)
 		SLACKER_SAVED_BOSSES[bossname] = 1;
 	end
 	
+	PlaySound("LEVELUPSOUND");
 	Slacker_DKP_EventLogBar_Update();
 	Slacker_DKP_Announce(bossname.." kill recorded at "..date("%H:%M on %d-%b-%Y"));
 	return 1;
