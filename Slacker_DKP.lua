@@ -89,9 +89,19 @@ function Slacker_DKP_HelpOnClick()
 end
 
 function Slacker_DKP_AddAttendanceOnClick()
+	if(Slacker_DKP_AttendanceLog("") > 0) then
+		selected_eid = getn(SLACKER_SAVED_EVENTLOG);
+		Slacker_DKP_EventLogBar_Update();
+		Slacker_DKP_EventLog_Edit();
+	end
 end
 
 function Slacker_DKP_AddBossKillOnClick()
+	if(Slacker_DKP_BossKillLog("") > 0) then
+		selected_eid = getn(SLACKER_SAVED_EVENTLOG);
+		Slacker_DKP_EventLogBar_Update();
+		Slacker_DKP_EventLog_Edit();
+	end
 end
 
 function Slacker_DKP_Message(buf)
@@ -369,6 +379,8 @@ function Slacker_DKP_AttendanceLog(parms)
 	};
 	Slacker_DKP_EventLogBar_Update();
 	Slacker_DKP_Message("Raid Attendance recorded at "..date("%H:%M on %d-%b-%Y"));
+	
+	return 1;
 end
 
 function Slacker_DKP_BossKillLog(parms)
@@ -383,7 +395,7 @@ function Slacker_DKP_BossKillLog(parms)
 
 	if (not UnitName("target")) then
 		StaticPopup_Show ("SDKP_NOTARGET");
-		return;
+		return 0;
 	end
 
 	local bossname = UnitName("Target");
@@ -410,6 +422,7 @@ function Slacker_DKP_BossKillLog(parms)
 	
 	Slacker_DKP_EventLogBar_Update();
 	Slacker_DKP_Announce(bossname.." kill recorded at "..date("%H:%M on %d-%b-%Y"));
+	return 1;
 end
 
 function Slacker_DKP_ClearLogs()
