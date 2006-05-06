@@ -249,13 +249,11 @@ function Slacker_DKP_EventLog_DeleteEntry()
 					local j=i-1;
 					SLACKER_SAVED_EVENTLOG[j]['ts'] = SLACKER_SAVED_EVENTLOG[i]['ts'];   -- attempt to index field '?' (a nil value)
 					SLACKER_SAVED_EVENTLOG[j]['type'] = SLACKER_SAVED_EVENTLOG[i]['type'];
-					SLACKER_SAVED_EVENTLOG[j]['description'] = SLACKER_SAVED_EVENTLOG[i]['description']
 				end
 			end
 		end
 		SLACKER_SAVED_EVENTLOG[count]['ts'] = nil;
 		SLACKER_SAVED_EVENTLOG[count]['type'] = nil;
-		SLACKER_SAVED_EVENTLOG[count]['description'] = nil;
 		SLACKER_SAVED_EVENTLOG[count] = nil;
 	end
 
@@ -344,7 +342,6 @@ function Slacker_DKP_LogLoot(name,item,dkp,secdkp)
 	SLACKER_SAVED_EVENTLOG[entries+1] = {
 		["ts"] = ts;
 		["type"] = 'LOOT';
-		["description"] = name..' looted '..item;
 	}
 	
 	SLACKER_SAVED_LOOTLOG[ts] = {
@@ -363,7 +360,6 @@ function Slacker_DKP_AttendanceLog(parms)
 	SLACKER_SAVED_EVENTLOG[entries+1] = {
 		["ts"] = ts,
 		["type"] = 'ATT',
-		["description"] = 'Attendance ('..parms..')',
 	};
 
 	SLACKER_SAVED_ATTLOG[ts] = {
@@ -397,7 +393,6 @@ function Slacker_DKP_BossKillLog(parms)
 	SLACKER_SAVED_EVENTLOG[entries+1] = {
 		["ts"] = ts,
 		["type"] = 'BOSSKILL',
-		["description"] = 'Killed '..bossname,
 	};
 
 	SLACKER_SAVED_BOSSKILLS[ts] = {
