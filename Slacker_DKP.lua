@@ -67,13 +67,11 @@ function Slacker_DKP_OnEvent()
 			end
 		end	
 	elseif (event == "CHAT_MSG_COMBAT_HOSTILE_DEATH") then
-		Slacker_DKP_Debug("chat_msg_combat: "..arg1);
 		local mob;
 		local _, _, mob = string.find(arg1, "(.+) dies.");
 		if (mob) then
-			Slacker_DKP_Debug("mob:"..mob);
 			if(SLACKER_SAVED_BOSSES[mob]) then
-				Slacker_DKP_BossKillLog(mob.." Auto-logged");
+				Slacker_DKP_BossKillLog(mob,"auto-logged");
 			end
 		end
 	elseif (event == "LOOT_OPENED") then
@@ -98,7 +96,7 @@ function Slacker_DKP_AddAttendanceOnClick()
 end
 
 function Slacker_DKP_AddBossKillOnClick()
-	if(Slacker_DKP_BossKillLog("") > 0) then
+	if(Slacker_DKP_BossKillNew("") > 0) then
 		selected_eid = getn(SLACKER_SAVED_EVENTLOG);
 		Slacker_DKP_EventLogBar_Update();
 		Slacker_DKP_EventLog_Edit();
@@ -397,23 +395,26 @@ function Slacker_DKP_AttendanceLog(parms)
 	return 1;
 end
 
-function Slacker_DKP_BossKillLog(parms)
-	local PlayerList = Slacker_DKPPlayerList();
-	local ts = date("%s");
-
+function Slacker_DKP_BossKillNew(parms)
 	StaticPopupDialogs["SDKP_NOTARGET"] = {
 		text = "You must target the corpse first",
 		button1 = "Dang, I knew that",
 		timeout = 30,
 	};
 
-	if (not UnitName("target")) then
+	local bossname = UnitName("Target");
+
+	if (not bossname) then
 		StaticPopup_Show ("SDKP_NOTARGET");
 		return 0;
+	else
+		return Slacker_DKP_BossKillLog(bossname,parms);
 	end
+end
 
-	local bossname = UnitName("Target");
+function Slacker_DKP_BossKillLog(bossname,parms)
 	local PlayerList = Slacker_DKPPlayerList();
+	local ts = date("%s");
 
 	local entries = getn (SLACKER_SAVED_EVENTLOG);
 	SLACKER_SAVED_EVENTLOG[entries+1] = {
@@ -520,7 +521,7 @@ function Slacker_DKP_CommandHandler(buf)
 			elseif(command == 'att') then
 				Slacker_DKP_AttendanceLog(args)
 			elseif(command == 'bosskill') then
-				Slacker_DKP_BossKillLog(args);
+				Slacker_DKP_BossKillNew(args);
 			elseif(command == 'clear') then
 				Slacker_DKP_ClearLogs();
 			elseif(command == 'ignore') then
