@@ -459,6 +459,9 @@ function Slacker_DKP_ClearLogs()
 	SLACKER_SAVED_LOOTLOG = {};
 	SLACKER_SAVED_ATTLOG = {};
 	
+	selected_eid = 0;
+	edti_eid = 0;
+	
 	Slacker_DKP_EventLogBar_Update();	
 end
 
