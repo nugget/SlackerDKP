@@ -29,7 +29,7 @@ $block = '';
 $ts = '';
 
 foreach($ifbuf as $buf) {
-	if(preg_match('/^NURFED_SAVED_([A-Z]+) = {/', $buf, $matches)) {
+	if(preg_match('/^SLACKER_SAVED_([A-Z]+) = {/', $buf, $matches)) {
 		$block = strtolower($matches[1]);
 	} elseif(preg_match('/^\t\["(\d+)"\] = {/', $buf, $matches)) {
 		$ts = $matches[1];
