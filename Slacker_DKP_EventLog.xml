@@ -114,6 +114,104 @@
 				</Anchors>
 			</Button>
 			
+			<Button name="$parentHelp">
+				<Size>
+					<AbsDimension x="14" y="24"/>
+				</Size>
+				<Anchors>
+					<Anchor point="TOPRIGHT" relativeTo="$parentCloseButton" relativePoint="TOPLEFT">
+						<Offset>
+							<AbsDimension x="-8" y="4"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnLoad>
+						this:RegisterForClicks("LeftButtonUp", "RightButtonUp");
+					</OnLoad>
+					<OnClick>
+						NurfedDKPRollOnClick(arg1);
+					</OnClick>
+					<OnEnter>
+						GameTooltip:SetOwner(this, "ANCHOR_RIGHT");
+						GameTooltip:SetText("Help/Credits");
+					</OnEnter>
+					<OnLeave>
+						GameTooltip:Hide();
+					</OnLeave>
+				</Scripts>
+				<NormalTexture file="Interface\Buttons\UI-MicroButton-Help-Up"/>
+				<HighlightTexture file="Interface\Buttons\UI-MicroButton-Help-Down" alphaMode="ADD"/>
+				<PushedTexture file="Interface\Buttons\UI-MicroButton-Help-Disabled"/>
+			</Button>	
+
+			
+			<Button name="$parentAddAttendance">
+				<Size>
+					<AbsDimension x="14" y="24"/>
+				</Size>
+				<Anchors>
+					<Anchor point="TOPRIGHT" relativeTo="$parentHelp" relativePoint="TOPLEFT">
+						<Offset>
+							<AbsDimension x="-8" y="0"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnLoad>
+						this:RegisterForClicks("LeftButtonUp", "RightButtonUp");
+					</OnLoad>
+					<OnClick>
+						NurfedDKPRollOnClick(arg1);
+					</OnClick>
+					<OnEnter>
+						GameTooltip:SetOwner(this, "ANCHOR_RIGHT");
+						GameTooltip:SetText("Add Attendance Event");
+					</OnEnter>
+					<OnLeave>
+						GameTooltip:Hide();
+					</OnLeave>
+				</Scripts>
+				<NormalTexture file="Interface\Buttons\UI-MicroButton-Socials-Up"/>
+				<HighlightTexture file="Interface\Buttons\UI-MicroButton-Socials-Down" alphaMode="ADD"/>
+				<PushedTexture file="Interface\Buttons\UI-MicroButton-Socials-Disabled"/>
+			</Button>	
+
+			<Button name="$parentAddBossKill">
+				<Size>
+					<AbsDimension x="14" y="24"/>
+				</Size>
+				<Anchors>
+					<Anchor point="TOPRIGHT" relativeTo="$parentAddAttendance" relativePoint="TOPLEFT">
+						<Offset>
+							<AbsDimension x="-2" y="0"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnLoad>
+						this:RegisterForClicks("LeftButtonUp", "RightButtonUp");
+					</OnLoad>
+					<OnClick>
+						NurfedDKPRollOnClick(arg1);
+					</OnClick>
+					<OnEnter>
+						GameTooltip:SetOwner(this, "ANCHOR_RIGHT");
+						GameTooltip:SetText("Add New Boss Kill");
+					</OnEnter>
+					<OnLeave>
+						GameTooltip:Hide();
+					</OnLeave>
+				</Scripts>
+				<NormalTexture file="Interface\Buttons\UI-MicroButton-Quest-Up"/>
+				<HighlightTexture file="Interface\Buttons\UI-MicroButton-Quest-Down" alphaMode="ADD"/>
+				<PushedTexture file="Interface\Buttons\UI-MicroButton-Quest-Disabled"/>
+			</Button>	
+
+			
+			
+			
+			
 		<ScrollFrame name="Slacker_DKP_EventLogBar" inherits="FauxScrollFrameTemplate">
 			<Anchors>
 				<Anchor point="TOPLEFT">

@@ -68,6 +68,7 @@
 						</Offset>
 					</Anchor>
 				</Anchors>
+				<Layers>
 					<Layer level="ARTWORK">
 						<Texture name="$parentTop" file="Interface\PaperDollInfoFrame\UI-Character-ScrollBar">
 							<Size>
@@ -112,7 +113,7 @@
 							</Anchor>
 						</Anchors>
 						<Frames>
-							<EditBox name="$parentEditBox" letters="7500" multiLine="true" enableMouse="true" autoFocus="false">
+							<EditBox name="Slacker_DKP_EditBox" letters="7500" multiLine="true" enableMouse="true" autoFocus="false" text="moo">
 								<Size>
 									<AbsDimension x="270" y="200"/>
 								</Size>
@@ -135,22 +136,12 @@
 											scrollBar:SetValue(max);
 										end
 									</OnTextChanged>
-									<OnClick>
-										this:SetFocus();
-									</OnClick>
 								</Scripts>
-								<FontString inherits="Slacker_BodyFont"/>
 							</EditBox>
 						</Frames>
-						<Scripts>
-							<OnMouseUp>
-								this:SetFocus();
-							</OnMouseUp>
-						</Scripts>
 					</Frame>
 				</ScrollChild>
-			</ScrollFrame>
-	        
+			</ScrollFrame>	        
 		</Frames>
 		
 		<Scripts>

@@ -1,0 +1,354 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xsi:schemaLocation="http://www.blizzard.com/wow/ui/ ..\FrameXML\UI.xsd">
+
+ 	<Button name = "PlayerListTemplate" virtual="true">
+		<Size>
+			<AbsDimension x="192" y="11" />
+		</Size>
+		<Frames>
+			<Frame name="$parentField" setAllPoints="true">
+				<Layers>
+					<Layer level="ARTWORK">
+						<Texture name="$parentHighlight" file="Interface\QuestFrame\UI-QuestTitleHighlight" alphaMode="ADD" setAllPoints="true" hidden="true">
+							<Size>
+								<AbsDimension x="185" y="11"/>
+							</Size>
+							<Anchors>
+								<Anchor point="TOP">
+									<Offset>
+										<AbsDimension x="-12" y="0"/>
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</Texture>
+					</Layer>
+					<Layer level="BACKGROUND">
+						<FontString name="$parentPlayer" inherits="Slacker_BodyFont" justifyH="LEFT">
+							<Size>
+								<AbsDimension x="180" y="11"/>
+							</Size>
+							<Anchors>
+								<Anchor point="TOPLEFT" relativeTo="$parentTime" relativePoint="TOPRIGHT">
+									<Offset>
+										<AbsDimension x="8" y="0"/>
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+			</Frame>
+		</Frames>
+		<Scripts>
+			<OnLoad>
+				this:RegisterForClicks("LeftButtonUp", "RightButtonUp");
+			</OnLoad>
+			<OnClick>
+				Slacker_DKP_PlayerListOnClick(arg1);
+			</OnClick>
+		</Scripts>
+	</Button>
+
+	<Frame name="Slacker_DKP_PlayerListFrame" frameStrata="BACKGROUND" parent="UIParent" movable="true" enableMouse="true" hidden="true">
+		<Size>
+			<AbsDimension x="194" y="500"/>
+		</Size>
+		<Anchors>
+			<Anchor point="CENTER">
+				<Offset>
+					<AbsDimension x="0" y="0"/>
+				</Offset>
+			</Anchor>
+		</Anchors>
+		<Backdrop name="$parentBackdrop" bgFile="Interface\Tooltips\UI-Tooltip-Background" edgeFile="Interface\Tooltips\UI-Tooltip-Border" tile="true">
+			<EdgeSize>
+				<AbsValue val="16"/>
+			</EdgeSize>
+			<TileSize>
+				<AbsValue val="16"/>
+			</TileSize>
+			<BackgroundInsets>
+				<AbsInset left="5" right="5" top="5" bottom="5"/>
+			</BackgroundInsets>
+		</Backdrop>
+		<Layers>
+			<Layer level="HEADER">
+				<FontString name="Slacker_DKP_PlayerListTitle" inherits="Slacker_TitleFont" justifyH="LEFT" text="Player Attendance Snapshot">
+					<Size>
+						<AbsDimension x="192" y="11"/>
+					</Size>
+					<Anchors>
+						<Anchor point="TOP">
+							<Offset>
+								<AbsDimension x="0" y="-5"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+			</Layer>
+		</Layers>
+		<Frames>
+			<Button name="$parentCloseButton" inherits="UIPanelCloseButton">
+				<Size>
+					<AbsDimension x="22" y="22"/>
+				</Size>
+				<Anchors>
+					<Anchor point="TOPRIGHT">
+						<Offset>
+							<AbsDimension x="0" y="0"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</Button>
+			
+		<ScrollFrame name="Slacker_DKP_PlayerListBar" inherits="FauxScrollFrameTemplate">
+			<Anchors>
+				<Anchor point="TOPLEFT">
+					<Offset>
+						<AbsDimension x="8" y="-20"/>
+					</Offset>
+				</Anchor>
+				<Anchor point="BOTTOMRIGHT">
+					<Offset>
+						<AbsDimension x="-28" y="8"/>
+					</Offset>
+				</Anchor>
+			</Anchors>
+			<Scripts>
+				<OnVerticalScroll>
+					FauxScrollFrame_OnVerticalScroll(16, Slacker_DKP_PlayerListBar_Update);
+				</OnVerticalScroll>
+				<OnShow>
+					Slacker_DKP_PlayerListBar_Update();
+				</OnShow>
+			</Scripts>
+		</ScrollFrame>
+		
+		<Button name="PlayerList1" inherits="PlayerListTemplate" id="1">
+			<Anchors>
+				<Anchor point="TOPLEFT" relativeTo="Slacker_DKP_PlayerListBar" relativePoint="TOPLEFT" />
+			</Anchors>
+		</Button>
+		<Button name="PlayerList2" inherits="PlayerListTemplate" id="2">
+			<Anchors>
+				<Anchor point="TOPLEFT" relativeTo="PlayerList1" relativePoint="BOTTOMLEFT" />
+			</Anchors>
+		</Button>
+		<Button name="PlayerList3" inherits="PlayerListTemplate" id="3">
+			<Anchors>
+				<Anchor point="TOPLEFT" relativeTo="PlayerList2" relativePoint="BOTTOMLEFT" />
+			</Anchors>
+		</Button>
+		<Button name="PlayerList4" inherits="PlayerListTemplate" id="4">
+			<Anchors>
+				<Anchor point="TOPLEFT" relativeTo="PlayerList3" relativePoint="BOTTOMLEFT" />
+			</Anchors>
+		</Button>
+		<Button name="PlayerList5" inherits="PlayerListTemplate" id="5">
+			<Anchors>
+				<Anchor point="TOPLEFT" relativeTo="PlayerList4" relativePoint="BOTTOMLEFT" />
+			</Anchors>
+		</Button>
+		<Button name="PlayerList6" inherits="PlayerListTemplate" id="6">
+			<Anchors>
+				<Anchor point="TOPLEFT" relativeTo="PlayerList5" relativePoint="BOTTOMLEFT" />
+			</Anchors>
+		</Button>
+		<Button name="PlayerList7" inherits="PlayerListTemplate" id="7">
+			<Anchors>
+				<Anchor point="TOPLEFT" relativeTo="PlayerList6" relativePoint="BOTTOMLEFT" />
+			</Anchors>
+		</Button>
+		<Button name="PlayerList8" inherits="PlayerListTemplate" id="8">
+			<Anchors>
+				<Anchor point="TOPLEFT" relativeTo="PlayerList7" relativePoint="BOTTOMLEFT" />
+			</Anchors>
+		</Button>
+		<Button name="PlayerList9" inherits="PlayerListTemplate" id="9">
+			<Anchors>
+				<Anchor point="TOPLEFT" relativeTo="PlayerList8" relativePoint="BOTTOMLEFT" />
+			</Anchors>
+		</Button>
+		<Button name="PlayerList10" inherits="PlayerListTemplate" id="10">
+			<Anchors>
+				<Anchor point="TOPLEFT" relativeTo="PlayerList9" relativePoint="BOTTOMLEFT" />
+			</Anchors>
+		</Button>
+		<Button name="PlayerList11" inherits="PlayerListTemplate" id="11">
+			<Anchors>
+				<Anchor point="TOPLEFT" relativeTo="PlayerList10" relativePoint="BOTTOMLEFT" />
+			</Anchors>
+		</Button>
+		<Button name="PlayerList12" inherits="PlayerListTemplate" id="12">
+			<Anchors>
+				<Anchor point="TOPLEFT" relativeTo="PlayerList11" relativePoint="BOTTOMLEFT" />
+			</Anchors>
+		</Button>
+		<Button name="PlayerList13" inherits="PlayerListTemplate" id="13">
+			<Anchors>
+				<Anchor point="TOPLEFT" relativeTo="PlayerList12" relativePoint="BOTTOMLEFT" />
+			</Anchors>
+		</Button>
+		<Button name="PlayerList14" inherits="PlayerListTemplate" id="14">
+			<Anchors>
+				<Anchor point="TOPLEFT" relativeTo="PlayerList13" relativePoint="BOTTOMLEFT" />
+			</Anchors>
+		</Button>
+		<Button name="PlayerList15" inherits="PlayerListTemplate" id="15">
+			<Anchors>
+				<Anchor point="TOPLEFT" relativeTo="PlayerList14" relativePoint="BOTTOMLEFT" />
+			</Anchors>
+		</Button>
+		<Button name="PlayerList16" inherits="PlayerListTemplate" id="16">
+			<Anchors>
+				<Anchor point="TOPLEFT" relativeTo="PlayerList15" relativePoint="BOTTOMLEFT" />
+			</Anchors>
+		</Button>
+		<Button name="PlayerList17" inherits="PlayerListTemplate" id="17">
+			<Anchors>
+				<Anchor point="TOPLEFT" relativeTo="PlayerList16" relativePoint="BOTTOMLEFT" />
+			</Anchors>
+		</Button>
+		<Button name="PlayerList18" inherits="PlayerListTemplate" id="18">
+			<Anchors>
+				<Anchor point="TOPLEFT" relativeTo="PlayerList17" relativePoint="BOTTOMLEFT" />
+			</Anchors>
+		</Button>
+		<Button name="PlayerList19" inherits="PlayerListTemplate" id="19">
+			<Anchors>
+				<Anchor point="TOPLEFT" relativeTo="PlayerList18" relativePoint="BOTTOMLEFT" />
+			</Anchors>
+		</Button>
+		<Button name="PlayerList20" inherits="PlayerListTemplate" id="20">
+			<Anchors>
+				<Anchor point="TOPLEFT" relativeTo="PlayerList19" relativePoint="BOTTOMLEFT" />
+			</Anchors>
+		</Button>
+		<Button name="PlayerList21" inherits="PlayerListTemplate" id="21">
+			<Anchors>
+				<Anchor point="TOPLEFT" relativeTo="PlayerList20" relativePoint="BOTTOMLEFT" />
+			</Anchors>
+		</Button>
+		<Button name="PlayerList22" inherits="PlayerListTemplate" id="22">
+			<Anchors>
+				<Anchor point="TOPLEFT" relativeTo="PlayerList21" relativePoint="BOTTOMLEFT" />
+			</Anchors>
+		</Button>
+		<Button name="PlayerList23" inherits="PlayerListTemplate" id="23">
+			<Anchors>
+				<Anchor point="TOPLEFT" relativeTo="PlayerList22" relativePoint="BOTTOMLEFT" />
+			</Anchors>
+		</Button>
+		<Button name="PlayerList24" inherits="PlayerListTemplate" id="24">
+			<Anchors>
+				<Anchor point="TOPLEFT" relativeTo="PlayerList23" relativePoint="BOTTOMLEFT" />
+			</Anchors>
+		</Button>
+		<Button name="PlayerList25" inherits="PlayerListTemplate" id="25">
+			<Anchors>
+				<Anchor point="TOPLEFT" relativeTo="PlayerList24" relativePoint="BOTTOMLEFT" />
+			</Anchors>
+		</Button>
+		<Button name="PlayerList26" inherits="PlayerListTemplate" id="26">
+			<Anchors>
+				<Anchor point="TOPLEFT" relativeTo="PlayerList25" relativePoint="BOTTOMLEFT" />
+			</Anchors>
+		</Button>
+		<Button name="PlayerList27" inherits="PlayerListTemplate" id="27">
+			<Anchors>
+				<Anchor point="TOPLEFT" relativeTo="PlayerList26" relativePoint="BOTTOMLEFT" />
+			</Anchors>
+		</Button>
+		<Button name="PlayerList28" inherits="PlayerListTemplate" id="28">
+			<Anchors>
+				<Anchor point="TOPLEFT" relativeTo="PlayerList27" relativePoint="BOTTOMLEFT" />
+			</Anchors>
+		</Button>
+		<Button name="PlayerList29" inherits="PlayerListTemplate" id="29">
+			<Anchors>
+				<Anchor point="TOPLEFT" relativeTo="PlayerList28" relativePoint="BOTTOMLEFT" />
+			</Anchors>
+		</Button>
+		<Button name="PlayerList30" inherits="PlayerListTemplate" id="30">
+			<Anchors>
+				<Anchor point="TOPLEFT" relativeTo="PlayerList29" relativePoint="BOTTOMLEFT" />
+			</Anchors>
+		</Button>
+		
+		<Button name="PlayerList_Save" inherits="UIPanelButtonTemplate" text="Save Changes">
+			<Size>
+				<AbsDimension x="60" y="18"/>
+			</Size>
+			<Anchors>
+				<Anchor point="BOTTOMLEFT">
+					<Offset>
+						<AbsDimension x="8" y="-8" />
+					</Offset>
+				</Anchor>
+			</Anchors>
+			<Scripts>
+				<OnClick>
+					Slacker_DKP_PlayerList_Save();
+				</OnClick>
+			</Scripts>
+		</Button>
+				
+		<Button name="PlayerList_Drop" inherits="UIPanelButtonTemplate" text="Drop" hidden="true">
+			<Size>
+				<AbsDimension x="60" y="18"/>
+			</Size>
+			<Anchors>
+				<Anchor point="TOPLEFT" relativeTo="PlayerList_Save" relativePoint="TOPRIGHT">
+					<Offset>
+						<AbsDimension x="2" y="0"/>
+					</Offset>
+				</Anchor>
+			</Anchors>
+			<Scripts>
+				<OnClick>
+					Slacker_DKP_PlayerList_DeleteEntry();
+				</OnClick>
+			</Scripts>
+		</Button>
+		
+		<Button name="PlayerList_Cancel" inherits="UIPanelButtonTemplate" text="Edit">
+			<Size>
+				<AbsDimension x="60" y="18"/>
+			</Size>
+			<Anchors>
+				<Anchor point="TOPLEFT" relativeTo="PlayerList_Drop" relativePoint="TOPRIGHT">
+					<Offset>
+						<AbsDimension x="2" y="0"/>
+					</Offset>
+				</Anchor>
+			</Anchors>
+			<Scripts>
+				<OnClick>
+					Slacker_DKP_PlayerList_Cancel();
+				</OnClick>
+			</Scripts>
+		</Button>		
+		
+				
+		</Frames>
+		
+		<Scripts>
+			<OnLoad>
+				this:SetBackdropColor(0, 0, 0, 0.75);
+				this:RegisterForDrag("LeftButton");
+			</OnLoad>
+			<OnDragStart>
+				if (IsAltKeyDown()) then
+					this:StartMoving();
+				end
+			</OnDragStart>
+			<OnDragStop>
+				this:StopMovingOrSizing();
+			</OnDragStop>
+			<OnEscapePressed>
+				this:ClearFocus();
+			</OnEscapePressed>
+		</Scripts>
+	</Frame>
+</Ui>

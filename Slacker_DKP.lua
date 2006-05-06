@@ -187,6 +187,7 @@ function Slacker_DKP_LootWalk()
 	end
 	if(items > 0) then
 		Slacker_DKP_Message(msgbuf);
+		
 	end
 end
 
@@ -262,6 +263,7 @@ function Slacker_DKP_ToggleFrame()
 end
 
 function Slacker_DKP_ToggleEdit()
+	Slacker_DKP_EditBox:SetText("Moo Cow");
 	if (Slacker_DKP_EditFrame:IsVisible()) then
 		Slacker_DKP_EditFrame:Hide();
 	else
