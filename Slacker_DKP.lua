@@ -5,7 +5,7 @@
 -- 
 
 local version = "0.1";
-local builddate = "1-May-2006";
+local builddate = "$Date$";
 local selected_eid = 0;
 local debug = 1;
 local context = 'PARTY';
@@ -84,6 +84,7 @@ function Slacker_DKP_Version()
 end
 
 function Slacker_DKP_HelpOnClick()
+	Slacker_DKP_Message(SLACKERDKP_CHAT_COMMAND_USAGE);
 end
 
 function Slacker_DKP_AddAttendanceOnClick()
