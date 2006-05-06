@@ -9,10 +9,11 @@ local builddate = "6-May-2006";
 local selected_eid = 0;
 local edit_eid = 0;
 local debug = 1;
-local context = 'PARTY';
 
 SLACKER_SAVED_DKP = {};
 SLACKER_SAVED_GEAR = {};
+
+SLACKER_SAVED_SETTINGS = {};
 
 SLACKER_SAVED_EVENTLOG = {};
 
@@ -215,8 +216,12 @@ function Slacker_DKP_LootWalk()
 		end
 	end
 	if(items > 0) then
-		Slacker_DKP_Message(msgbuf);
-		
+		if(SLACKER_SAVED_SETTINGS['announceloot'] == 'yes') then
+			Slacker_DKP_Announce('GUILD',msgbuf);
+		end
+		if(SLACKER_SAVED_SETTINGS['raidloot'] == 'yes') then
+			Slacker_DKP_Announce('RAID',msgbuf);
+		end
 	end
 end
 
@@ -427,7 +432,9 @@ function Slacker_DKP_BossKillLog(parms)
 	
 	PlaySound("LEVELUPSOUND");
 	Slacker_DKP_EventLogBar_Update();
-	Slacker_DKP_Announce(bossname.." kill recorded at "..date("%H:%M on %d-%b-%Y"));
+	
+	if(SLACKER_SAVED_SETTINGS['announcekills'] == 'yes') then
+		Slacker_DKP_Announce('GUILD',bossname.." kill recorded at "..date("%H:%M on %d-%b-%Y"));
 	return 1;
 end
 
@@ -447,9 +454,33 @@ function Slacker_DKP_ClearLogs()
 	Slacker_DKP_EventLogBar_Update();	
 end
 
-function Slacker_DKP_Announce(buf)
+function Slacker_DKP_Announce(context, buf)
 	SendChatMessage("sDKP: "..buf, context, nil, nil);
-	SendChatMessage("sDKP: "..buf, "GUILD", nil, nil);
+end
+
+function Slacker_DKP_Toggle(buf)
+	local setting = '';
+	local flag = '';
+
+	if(not string.find(buf, " ")) then
+		command = string.lower(buf);
+	else
+		command = string.lower(string.sub(buf,1,string.find(buf, " ")-1));
+		flag    = string.sub(buf,string.find(buf, " ")+1,256);
+	end
+
+	if(flag == 'on') then
+		SLACKER_SAVED_SETTINGS[setting] = 'yes';
+	elseif(flag == "off") then
+		SLACKER_SAVED_SETTINGS[setting] = 'no';
+	end
+
+	if(SLACKER_SAVED_SETTINGS[setting] == 'yes') then
+		Slacker_DKP_Message(SLACKER_SETTING[setting]..ENABLED);
+	else
+		Slacker_DKP_Message(SLACKER_SETTING[setting]..DISABLED);
+	end
+
 end
 
 function Slacker_DKP_CommandHandler(buf)
@@ -487,6 +518,8 @@ function Slacker_DKP_CommandHandler(buf)
 			elseif(command == 'unignore') then
 				SLACKER_SAVED_IGNORED[args] = nil;
 				Slacker_DKP_Message("No longer ignoring all "..args.." drops.");
+			elseif(command == 'set') then
+				Slacker_DKP_Toggle(args);
 			else
 				Slacker_DKP_Message(SLACKERDKP_UNKNOWN_COMMAND..": "..command);
 				Slacker_DKP_Message(SLACKERDKP_CHAT_COMMAND_USAGE);
