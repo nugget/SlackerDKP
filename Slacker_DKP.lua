@@ -388,7 +388,11 @@ function Slacker_DKP_AttendanceLog(parms)
 	
 	PlaySound("GnomeExploration");
 	Slacker_DKP_EventLogBar_Update();
+	
 	Slacker_DKP_Message("Raid Attendance recorded at "..date("%H:%M on %d-%b-%Y"));
+	if(SLACKER_SAVED_SETTINGS['raidatt'] == 'yes') then
+		Slacker_DKP_Announce('RAID',"Raid Attendance recorded at "..date("%H:%M on %d-%b-%Y"));
+	end
 	
 	return 1;
 end
@@ -432,9 +436,12 @@ function Slacker_DKP_BossKillLog(parms)
 	
 	PlaySound("LEVELUPSOUND");
 	Slacker_DKP_EventLogBar_Update();
-	
+
+	Slacker_DKP_Message(bossname.." kill "..SLACKER_SAVED_BOSSES[bossname].." recorded at "..date("%H:%M on %d-%b-%Y"));
 	if(SLACKER_SAVED_SETTINGS['announcekills'] == 'yes') then
-		Slacker_DKP_Announce('GUILD',bossname.." kill recorded at "..date("%H:%M on %d-%b-%Y"));
+		Slacker_DKP_Announce('GUILD',bossname.." kill "..SLACKER_SAVED_BOSSES[bossname].." recorded at "..date("%H:%M on %d-%b-%Y"));
+	end
+	
 	return 1;
 end
 
@@ -461,11 +468,15 @@ end
 function Slacker_DKP_Toggle(buf)
 	local setting = '';
 	local flag = '';
+	
+	if(buf == '') then
+		return;
+	end
 
 	if(not string.find(buf, " ")) then
-		command = string.lower(buf);
+		setting = string.lower(buf);
 	else
-		command = string.lower(string.sub(buf,1,string.find(buf, " ")-1));
+		setting = string.lower(string.sub(buf,1,string.find(buf, " ")-1));
 		flag    = string.sub(buf,string.find(buf, " ")+1,256);
 	end
 

@@ -21,6 +21,7 @@ table.insert(SLACKERDKP_CHAT_COMMAND_USAGE, " set <setting> <on|off> - Announce 
 table.insert(SLACKERDKP_CHAT_COMMAND_USAGE, "Settings:");
 table.insert(SLACKERDKP_CHAT_COMMAND_USAGE, " announcekills - Send boss kill announcements to guild chat");
 table.insert(SLACKERDKP_CHAT_COMMAND_USAGE, " announceloot - Send loot item list to guild chat");
+table.insert(SLACKERDKP_CHAT_COMMAND_USAGE, " raidatt - Send attendance announements to raid chat");
 table.insert(SLACKERDKP_CHAT_COMMAND_USAGE, " raidloot - Send loot item list to raid chat");
 
 SLACKERDKP_UNKNOWN_COMMAND				= "Unknown Slacker DKP command";
@@ -29,6 +30,7 @@ ENABLED = 'enabled';
 DISABLED = 'disabled';
 
 SLACKER_SETTING = {};
-SLACKER_SETTING['announcekills']		= "Boss kill announcements to guild chat are "
-SLACKER_SETTING['announceloot']			= "Loot item list to guild chat is "
-SLACKER_SETTING['raidloot']				= "Loot item list to raid chat is "
+SLACKER_SETTING['announcekills']		= "Boss kill announcements to guild chat are ";
+SLACKER_SETTING['announceloot']			= "Loot item list to guild chat is ";
+SLACKER_SETTING['raidloot']				= "Loot item list to raid chat is ";
+SLACKER_SETTING['raidatt']				= "Attendance snapshot announcements to raid chat are ";
