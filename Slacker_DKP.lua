@@ -7,6 +7,7 @@
 local version = "1.0ß";
 local builddate = "6-May-2006";
 local selected_eid = 0;
+local edit_eid = 0;
 local debug = 1;
 local context = 'PARTY';
 
@@ -145,18 +146,25 @@ function Slacker_DKP_EventLogBar_Update()
 		local highlight = getglobal("EventLog"..row.."FieldHighlight");
 		local eid = row + FauxScrollFrame_GetOffset(Slacker_DKP_EventLogBar);
 		local eventrow = getglobal("EventLog"..row);
+		local description = '';
 		
 		if eid <= entries then
 			local color = "|cffFFFFFF";
-		
-			if(SLACKER_SAVED_EVENTLOG[eid]['type'] == 'BOSSKILL') then
+			local etype = SLACKER_SAVED_EVENTLOG[eid]['type'];
+			local ets = SLACKER_SAVED_EVENTLOG[eid]['ts'];
+			
+			if(etype == 'BOSSKILL') then
 				color = "|cffFF7F7F";
-			elseif(SLACKER_SAVED_EVENTLOG[eid]['type'] == 'LOOT') then
-				color = "|cff7FFF7F";		
+				description = "Killed "..SLACKER_SAVED_BOSSKILLS[ets]['bossname'].." ("..SLACKER_SAVED_BOSSKILLS[ets]['comments']..")";
+			elseif(etype == 'LOOT') then
+				color = "|cff7FFF7F";
+				description = SLACKER_SAVED_LOOTLOG[ets]['player'].." looted "..SLACKER_SAVED_LOOTLOG[ets]['item'];
+			elseif(etype == 'ATT') then
+				description = "Attendance ("..SLACKER_SAVED_ATTLOG[ets]['comments']..")";
 			end
 
 			time:SetText(date("%H:%M",SLACKER_SAVED_EVENTLOG[eid]['ts']));
-			comments:SetText(color..SLACKER_SAVED_EVENTLOG[eid]['description']);
+			comments:SetText(color..description);
 			eventrow:Show();
 			if(selected_eid == eid) then
 				highlight:Show();
@@ -261,6 +269,42 @@ function Slacker_DKP_EventLog_DeleteEntry()
 end
 
 function Slacker_DKP_EventLog_Edit()
+	if(selected_eid > 0) then
+		local etype = SLACKER_SAVED_EVENTLOG[selected_eid]['type'];
+		local ets = SLACKER_SAVED_EVENTLOG[selected_eid]['ts'];
+				
+		edit_eid = selected_eid;
+		
+		if(etype == 'BOSSKILL') then
+			Slacker_DKP_EditFrameComment:SetText(SLACKER_SAVED_BOSSKILLS[ets]['comments']);
+			Slacker_DKP_EditFrame:Show();
+		elseif(etype == 'ATT') then
+			Slacker_DKP_EditFrameComment:SetText(SLACKER_SAVED_ATTLOG[ets]['comments']);
+			Slacker_DKP_EditFrame:Show();
+		end		
+	end
+end
+
+function Slacker_DKP_EditWindow_Save()
+	if(edit_eid > 0) then
+		local etype = SLACKER_SAVED_EVENTLOG[edit_eid]['type'];
+		local ets = SLACKER_SAVED_EVENTLOG[edit_eid]['ts'];
+		
+		local newtext = Slacker_DKP_EditFrameComment:GetText();
+						
+		if(etype == 'BOSSKILL') then
+			SLACKER_SAVED_BOSSKILLS[ets]['comments'] = newtext;
+			Slacker_DKP_EditFrame:Hide();
+		elseif(etype == 'ATT') then
+			SLACKER_SAVED_ATTLOG[ets]['comments'] = newtext;
+			Slacker_DKP_EditFrame:Hide();
+		end		
+		
+		edit_eid = 0;
+		Slacker_DKP_EditFrameComment:SetText("");
+
+		Slacker_DKP_EventLogBar_Update();
+	end
 end
 
 function Slacker_DKP_ToggleFrame()
@@ -273,7 +317,6 @@ function Slacker_DKP_ToggleFrame()
 end
 
 function Slacker_DKP_ToggleEdit()
-	Slacker_DKP_EditBox:SetText("Moo Cow");
 	if (Slacker_DKP_EditFrame:IsVisible()) then
 		Slacker_DKP_EditFrame:Hide();
 	else

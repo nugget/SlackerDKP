@@ -38,7 +38,7 @@
 						</FontString>
 						<FontString name="$parentComments" inherits="Slacker_BodyFont" justifyH="LEFT">
 							<Size>
-								<AbsDimension x="190" y="11"/>
+								<AbsDimension x="220" y="11"/>
 							</Size>
 							<Anchors>
 								<Anchor point="TOPLEFT" relativeTo="$parentTime" relativePoint="TOPRIGHT">
