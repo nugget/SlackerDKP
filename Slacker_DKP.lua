@@ -4,8 +4,8 @@
 -- $Id$
 -- 
 
-local version = "0.1";
-local builddate = "$Date$";
+local version = "1.0ß";
+local builddate = "6-May-2006";
 local selected_eid = 0;
 local debug = 1;
 local context = 'PARTY';
