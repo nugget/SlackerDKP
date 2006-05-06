@@ -193,7 +193,7 @@
 						this:RegisterForClicks("LeftButtonUp", "RightButtonUp");
 					</OnLoad>
 					<OnClick>
-						Slacker_DKP_BossKillOnClick(arg1);
+						Slacker_DKP_AddBossKillOnClick(arg1);
 					</OnClick>
 					<OnEnter>
 						GameTooltip:SetOwner(this, "ANCHOR_RIGHT");
