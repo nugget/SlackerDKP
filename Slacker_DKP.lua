@@ -450,7 +450,7 @@ function Slacker_DKP_CommandHandler(buf)
 
 			if(command == 'help') then
 				Slacker_DKP_Message(SLACKERDKP_CHAT_COMMAND_USAGE);
-			if(command == 'version') then
+			elseif(command == 'version') then
 				Slacker_DKP_Version();
 			elseif(command == 'toggle') then
 				Slacker_DKP_ToggleFrame();
