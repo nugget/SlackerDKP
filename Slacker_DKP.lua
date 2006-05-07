@@ -24,6 +24,7 @@ SLACKER_SAVED_ATTLOG = {};
 SLACKER_SAVED_BOSSES = {};
 SLACKER_SAVED_IGNORED = {};
 SLACKER_SAVED_LOOTLIST = {};
+SLACKER_SAVED_ALTS = {};
 
 function Slacker_DKP_OnLoad()
 	this:RegisterEvent("PLAYER_LOGIN");
@@ -379,6 +380,7 @@ function Slacker_DKP_LogLoot(name,item,dkp,secdkp)
 end
 
 function Slacker_DKP_AttendanceLog(parms)
+	Slacker_DKP_LoadAltList();
 	local PlayerList = Slacker_DKPPlayerList();
 	local ts = date("%s");
 
@@ -523,6 +525,25 @@ function Slacker_DKP_GetPrimary(playername)
 			else
 				return
 			end
+		end
+	end
+end
+
+function Slacker_DKP_LoadAltList()
+	GuildRoster();
+	local guildcount = GetNumGuildMembers(true);
+	local primaryname;
+
+	SLACKER_SAVED_ALTS = nil;
+	SLACKER_SAVED_ALTS = {};
+
+	for i=1, guildcount do
+		local name, rank, rankIndex, level, class, zone, note, officernote, online, year, month, day, hour;
+		name, rank, rankIndex, level, class, zone, note, officernote, online = GetGuildRosterInfo(i);
+	
+		local _,_, mainname = string.find(note, "([^%s]+)'s Alt");
+		if(mainname) then
+			SLACKER_SAVED_ALTS[name] = mainname;
 		end
 	end
 end
