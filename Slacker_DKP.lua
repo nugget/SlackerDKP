@@ -25,6 +25,7 @@ SLACKER_SAVED_BOSSES = {};
 SLACKER_SAVED_IGNORED = {};
 SLACKER_SAVED_LOOTLIST = {};
 SLACKER_SAVED_ALTS = {};
+SLACKER_SAVED_CLASSES = {};
 
 function Slacker_DKP_OnLoad()
 	this:RegisterEvent("PLAYER_LOGIN");
@@ -536,6 +537,8 @@ function Slacker_DKP_LoadAltList()
 
 	SLACKER_SAVED_ALTS = nil;
 	SLACKER_SAVED_ALTS = {};
+	SLACKER_SAVED_CLASSES = nil;
+	SLACKER_SAVED_CLASSES = {};
 
 	for i=1, guildcount do
 		local name, rank, rankIndex, level, class, zone, note, officernote, online, year, month, day, hour;
@@ -545,7 +548,9 @@ function Slacker_DKP_LoadAltList()
 		if(mainname) then
 			SLACKER_SAVED_ALTS[name] = mainname;
 		end
+		SLACKER_SAVED_CLASSES[name] = class;
 	end
+
 end
 
 function Slacker_DKP_CommandHandler(buf)
