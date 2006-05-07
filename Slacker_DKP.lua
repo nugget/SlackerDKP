@@ -346,8 +346,18 @@ function Slacker_DKPPlayerList()
 	for i = 1, GetNumRaidMembers() do
 		name, _, _, _, _, _, _, online, _ = GetRaidRosterInfo(i);
 		if (online) then
+		
+			local rank = Slacker_DKP_GetRank(name);
+			local primary = Slacker_DKP_GetPrimary(name);
+
+			if(string.find(rank," Alt")) then
+				if(not primary) then
+					SendChatMessage("sDKP: You are an alt but your guild note does not indicate who your main is!  Please correct this.", "WHISPER", this.language, name);
+					Slacker_DKP_Message("Attendance Incomplete.  "..name.." has no main listed.");
+				end
+			end
+		
 			if(SLACKER_SAVED_SETTINGS['mapalts'] == 'yes') then
-				local primary = Slacker_DKP_GetPrimary(name);
 
 				if(primary) then
 					PlayerNames = PlayerNames..primary.." ";
@@ -357,6 +367,7 @@ function Slacker_DKPPlayerList()
 			else
 				PlayerNames = PlayerNames..name.." ";
 			end
+			
 		end
 	end
 
@@ -530,6 +541,21 @@ function Slacker_DKP_GetPrimary(playername)
 	end
 end
 
+function Slacker_DKP_GetRank(playername)
+	local guildcount = GetNumGuildMembers();
+	local primaryname;
+	
+	for i=1, guildcount do
+		local name, rank, rankIndex, level, class, zone, note, officernote, online, year, month, day, hour;
+		name, rank, rankIndex, level, class, zone, note, officernote, online = GetGuildRosterInfo(i);
+		
+		if(name == playername) then
+			return rank;
+		end
+	end
+end
+
+
 function Slacker_DKP_LoadAltList()
 	GuildRoster();
 	local guildcount = GetNumGuildMembers(true);
@@ -539,7 +565,6 @@ function Slacker_DKP_LoadAltList()
 	SLACKER_SAVED_ALTS = {};
 	SLACKER_SAVED_CLASSES = nil;
 	SLACKER_SAVED_CLASSES = {};
-
 	for i=1, guildcount do
 		local name, rank, rankIndex, level, class, zone, note, officernote, online, year, month, day, hour;
 		name, rank, rankIndex, level, class, zone, note, officernote, online = GetGuildRosterInfo(i);
