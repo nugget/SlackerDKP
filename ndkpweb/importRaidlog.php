@@ -23,7 +23,7 @@ $unknown_player = array();
 $unknown_item = array();
 
 $ifbuf = array();
-$ifbuf = file('Nurfed_DKP.lua');
+$ifbuf = file('Slacker_DKP.lua');
 
 $block = '';
 $ts = '';
@@ -36,6 +36,11 @@ foreach($ifbuf as $buf) {
 		$store = '$' . $block . '[] = "' . $ts . '";';
 		# print "<pre>$store</pre>\n";
 		eval($store);
+	} elseif(preg_match('/^\t\["(.+)"\] = \"(.+)\",/', $buf, $matches)) {
+		$name = $matches[1];
+		$data = $matches[2];
+		$raiddata[$block][$name] = $data;
+		# print "<p>" . $block . ":" . $name . " = " . $raiddata[$block][$name] . "</p>";
 	} elseif(preg_match('/^\t\t\["([^"]+)"\] = "([^"]+)",/', $buf, $matches)) {
 		$fieldname = $matches[1];
 		$data = $matches[2];
@@ -73,6 +78,26 @@ sort($unknown_item);
 $unknown_player = array_unique($unknown_player);
 $unknown_item   = array_unique($unknown_item);
 
+update_alts();
+
+function update_alts() {
+	global $raiddata;
+
+	$sql = "update NDKP_members set alt_of = 0";
+	$result = mysql_query($sql);
+
+	while (list($key,$val) = each($raiddata)) {
+		if($key == 'alts') {
+			while (list($alt,$main) = each($val)) {
+				$sql = "select player_id from NDKP_members where name = '$main'";
+				$result = mysql_fetch_assoc(mysql_query($sql));
+				$main_id = $result['player_id'];
+				$sql = "update NDKP_members set alt_of = '$main_id' where name = '$alt'";
+				mysql_query($sql);
+			}
+		}
+	}
+}
 function player_exists($name) {
 	$sql = "select player_id from NDKP_members where name = '$name'";
 	$result = mysql_query($sql);
@@ -83,11 +108,19 @@ function player_exists($name) {
 	return $result;
 }
 function list_unknown_players() {
-	global $unknown_player;
+	global $unknown_player, $raiddata;
 
 	print "<ol>\n";
 	foreach($unknown_player as $player) {
-		print "<li style=\"color: red;\">$player</li>\n";
+		print "<li style=\"color: red;\">$player";
+		if($raiddata[classes][$player]) {
+			print '<form action="modules/addPlayer.php" method="post">';
+			print '<input type="hidden" name="player" value="' . $player . '"/>';
+			print '<input type="hidden" name="class"  value="' . $raiddata[classes][$player] . '"/>';
+			print '<input type="submit" value="Add"/>';
+			print '</form>';
+		}
+		print "</li>\n";
 	}
 	print "</ol>\n";
 }
