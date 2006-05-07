@@ -344,7 +344,17 @@ function Slacker_DKPPlayerList()
 	for i = 1, GetNumRaidMembers() do
 		name, _, _, _, _, _, _, online, _ = GetRaidRosterInfo(i);
 		if (online) then
-			PlayerNames = PlayerNames..name.." ";
+			if(SLACKER_SAVED_SETTINGS['mapalts'] == 'yes') then
+				local primary = Slacker_DKP_GetPrimary(name);
+
+				if(primary) then
+					PlayerNames = PlayerNames..primary.." ";
+				else
+					PlayerNames = PlayerNames..name.." ";
+				end
+			else
+				PlayerNames = PlayerNames..name.." ";
+			end
 		end
 	end
 
@@ -498,6 +508,25 @@ function Slacker_DKP_Toggle(buf)
 
 end
 
+function Slacker_DKP_GetPrimary(playername)
+	local guildcount = GetNumGuildMembers();
+	local primaryname;
+	
+	for i=1, guildcount do
+		local name, rank, rankIndex, level, class, zone, note, officernote, online, year, month, day, hour;
+		name, rank, rankIndex, level, class, zone, note, officernote, online = GetGuildRosterInfo(i);
+		
+		if(name == playername) then
+			local _,_, mainname = string.find(note, "([^%s]+)'s Alt");
+			if(mainname) then
+				return mainname;
+			else
+				return
+			end
+		end
+	end
+end
+
 function Slacker_DKP_CommandHandler(buf)
 	if(buf) then
 		if(buf == '') then
@@ -535,6 +564,9 @@ function Slacker_DKP_CommandHandler(buf)
 				Slacker_DKP_Message("No longer ignoring all "..args.." drops.");
 			elseif(command == 'set') then
 				Slacker_DKP_Toggle(args);
+			elseif(command == 'primary') then
+				local membername = Slacker_DKP_GetPrimary(args);
+				Slacker_DKP_Message(args.." is really "..membername);
 			else
 				Slacker_DKP_Message(SLACKERDKP_UNKNOWN_COMMAND..": "..command);
 				Slacker_DKP_Message(SLACKERDKP_CHAT_COMMAND_USAGE);
