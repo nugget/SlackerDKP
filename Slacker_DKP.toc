@@ -10,3 +10,4 @@
 Slacker_DKP.xml
 Slacker_DKP_EventLog.xml
 Slacker_DKP_EditWindow.xml
+Slacker_DKP_PlayerList.xml
