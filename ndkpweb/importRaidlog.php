@@ -126,6 +126,7 @@ function list_unknown_players() {
 }
 
 function item_exists($name) {
+	$name = addslashes($name);
 	$sql = "select item_id from NDKP_items where name = '$name'";
 	$result = mysql_query($sql);
 	if($result) {
@@ -168,6 +169,7 @@ function list_attlogs() {
 	print "</ol>\n";
 }
 function att_add_form($ts,$type,$comments,$playerlist) {
+	$comments = addslashes($comments);
 	print '<form action="modules/attendance.php" method="post">';
 	print '<input type="hidden" name="raiddate"   value="' . $ts . '">';
 	print '<input type="hidden" name="type"       value="' . $type . '">';
@@ -230,6 +232,9 @@ function list_bosskills() {
 
 }
 function boss_add_form($epochlow,$epochhigh,$ts,$bossname,$location,$comments,$playerlist) {
+	$comments = addslashes($comments);
+	$location = addslashes($location);
+	$bossname = addslashes($bossname);
 	print '<form action="modules/addRaid.php" method="post">';
 	print '<input type="hidden" name="raiddate"    value="' . $ts . '">';
 	print '<input type="hidden" name="newdungeon"  value="' . $location . '">';
