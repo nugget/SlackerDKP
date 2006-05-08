@@ -31,7 +31,7 @@ $ts = '';
 foreach($ifbuf as $buf) {
 	if(preg_match('/^SLACKER_SAVED_([A-Z]+) = {/', $buf, $matches)) {
 		$block = strtolower($matches[1]);
-	} elseif(preg_match('/^\t\["(\d+)"\] = {/', $buf, $matches)) {
+	} elseif(preg_match('/^\t\["?(\d+)"?\] = {/', $buf, $matches)) {
 		$ts = $matches[1];
 		$store = '$' . $block . '[] = "' . $ts . '";';
 		# print "<pre>$store</pre>\n";
@@ -41,7 +41,7 @@ foreach($ifbuf as $buf) {
 		$data = $matches[2];
 		$raiddata[$block][$name] = $data;
 		# print "<p>" . $block . ":" . $name . " = " . $raiddata[$block][$name] . "</p>";
-	} elseif(preg_match('/^\t\t\["([^"]+)"\] = "([^"]+)",/', $buf, $matches)) {
+	} elseif(preg_match('/^\t\t\["?([^"\]]+)"?\] = "([^"\]]+)"?,/', $buf, $matches)) {
 		$fieldname = $matches[1];
 		$data = $matches[2];
 		# print "<pre>\$raiddata[$block][$ts][$fieldname] = $data</pre>\n";
