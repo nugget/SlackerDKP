@@ -4,8 +4,8 @@
 -- $Id$
 -- 
 
-local version = "1.0ß";
-local builddate = "6-May-2006";
+local version = "1.01ß";
+local builddate = "8i-May-2006";
 local selected_eid = 0;
 local edit_eid = 0;
 
@@ -359,12 +359,14 @@ function Slacker_DKPPlayerList()
 			local rank = Slacker_DKP_GetRank(name);
 			local primary = Slacker_DKP_GetPrimary(name);
 
---			if(string.find(rank," Alt")) then
---				if(not primary) then
---					SendChatMessage("sDKP: You are an alt but your guild note does not indicate who your main is!  Please correct this.", "WHISPER", this.language, name);
---					Slacker_DKP_Message("Attendance Incomplete.  "..name.." has no main listed.");
---				end
---			end
+			if(rank) then
+				if(string.find(rank," Alt")) then
+					if(not primary) then
+						SendChatMessage("sDKP: You are an alt but your guild note does not indicate who your main is!  Please correct this.", "WHISPER", this.language, name);
+						Slacker_DKP_Message("Attendance Incomplete.  "..name.." has no main listed.");
+					end
+				end
+			end
 		
 			if(SLACKER_SAVED_SETTINGS['mapalts'] == 'yes') then
 
@@ -398,7 +400,7 @@ function Slacker_DKP_LogLoot(name,item,link)
 		["link"] = link,
 	};
 	Slacker_DKP_EventLogBar_Update();
-	Slacker_DKP_Message("Loot "..item.." to "..name.." recorded at "..date("%H:%M on %d-%b-%Y"));
+	Slacker_DKP_Message("Loot "..item.." to "..name.." recorded at "..date("%H:%M").." on "..date("%d-%b-%Y"));
 end
 
 function Slacker_DKP_AttendanceLog(parms)
@@ -421,9 +423,9 @@ function Slacker_DKP_AttendanceLog(parms)
 	PlaySound("GnomeExploration");
 	Slacker_DKP_EventLogBar_Update();
 	
-	Slacker_DKP_Message("Raid Attendance recorded at "..date("%H:%M on %d-%b-%Y"));
+	Slacker_DKP_Message("Raid Attendance recorded at "..date("%H:%M").." on "..date("%d-%b-%Y"));
 	if(SLACKER_SAVED_SETTINGS['raidatt'] == 'yes') then
-		Slacker_DKP_Announce('RAID',"Raid Attendance recorded at "..date("%H:%M on %d-%b-%Y"));
+		Slacker_DKP_Announce('RAID',"Raid Attendance recorded at "..date("%H:%M").." on "..date("%d-%b-%Y"));
 	end
 	
 	return 1;
@@ -472,9 +474,9 @@ function Slacker_DKP_BossKillLog(bossname,parms)
 	PlaySound("LEVELUPSOUND");
 	Slacker_DKP_EventLogBar_Update();
 
-	Slacker_DKP_Message(bossname.." kill "..SLACKER_SAVED_BOSSES[bossname].." recorded at "..date("%H:%M on %d-%b-%Y"));
+	Slacker_DKP_Message(bossname.." kill "..SLACKER_SAVED_BOSSES[bossname].." recorded at "..date("%H:%M").." on "..date("%d-%b-%Y"));
 	if(SLACKER_SAVED_SETTINGS['announcekills'] == 'yes') then
-		Slacker_DKP_Announce('GUILD',bossname.." kill "..SLACKER_SAVED_BOSSES[bossname].." recorded at "..date("%H:%M on %d-%b-%Y"));
+		Slacker_DKP_Announce('GUILD',bossname.." kill "..SLACKER_SAVED_BOSSES[bossname].." recorded at "..date("%H:%M").." on "..date("%d-%b-%Y"));
 	end
 	
 	return 1;
