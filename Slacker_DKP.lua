@@ -4,8 +4,8 @@
 -- $Id$
 -- 
 
-local version = "1.01ß";
-local builddate = "8i-May-2006";
+local version = "1.03ß";
+local builddate = "8-May-2006";
 local selected_eid = 0;
 local edit_eid = 0;
 
@@ -386,7 +386,7 @@ function Slacker_DKPPlayerList()
 end
 
 function Slacker_DKP_LogLoot(name,item,link)
-	local ts = date("%s");
+	local ts = time();
 
 	local entries = getn (SLACKER_SAVED_EVENTLOG);
 	SLACKER_SAVED_EVENTLOG[entries+1] = {
@@ -406,7 +406,7 @@ end
 function Slacker_DKP_AttendanceLog(parms)
 	Slacker_DKP_LoadAltList();
 	local PlayerList = Slacker_DKPPlayerList();
-	local ts = date("%s");
+	local ts = time();
 
 	local entries = getn (SLACKER_SAVED_EVENTLOG);
 	SLACKER_SAVED_EVENTLOG[entries+1] = {
@@ -450,7 +450,7 @@ end
 
 function Slacker_DKP_BossKillLog(bossname,parms)
 	local PlayerList = Slacker_DKPPlayerList();
-	local ts = date("%s");
+	local ts = time();
 
 	local entries = getn (SLACKER_SAVED_EVENTLOG);
 	SLACKER_SAVED_EVENTLOG[entries+1] = {
