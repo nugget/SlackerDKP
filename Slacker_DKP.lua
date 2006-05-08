@@ -6,6 +6,7 @@
 
 local version = "1.03ß";
 local builddate = "8-May-2006";
+local cvsversion = '$Id$';
 local selected_eid = 0;
 local edit_eid = 0;
 
