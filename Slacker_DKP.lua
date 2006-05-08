@@ -4,9 +4,11 @@
 -- $Id$
 -- 
 
-local version = "1.03ß";
+local version = "1.04";
 local builddate = "8-May-2006";
+local buildnum = 0;
 local cvsversion = '$Id$';
+_,_,buildnum,builddate = string.find(cvsversion, ",v ([^%s]+)% ([^%s]+) ");
 local selected_eid = 0;
 local edit_eid = 0;
 
@@ -82,7 +84,7 @@ function Slacker_DKP_OnEvent()
 end
 
 function Slacker_DKP_Version()
-	Slacker_DKP_Message("Slacker DKP v"..version.." ("..builddate..") loaded.");
+	Slacker_DKP_Message("Slacker DKP v"..version.." (Build "..buildnum..") "..builddate.." loaded.");
 end
 
 function Slacker_DKP_HelpOnClick()
