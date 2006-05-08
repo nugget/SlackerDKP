@@ -63,7 +63,7 @@ function Slacker_DKP_OnEvent()
 				if(SLACKER_SAVED_IGNORED[info.name]) then
 					Slacker_DKP_Debug("Ignoring "..info.name.." drop.");
 				else
-					Slacker_DKP_LogLoot(name,info.name);
+					Slacker_DKP_LogLoot(name,info.name,itemlink);
 				end
 			end
 		end	
@@ -161,6 +161,14 @@ function Slacker_DKP_EventLogBar_Update()
 		local eventrow = getglobal("EventLog"..row);
 		local description = '';
 		
+		local lootcolors = {};
+		lootcolors[1] = "|cff7FFF7F";
+		lootcolors[2] = "|cff7FFF7F";
+		lootcolors[3] = "|cff7FFF7F";
+		lootcolors[4] = "|cff7FFF7F";
+		lootcolors[5] = "|cff7FFF7F";
+		lootcolors[6] = "|cff7FFF7F";
+		
 		if eid <= entries then
 			local color = "|cffFFFFFF";
 			local etype = SLACKER_SAVED_EVENTLOG[eid]['type'];
@@ -170,7 +178,7 @@ function Slacker_DKP_EventLogBar_Update()
 				color = "|cffFF7F7F";
 				description = "Killed "..SLACKER_SAVED_BOSSKILLS[ets]['bossname'].." ("..SLACKER_SAVED_BOSSKILLS[ets]['comments']..")";
 			elseif(etype == 'LOOT') then
-				color = "|cff7FFF7F";
+				color = lootcolors[1];
 				description = SLACKER_SAVED_LOOTLOG[ets]['player'].." looted "..SLACKER_SAVED_LOOTLOG[ets]['item'];
 			elseif(etype == 'ATT') then
 				description = "Attendance ("..SLACKER_SAVED_ATTLOG[ets]['comments']..")";
@@ -375,7 +383,7 @@ function Slacker_DKPPlayerList()
 	return PlayerNames;
 end
 
-function Slacker_DKP_LogLoot(name,item,dkp,secdkp)
+function Slacker_DKP_LogLoot(name,item,link)
 	local ts = date("%s");
 
 	local entries = getn (SLACKER_SAVED_EVENTLOG);
@@ -387,6 +395,7 @@ function Slacker_DKP_LogLoot(name,item,dkp,secdkp)
 	SLACKER_SAVED_LOOTLOG[ts] = {
 		["player"] = name,
 		["item"] = item,
+		["link"] = link,
 	};
 	Slacker_DKP_EventLogBar_Update();
 	Slacker_DKP_Message("Loot "..item.." to "..name.." recorded at "..date("%H:%M on %d-%b-%Y"));
