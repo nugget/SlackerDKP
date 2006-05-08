@@ -160,15 +160,7 @@ function Slacker_DKP_EventLogBar_Update()
 		local eid = row + FauxScrollFrame_GetOffset(Slacker_DKP_EventLogBar);
 		local eventrow = getglobal("EventLog"..row);
 		local description = '';
-		
-		local lootcolors = {};
-		lootcolors[1] = "|cff7FFF7F";
-		lootcolors[2] = "|cff7FFF7F";
-		lootcolors[3] = "|cff7FFF7F";
-		lootcolors[4] = "|cff7FFF7F";
-		lootcolors[5] = "|cff7FFF7F";
-		lootcolors[6] = "|cff7FFF7F";
-		
+	
 		if eid <= entries then
 			local color = "|cffFFFFFF";
 			local etype = SLACKER_SAVED_EVENTLOG[eid]['type'];
@@ -178,9 +170,14 @@ function Slacker_DKP_EventLogBar_Update()
 				color = "|cffFF7F7F";
 				description = "Killed "..SLACKER_SAVED_BOSSKILLS[ets]['bossname'].." ("..SLACKER_SAVED_BOSSKILLS[ets]['comments']..")";
 			elseif(etype == 'LOOT') then
-				color = lootcolors[1];
-				description = SLACKER_SAVED_LOOTLOG[ets]['player'].." looted "..SLACKER_SAVED_LOOTLOG[ets]['item'];
+				local elink = SLACKER_SAVED_LOOTLOG[ets]['link'];
+				if(elink) then
+					description = SLACKER_SAVED_LOOTLOG[ets]['player'].." loot "..elink;
+				else
+					description = SLACKER_SAVED_LOOTLOG[ets]['player'].." loot "..SLACKER_SAVED_LOOTLOG[ets]['item'];
+				end
 			elseif(etype == 'ATT') then
+				color = "|cff00FFFF";
 				description = "Attendance ("..SLACKER_SAVED_ATTLOG[ets]['comments']..")";
 			end
 
