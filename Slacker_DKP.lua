@@ -627,6 +627,8 @@ function Slacker_DKP_CommandHandler(buf)
 				Slacker_DKP_Message("No longer ignoring all "..args.." drops.");
 			elseif(command == 'set') then
 				Slacker_DKP_Toggle(args);
+			elseif(command == 'bossignore') then			
+				SLACKER_SAVED_BOSSES[args] = nil;
 			elseif(command == 'primary') then
 				local membername = Slacker_DKP_GetPrimary(args);
 				Slacker_DKP_Message(args.." is really "..membername);
