@@ -8,7 +8,6 @@ local version = "1.0ß";
 local builddate = "6-May-2006";
 local selected_eid = 0;
 local edit_eid = 0;
-local debug = 1;
 
 SLACKER_SAVED_DKP = {};
 SLACKER_SAVED_GEAR = {};
@@ -116,11 +115,13 @@ function Slacker_DKP_Message(buf)
 end
 
 function Slacker_DKP_Debug(buf)
-	if type(buf) == 'string' then
-		DEFAULT_CHAT_FRAME:AddMessage("|cff00FFFFdebug:"..buf);
-	else
-		for key, line in buf do
-			DEFAULT_CHAT_FRAME:AddMessage("|cff00FFFFdebug:"..line);
+	if(SLACKER_SAVED_SETTINGS['debug'] == 'yes') then
+		if type(buf) == 'string' then
+			DEFAULT_CHAT_FRAME:AddMessage("|cff00FFFFdebug:"..buf);
+		else
+			for key, line in buf do
+				DEFAULT_CHAT_FRAME:AddMessage("|cff00FFFFdebug:"..line);
+			end
 		end
 	end
 end
@@ -151,7 +152,7 @@ function Slacker_DKP_EventLogBar_Update()
 		end
 	end
 		
-	FauxScrollFrame_Update(Slacker_DKP_EventLogBar,entries,10,14);
+	FauxScrollFrame_Update(Slacker_DKP_EventLogBar,entries,10,11);
 	for row=1,10 do
 		local time = getglobal("EventLog"..row.."FieldTime");
 		local comments = getglobal("EventLog"..row.."FieldComments");
@@ -350,12 +351,12 @@ function Slacker_DKPPlayerList()
 			local rank = Slacker_DKP_GetRank(name);
 			local primary = Slacker_DKP_GetPrimary(name);
 
-			if(string.find(rank," Alt")) then
-				if(not primary) then
-					SendChatMessage("sDKP: You are an alt but your guild note does not indicate who your main is!  Please correct this.", "WHISPER", this.language, name);
-					Slacker_DKP_Message("Attendance Incomplete.  "..name.." has no main listed.");
-				end
-			end
+--			if(string.find(rank," Alt")) then
+--				if(not primary) then
+--					SendChatMessage("sDKP: You are an alt but your guild note does not indicate who your main is!  Please correct this.", "WHISPER", this.language, name);
+--					Slacker_DKP_Message("Attendance Incomplete.  "..name.." has no main listed.");
+--				end
+--			end
 		
 			if(SLACKER_SAVED_SETTINGS['mapalts'] == 'yes') then
 
