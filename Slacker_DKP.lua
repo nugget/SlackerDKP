@@ -151,8 +151,8 @@ function Slacker_DKP_EventLogBar_Update()
 			Event_Edit:Show();
 		end
 	end
-		
-	FauxScrollFrame_Update(Slacker_DKP_EventLogBar,entries,10,11);
+	
+	FauxScrollFrame_Update(Slacker_DKP_EventLogBar,entries,10,17);
 	for row=1,10 do
 		local time = getglobal("EventLog"..row.."FieldTime");
 		local comments = getglobal("EventLog"..row.."FieldComments");
