@@ -3,7 +3,7 @@ http://slacker.com/~nugget/projects/slackerdkp/
 David McNett <nugget@slacker.com>
 
 Please visit the project page for more information about Slacker DKP's goals
-and features.  This document is just a bare-bones installation guid intended
+and features.  This document is just a bare-bones installation guide intended
 to help you get up and running with sDKP.
 
 ** INSTALLTION BASICS
@@ -23,11 +23,20 @@ site.php file which also exists in this distribution.  It is not required
 to use SlackerDKP.
 
 Many Slacker DKP in-game features are optional, and are all disabled by
-default.  You may with to run the following commands to set up 
+default.  You may wish to run the following commands to set up 
 Slacker DKP after you've first installed it:
 
 /sdkp set announcekills on
 /sdkp set raidatt on
+
+
+** LIMITATIONS
+
+Aberration does not make use of NDKP's Main/Alt system so it's unlikely
+that SlackerDKP will work for you if your guild is using NDKP's alt
+support.  I plan to fix this, but it's not high on the list since it's
+not a factor for us.  If your guild uses NDKP's alt support and you'd like
+to help code/test support for it, let me know.
 
 
 ** IN GAME USAGE
