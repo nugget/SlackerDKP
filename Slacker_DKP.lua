@@ -148,18 +148,29 @@ function Slacker_DKP_EventLogBar_Update()
 	end
 	
 	if(selected_eid == 0) then
-		Event_DEItem:Hide();
+		Event_DownItem:Hide();
+		Event_BidItem:Hide();
 		Event_DeleteEntry:Hide();
 		Event_Edit:Hide();
 	else
+		local ets = SLACKER_SAVED_EVENTLOG[selected_eid]['ts'];
+		
 		Event_DeleteEntry:Show();
+		
 		if(SLACKER_SAVED_EVENTLOG[selected_eid]['type'] == 'LOOT') then
-			Event_DEItem:Show();
 			Event_Edit:Hide();
+			if(SLACKER_SAVED_LOOTLOG[ets]['type'] == 'down') then
+				Event_DownItem:Hide();
+				Event_BidItem:Show();
+			else
+				Event_BidItem:Hide();								
+				Event_DownItem:Show();
+			end	
 		else
-			Event_DEItem:Hide();
-			Event_Edit:Show();
+			Event_BidItem:Hide();								
+			Event_DownItem:Hide();
 		end
+		Event_Edit:Show();
 	end
 	
 	FauxScrollFrame_Update(Slacker_DKP_EventLogBar,entries,10,17);
@@ -181,10 +192,14 @@ function Slacker_DKP_EventLogBar_Update()
 				description = "Killed "..SLACKER_SAVED_BOSSKILLS[ets]['bossname'].." ("..SLACKER_SAVED_BOSSKILLS[ets]['comments']..")";
 			elseif(etype == 'LOOT') then
 				local elink = SLACKER_SAVED_LOOTLOG[ets]['link'];
+				local loottype = 'bid';
+				if(SLACKER_SAVED_LOOTLOG[ets]['type']) then
+					loottype = SLACKER_SAVED_LOOTLOG[ets]['type'];
+				end
 				if(elink) then
-					description = SLACKER_SAVED_LOOTLOG[ets]['player'].." loot "..elink;
+					description = SLACKER_SAVED_LOOTLOG[ets]['player'].." "..loottype.." won "..elink;
 				else
-					description = SLACKER_SAVED_LOOTLOG[ets]['player'].." loot "..SLACKER_SAVED_LOOTLOG[ets]['item'];
+					description = SLACKER_SAVED_LOOTLOG[ets]['player'].." "..loottype.." won "..SLACKER_SAVED_LOOTLOG[ets]['item'];
 				end
 			elseif(etype == 'ATT') then
 				color = "|cff00FFFF";
@@ -300,6 +315,18 @@ function Slacker_DKP_EventLog_DeleteEntry()
 	Slacker_DKP_EventLogBar_Update();
 end
 
+function Slacker_DKP_EventLog_EntryType(type)
+	if(selected_eid > 0) then
+		local etype = SLACKER_SAVED_EVENTLOG[selected_eid]['type'];
+		local ets = SLACKER_SAVED_EVENTLOG[selected_eid]['ts'];
+		
+		if(etype == 'LOOT') then
+			SLACKER_SAVED_LOOTLOG[ets]['type'] = type;	
+		end
+	end
+	Slacker_DKP_EventLogBar_Update();
+end
+
 function Slacker_DKP_EventLog_Edit()
 	if(selected_eid > 0) then
 		local etype = SLACKER_SAVED_EVENTLOG[selected_eid]['type'];
@@ -313,27 +340,40 @@ function Slacker_DKP_EventLog_Edit()
 		elseif(etype == 'ATT') then
 			Slacker_DKP_EditFrameComment:SetText(SLACKER_SAVED_ATTLOG[ets]['comments']);
 			Slacker_DKP_EditFrame:Show();
+		elseif(etype == 'LOOT') then
+			Slacker_DKP_LootFramePlayer:SetText(SLACKER_SAVED_LOOTLOG[ets]['player']);
+			Slacker_DKP_LootFrame:Show();		
 		end		
 	end
 end
+
 
 function Slacker_DKP_EditWindow_Save()
 	if(edit_eid > 0) then
 		local etype = SLACKER_SAVED_EVENTLOG[edit_eid]['type'];
 		local ets = SLACKER_SAVED_EVENTLOG[edit_eid]['ts'];
-		
-		local newtext = Slacker_DKP_EditFrameComment:GetText();
-						
+					
 		if(etype == 'BOSSKILL') then
+			local newtext = Slacker_DKP_EditFrameComment:GetText();
+			
 			SLACKER_SAVED_BOSSKILLS[ets]['comments'] = newtext;
 			Slacker_DKP_EditFrame:Hide();
 		elseif(etype == 'ATT') then
+			local newtext = Slacker_DKP_EditFrameComment:GetText();
+			
 			SLACKER_SAVED_ATTLOG[ets]['comments'] = newtext;
 			Slacker_DKP_EditFrame:Hide();
+		elseif(etype == 'LOOT') then
+			local newplayer = Slacker_DKP_LootFramePlayer:GetText();
+			
+			SLACKER_SAVED_LOOTLOG[ets]['player'] = newplayer;
+			Slacker_DKP_LootFrame:Hide();
 		end		
 		
 		edit_eid = 0;
+		
 		Slacker_DKP_EditFrameComment:SetText("");
+		Slacker_DKP_LootFramePlayer:SetText("");
 
 		Slacker_DKP_EventLogBar_Update();
 	end
