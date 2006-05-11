@@ -4,7 +4,7 @@
 -- $Id$
 -- 
 
-local version = "1.05ß";
+local version = "1.06ß";
 local builddate = "8-May-2006";
 local buildnum = 0;
 local cvsversion = '$Id$';
@@ -435,6 +435,10 @@ end
 function Slacker_DKP_LogLoot(name,item,link)
 	local ts = time();
 
+	if(SLACKER_SAVED_SETTINGS['active'] == 'no') then
+		return 0;
+	end
+
 	local entries = getn (SLACKER_SAVED_EVENTLOG);
 	SLACKER_SAVED_EVENTLOG[entries+1] = {
 		["ts"] = ts;
@@ -454,6 +458,10 @@ function Slacker_DKP_AttendanceLog(parms)
 	Slacker_DKP_LoadAltList();
 	local PlayerList = Slacker_DKPPlayerList();
 	local ts = time();
+
+	if(SLACKER_SAVED_SETTINGS['active'] == 'no') then
+		return 0;
+	end
 
 	local entries = getn (SLACKER_SAVED_EVENTLOG);
 	SLACKER_SAVED_EVENTLOG[entries+1] = {
@@ -498,6 +506,10 @@ end
 function Slacker_DKP_BossKillLog(bossname,parms)
 	local PlayerList = Slacker_DKPPlayerList();
 	local ts = time();
+
+	if(SLACKER_SAVED_SETTINGS['active'] == 'no') then
+		return 0;
+	end
 
 	local entries = getn (SLACKER_SAVED_EVENTLOG);
 	SLACKER_SAVED_EVENTLOG[entries+1] = {

@@ -36,3 +36,4 @@ SLACKER_SETTING['raidloot']				= "Loot item list to raid chat is ";
 SLACKER_SETTING['raidatt']				= "Attendance snapshot announcements to raid chat are ";
 SLACKER_SETTING['mapalts']				= "Map players to primary for attendance is "
 SLACKER_SETTING['debug']				= "Display of debugging info is "
+SLACKER_SETTING['active']				= "SlackerDKP Logging is "
