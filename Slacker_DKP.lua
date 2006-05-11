@@ -37,6 +37,7 @@ function Slacker_DKP_OnLoad()
 	this:RegisterEvent("CHAT_MSG_LOOT");
 	this:RegisterEvent("ADDON_LOADED");
 	this:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH");
+	this:RegisterEvent("CHAT_MSG_MONSTER_YELL");	
 		
 	SlashCmdList["SLACKERDKP"] = Slacker_DKP_CommandHandler;
 	SLASH_SLACKERDKP1 = "/sdkp";
@@ -74,9 +75,15 @@ function Slacker_DKP_OnEvent()
 		local mob;
 		local _, _, mob = string.find(arg1, "(.+) dies.");
 		if (mob) then
-			if(SLACKER_SAVED_BOSSES[mob]) then
-				Slacker_DKP_BossKillLog(mob,"auto-logged");
+			if(not mob == 'Majordomo Executus') then
+				if(SLACKER_SAVED_BOSSES[mob]) then
+					Slacker_DKP_BossKillLog(mob,"auto-logged");
+				end
 			end
+		end
+	elseif (event == "CHAT_MSG_MONSTER_YELL") then
+		if( string.find(arg1, "Brashly, you have come to wrest the secrets of the Living Flame")) then
+			Slacker_DKP_BossKillLog('Majordomo Executus','auto-logged');
 		end
 	elseif (event == "LOOT_OPENED") then
 		Slacker_DKP_LootWalk();
