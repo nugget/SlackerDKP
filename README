@@ -49,7 +49,7 @@ take an attendance snapshot.
 
 Currently the attendance snapshots only record raid members and not any
 standby players who didn't make it in to the raid.  For now we are just
-handling those players by-hand from the NDKP website.  This will be fixed
+handling those players by hand on the NDKP website.  This will be fixed
 in a future sDKP release.
 
 When a boss is killed for the first time, target the boss corpse and click the
@@ -60,6 +60,13 @@ automatically log the kill.
 sDKP will automatically log player loot events.  You should continue to use
 the normal NurfedDKP window and facilities to handle item bidding and 
 awarding.
+
+You can click the dynamic loot button to flag a loot entry as having been a 
+"!bid" or "!down" award.
+
+Editing a loot entry allows you to alter the target player name.  Use this
+in the event of Bind on Equip items that were first collected by your
+Loot Monger and then awarded at a later time.
 
 You'll notice that sDKP is very aggressive about logging loots, even non-boss
 and non-BoP loots.  You'll probably want to highlight and delete many of
@@ -90,6 +97,10 @@ convenient buttons to allow you to enter each relevant event into NDKP.
 
 If there are any unknown players or items found in the log, warnings will
 appear at the top of the page.
+
+A special "Meta" attendance entry will automatically be added if there
+were successful boss kills during the raid.  This entry will include 
+any player present for any of the boss kills during the raid.
 
 You should be able to just walk down the page, clicking each button in turn
 to add that item, then hitting "back" in your browser and then "refresh"
