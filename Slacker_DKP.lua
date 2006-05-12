@@ -72,6 +72,7 @@ function Slacker_DKP_OnEvent()
 					Slacker_DKP_Debug("Ignoring "..info.name.." drop.");
 				else
 					if(info.rarity >= tonumber(SLACKER_SAVED_SETTINGS['rarity'])) then
+						Slacker_DKP_Debug('LogLoot '..info.rarity..' and '..SLACKER_SAVED_SETTINGS['rarity']);
 						Slacker_DKP_LogLoot(name,info.name,itemlink);
 					end
 				end
@@ -630,8 +631,11 @@ function Slacker_DKP_Toggle(buf)
 		SLACKER_SAVED_SETTINGS[setting] = 'yes';
 	elseif(flag == "off" or flag == 'no') then
 		SLACKER_SAVED_SETTINGS[setting] = 'no';
-	elseif(not flag == 'nil') then
-		SLACKER_SAVED_SETTINGS[setting] = flag;
+	else
+		if(flag ~= '') then
+			Slacker_DKP_Debug('setting '..setting..' to '..flag);
+			SLACKER_SAVED_SETTINGS[setting] = flag;
+		end
 	end
 
 	if(SLACKER_SAVED_SETTINGS[setting] == 'yes') then
@@ -639,10 +643,12 @@ function Slacker_DKP_Toggle(buf)
 	elseif(SLACKER_SAVED_SETTINGS[setting] == 'no') then
 		Slacker_DKP_Message(SLACKER_SETTING[setting]..DISABLED);
 	else
+		local value = SLACKER_SAVED_SETTINGS[setting];
+		
 		if(setting == 'rarity') then
-			Slacker_DKP_Message(SLACKER_SETTING[setting]..SLACKER_ITEM_RARITY[flag]..' ('..flag..')');	
+			Slacker_DKP_Message(SLACKER_SETTING[setting]..SLACKER_ITEM_RARITY[value]..' ('..value..')');	
 		else
-			Slacker_DKP_Message(SLACKER_SETTING[setting]..flag);	
+			Slacker_DKP_Message(SLACKER_SETTING[setting]..value);	
 		end
 	end
 end
