@@ -65,12 +65,13 @@ function Slacker_DKP_OnEvent()
 		end
 
 		if (name and itemlink) then
-			local info = Nurfed_DKP:ItemInfo(itemlink);
+			local info = Slacker_DKP_ItemInfo(itemlink);
 			if (info) then
+				Slacker_DKP_Debug('Drop with info '..info.name..' rarity '..info.rarity);
 				if(SLACKER_SAVED_IGNORED[info.name]) then
 					Slacker_DKP_Debug("Ignoring "..info.name.." drop.");
 				else
-					if(info.rarity >= SLACKER_SAVED_SETTINGS['rarity']) then
+					if(info.rarity >= tonumber(SLACKER_SAVED_SETTINGS['rarity'])) then
 						Slacker_DKP_LogLoot(name,info.name,itemlink);
 					end
 				end
@@ -118,6 +119,25 @@ function Slacker_DKP_AddBossKillOnClick()
 		Slacker_DKP_EventLog_Edit();
 	end
 end
+
+function Slacker_DKP_ItemInfo(link)
+	local _, _, id, name = string.find(link,"|Hitem:(%d+):%d+:%d+:%d+|h%[([^]]+)%]|h|r$");
+	local itemName, itemLink, itemRarity, itemMinLevel, itemType, itemSubType, itemStackCount, itemEquipLoc, itemTexture = GetItemInfo(id);
+	local info = {};
+
+	info.id = id;
+	info.name = name;
+	info.link = itemLink;
+	info.rarity = itemRarity;
+	info.icon = itemTexture;
+	info.dkp = 0;
+	info.secdkp = 0;
+
+	return info;
+end
+
+
+
 
 function Slacker_DKP_Message(buf)
 	if type(buf) == 'string' then
@@ -191,33 +211,36 @@ function Slacker_DKP_EventLogBar_Update()
 			local color = "|cffFFFFFF";
 			local etype = SLACKER_SAVED_EVENTLOG[eid]['type'];
 			local ets = SLACKER_SAVED_EVENTLOG[eid]['ts'];
-			
-			if(etype == 'BOSSKILL') then
-				color = "|cffFF7F7F";
-				description = "Killed "..SLACKER_SAVED_BOSSKILLS[ets]['bossname'].." ("..SLACKER_SAVED_BOSSKILLS[ets]['comments']..")";
-			elseif(etype == 'LOOT') then
-				local elink = SLACKER_SAVED_LOOTLOG[ets]['link'];
-				local loottype = 'bid';
-				if(SLACKER_SAVED_LOOTLOG[ets]['type']) then
-					loottype = SLACKER_SAVED_LOOTLOG[ets]['type'];
+			if(ets) then
+				if(etype == 'BOSSKILL') then
+					color = "|cffFF7F7F";
+					description = "Killed "..SLACKER_SAVED_BOSSKILLS[ets]['bossname'].." ("..SLACKER_SAVED_BOSSKILLS[ets]['comments']..")";
+				elseif(etype == 'LOOT') then
+					local elink = SLACKER_SAVED_LOOTLOG[ets]['link'];
+					local loottype = 'bid';
+					if(SLACKER_SAVED_LOOTLOG[ets]['type']) then
+						loottype = SLACKER_SAVED_LOOTLOG[ets]['type'];
+					end
+					if(elink) then
+						description = SLACKER_SAVED_LOOTLOG[ets]['player'].." "..loottype.." "..elink;
+					else
+						description = SLACKER_SAVED_LOOTLOG[ets]['player'].." "..loottype.." "..SLACKER_SAVED_LOOTLOG[ets]['item'];
+					end
+				elseif(etype == 'ATT') then
+					color = "|cff00FFFF";
+					description = "Attendance ("..SLACKER_SAVED_ATTLOG[ets]['comments']..")";
 				end
-				if(elink) then
-					description = SLACKER_SAVED_LOOTLOG[ets]['player'].." "..loottype.." won "..elink;
-				else
-					description = SLACKER_SAVED_LOOTLOG[ets]['player'].." "..loottype.." won "..SLACKER_SAVED_LOOTLOG[ets]['item'];
-				end
-			elseif(etype == 'ATT') then
-				color = "|cff00FFFF";
-				description = "Attendance ("..SLACKER_SAVED_ATTLOG[ets]['comments']..")";
-			end
 
-			time:SetText(date("%H:%M",SLACKER_SAVED_EVENTLOG[eid]['ts']));
-			comments:SetText(color..description);
-			eventrow:Show();
-			if(selected_eid == eid) then
-				highlight:Show();
+				time:SetText(date("%H:%M",SLACKER_SAVED_EVENTLOG[eid]['ts']));
+				comments:SetText(color..description);
+				eventrow:Show();
+				if(selected_eid == eid) then
+					highlight:Show();
+				else
+					highlight:Hide();
+				end
 			else
-				highlight:Hide();
+				eventrow:Hide();
 			end
 		else
 			eventrow:Hide();
@@ -445,7 +468,7 @@ function Slacker_NewTS()
 	
 	for i=1, getn (SLACKER_SAVED_EVENTLOG) do
 		local ets = SLACKER_SAVED_EVENTLOG[i]['ts'];
-		if(ets > maxts) then
+		if(tonumber(ets) > tonumber(maxts)) then
 			maxts = ets;
 		end
 	end
@@ -457,7 +480,7 @@ function Slacker_NewTS()
 end
 
 function Slacker_DKP_LogLoot(name,item,link)
-	local ts = Slacker_NewTS;
+	local ts = Slacker_NewTS();
 
 	if(SLACKER_SAVED_SETTINGS['active'] == 'no') then
 		return 0;
@@ -529,7 +552,7 @@ end
 
 function Slacker_DKP_BossKillLog(bossname,parms)
 	local PlayerList = Slacker_DKPPlayerList();
-	local ts = Slacker_NewTS;
+	local ts = Slacker_NewTS();
 
 	if(SLACKER_SAVED_SETTINGS['active'] == 'no') then
 		return 0;
@@ -607,7 +630,7 @@ function Slacker_DKP_Toggle(buf)
 		SLACKER_SAVED_SETTINGS[setting] = 'yes';
 	elseif(flag == "off" or flag == 'no') then
 		SLACKER_SAVED_SETTINGS[setting] = 'no';
-	else
+	elseif(not flag == nil) then
 		SLACKER_SAVED_SETTINGS[setting] = flag;
 	end
 
