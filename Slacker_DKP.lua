@@ -630,7 +630,7 @@ function Slacker_DKP_Toggle(buf)
 		SLACKER_SAVED_SETTINGS[setting] = 'yes';
 	elseif(flag == "off" or flag == 'no') then
 		SLACKER_SAVED_SETTINGS[setting] = 'no';
-	elseif(not flag == nil) then
+	elseif(not flag == 'nil') then
 		SLACKER_SAVED_SETTINGS[setting] = flag;
 	end
 
