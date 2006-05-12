@@ -75,6 +75,21 @@ the logged items as the raid progresses.
 You can highlight any attendance or bosskill log entry and click edit to
 add/edit comments for that log entry.
 
+** Available Settings
+
+All of these may be set using the sdkp set command:
+  "/sdkp set <setting> on" or "/sdkp set <setting> off":
+
+announcekills - Send boss kill announcements to guild chat"
+announceloot - Send loot item list to guild chat"
+raidatt - Send attendance announements to raid chat"
+raidloot - Send loot item list to raid chat"
+active - Toggle all logging on/off"
+
+This setting is not a toggle, but expects a value:
+
+rarity <#> - Set loot logging threshhold (rarity 1-6)
+
 ** POST RAID
 
 Exit WoW, or issue the command "/console reloadui" to cause sDKP to write 
@@ -112,6 +127,9 @@ log is entered into NDKP.
 This is very preliminary and is being continually developed.   However it's
 mostly feature-complete at this point and is certainly a lot easier to use
 than the manual approach we've all been using.
+
+There's a hard-coded handler in the AddOn for Majordomo Executus that will
+log the bosskill at the appropriate time, not literally when he dies.
 
 ** EXTRAS
 

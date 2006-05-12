@@ -4,8 +4,8 @@
 -- $Id$
 -- 
 
-local version = "1.06ß";
-local builddate = "8-May-2006";
+local version = "1.08ß";
+local builddate = "4-Nov-1970";
 local buildnum = 0;
 local cvsversion = '$Id$';
 _,_,buildnum,builddate = string.find(cvsversion, ",v 1.([^%s]+)% ([^%s]+) ");
