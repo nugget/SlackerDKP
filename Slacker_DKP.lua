@@ -4,7 +4,7 @@
 -- $Id$
 -- 
 
-local version = "1.08ß";
+local version = "1.09ß";
 local builddate = "4-Nov-1970";
 local buildnum = 0;
 local cvsversion = '$Id$';
