@@ -23,6 +23,8 @@ table.insert(SLACKERDKP_CHAT_COMMAND_USAGE, " announcekills - Send boss kill ann
 table.insert(SLACKERDKP_CHAT_COMMAND_USAGE, " announceloot - Send loot item list to guild chat");
 table.insert(SLACKERDKP_CHAT_COMMAND_USAGE, " raidatt - Send attendance announements to raid chat");
 table.insert(SLACKERDKP_CHAT_COMMAND_USAGE, " raidloot - Send loot item list to raid chat");
+table.insert(SLACKERDKP_CHAT_COMMAND_USAGE, " rarity <#> - Set loot logging threshhold (rarity 1-6)");
+table.insert(SLACKERDKP_CHAT_COMMAND_USAGE, " active - Toggle all logging on/off");
 
 SLACKERDKP_UNKNOWN_COMMAND				= "Unknown Slacker DKP command";
 
@@ -37,3 +39,13 @@ SLACKER_SETTING['raidatt']				= "Attendance snapshot announcements to raid chat 
 SLACKER_SETTING['mapalts']				= "Map players to primary for attendance is "
 SLACKER_SETTING['debug']				= "Display of debugging info is "
 SLACKER_SETTING['active']				= "SlackerDKP Logging is "
+SLACKER_SETTING['rarity']				= "Loot logging level set to "
+
+SLACKER_ITEM_RARITY = {};
+SLACKER_ITEM_RARITY['0'] = 'Poor';
+SLACKER_ITEM_RARITY['1'] = 'Common';
+SLACKER_ITEM_RARITY['2'] = 'Uncommon';
+SLACKER_ITEM_RARITY['3'] = 'Rare';
+SLACKER_ITEM_RARITY['4'] = 'Epic';
+SLACKER_ITEM_RARITY['5'] = 'Legendary';
+SLACKER_ITEM_RARITY['6'] = 'Artifact';

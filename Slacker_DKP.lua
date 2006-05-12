@@ -46,6 +46,9 @@ end
 function Slacker_DKP_OnEvent()
 	if(event == "ADDON_LOADED" and arg1 == "Slacker_DKP") then
 		Slacker_DKP_Version();
+		if(SLACKER_SAVED_SETTINGS['rarity'] == nil) then
+			Slacker_DKP_Toggle('rarity 4');
+		end
 	elseif	(event == "CHAT_MSG_LOOT") then
 		local name, itemlink;
 		local _, _, player, link = string.find(arg1, "([^%s]+) receives loot: (.+)%.");
@@ -67,7 +70,9 @@ function Slacker_DKP_OnEvent()
 				if(SLACKER_SAVED_IGNORED[info.name]) then
 					Slacker_DKP_Debug("Ignoring "..info.name.." drop.");
 				else
-					Slacker_DKP_LogLoot(name,info.name,itemlink);
+					if(info.rarity >= SLACKER_SAVED_SETTINGS['rarity']) then
+						Slacker_DKP_LogLoot(name,info.name,itemlink);
+					end
 				end
 			end
 		end	
@@ -276,31 +281,33 @@ function Slacker_DKP_EventLog_DeleteEntry()
 		
 			if (i == eid) then
 				if(etype == 'LOOT') then
-					SLACKER_SAVED_LOOTLOG[ets]['player'] = nil;
-					SLACKER_SAVED_LOOTLOG[ets]['item'] = nil;					
+--					SLACKER_SAVED_LOOTLOG[ets]['player'] = nil;
+--					SLACKER_SAVED_LOOTLOG[ets]['item'] = nil;					
 					SLACKER_SAVED_LOOTLOG[ets] = nil;
 				elseif(etype == 'BOSSKILL') then
-					SLACKER_SAVED_BOSSKILLS[ets]['bossname'] = nil;
-					SLACKER_SAVED_BOSSKILLS[ets]['location'] = nil;
-					SLACKER_SAVED_BOSSKILLS[ets]['comments'] = nil;
-					SLACKER_SAVED_BOSSKILLS[ets]['playerlist'] = nil;
+--					SLACKER_SAVED_BOSSKILLS[ets]['bossname'] = nil;
+--					SLACKER_SAVED_BOSSKILLS[ets]['location'] = nil;
+--					SLACKER_SAVED_BOSSKILLS[ets]['comments'] = nil;
+--					SLACKER_SAVED_BOSSKILLS[ets]['playerlist'] = nil;
 					SLACKER_SAVED_BOSSKILLS[ets] = nil;
 				elseif(etype == 'ATT') then
-					SLACKER_SAVED_ATTLOG[ets]['location'] = nil;
-					SLACKER_SAVED_ATTLOG[ets]['comments'] = nil;
-					SLACKER_SAVED_ATTLOG[ets]['playerlist'] = nil;					
+--					SLACKER_SAVED_ATTLOG[ets]['location'] = nil;
+--					SLACKER_SAVED_ATTLOG[ets]['comments'] = nil;
+--					SLACKER_SAVED_ATTLOG[ets]['playerlist'] = nil;					
 					SLACKER_SAVED_ATTLOG[ets] = nil;
 				end
 			elseif (i > eid) then
 				if(i > 1) then
 					local j=i-1;
-					SLACKER_SAVED_EVENTLOG[j]['ts'] = SLACKER_SAVED_EVENTLOG[i]['ts'];   -- attempt to index field '?' (a nil value)
-					SLACKER_SAVED_EVENTLOG[j]['type'] = SLACKER_SAVED_EVENTLOG[i]['type'];
+--					SLACKER_SAVED_EVENTLOG[j]['ts'] = SLACKER_SAVED_EVENTLOG[i]['ts'];   -- attempt to index field '?' (a nil value)
+--					SLACKER_SAVED_EVENTLOG[j]['type'] = SLACKER_SAVED_EVENTLOG[i]['type'];
+					SLACKER_SAVED_EVENTLOG[j] = SLACKER_SAVED_EVENTLOG[i];
+					
 				end
 			end
 		end
-		SLACKER_SAVED_EVENTLOG[count]['ts'] = nil;
-		SLACKER_SAVED_EVENTLOG[count]['type'] = nil;
+--		SLACKER_SAVED_EVENTLOG[count]['ts'] = nil;
+--		SLACKER_SAVED_EVENTLOG[count]['type'] = nil;
 		SLACKER_SAVED_EVENTLOG[count] = nil;
 	end
 
@@ -579,18 +586,25 @@ function Slacker_DKP_Toggle(buf)
 		flag    = string.sub(buf,string.find(buf, " ")+1,256);
 	end
 
-	if(flag == 'on') then
+	if(flag == 'on' or flag == 'yes') then
 		SLACKER_SAVED_SETTINGS[setting] = 'yes';
-	elseif(flag == "off") then
+	elseif(flag == "off" or flag == 'no') then
 		SLACKER_SAVED_SETTINGS[setting] = 'no';
+	else
+		SLACKER_SAVED_SETTINGS[setting] = flag;
 	end
 
 	if(SLACKER_SAVED_SETTINGS[setting] == 'yes') then
 		Slacker_DKP_Message(SLACKER_SETTING[setting]..ENABLED);
-	else
+	elseif(SLACKER_SAVED_SETTINGS[setting] == 'no') then
 		Slacker_DKP_Message(SLACKER_SETTING[setting]..DISABLED);
+	else
+		if(setting == 'rarity') then
+			Slacker_DKP_Message(SLACKER_SETTING[setting]..SLACKER_ITEM_RARITY[flag]..' ('..flag..')');	
+		else
+			Slacker_DKP_Message(SLACKER_SETTING[setting]..flag);	
+		end
 	end
-
 end
 
 function Slacker_DKP_GetPrimary(playername)
