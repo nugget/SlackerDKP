@@ -439,8 +439,25 @@ function Slacker_DKPPlayerList()
 	return PlayerNames;
 end
 
-function Slacker_DKP_LogLoot(name,item,link)
+function Slacker_NewTS()
 	local ts = time();
+	local maxts = 0;
+	
+	for i=1, getn (SLACKER_SAVED_EVENTLOG) do
+		local ets = SLACKER_SAVED_EVENTLOG[i]['ts'];
+		if(ets > maxts) then
+			maxts = ets;
+		end
+	end
+	if(ts > maxts) then
+		return ts;
+	else
+		return maxts + 1;
+	end
+end
+
+function Slacker_DKP_LogLoot(name,item,link)
+	local ts = Slacker_NewTS;
 
 	if(SLACKER_SAVED_SETTINGS['active'] == 'no') then
 		return 0;
@@ -464,7 +481,7 @@ end
 function Slacker_DKP_AttendanceLog(parms)
 	Slacker_DKP_LoadAltList();
 	local PlayerList = Slacker_DKPPlayerList();
-	local ts = time();
+	local ts = Slacker_NewTS();
 
 	if(SLACKER_SAVED_SETTINGS['active'] == 'no') then
 		return 0;
@@ -512,7 +529,7 @@ end
 
 function Slacker_DKP_BossKillLog(bossname,parms)
 	local PlayerList = Slacker_DKPPlayerList();
-	local ts = time();
+	local ts = Slacker_NewTS;
 
 	if(SLACKER_SAVED_SETTINGS['active'] == 'no') then
 		return 0;
