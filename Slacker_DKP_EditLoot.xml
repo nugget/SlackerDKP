@@ -1,0 +1,124 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xsi:schemaLocation="http://www.blizzard.com/wow/ui/ ..\FrameXML\UI.xsd">
+
+	<Frame name="Slacker_DKP_LootFrame" frameStrata="BACKGROUND" parent="UIParent" movable="true" enableMouse="true" hidden="true">
+		<Size>
+			<AbsDimension x="300" y="55"/>
+		</Size>
+		<Anchors>
+			<Anchor point="CENTER">
+				<Offset>
+					<AbsDimension x="0" y="0"/>
+				</Offset>
+			</Anchor>
+		</Anchors>
+		<Backdrop name="$parentBackdrop" bgFile="Interface\Tooltips\UI-Tooltip-Background" edgeFile="Interface\Tooltips\UI-Tooltip-Border" tile="true">
+			<EdgeSize>
+				<AbsValue val="16"/>
+			</EdgeSize>
+			<TileSize>
+				<AbsValue val="16"/>
+			</TileSize>
+			<BackgroundInsets>
+				<AbsInset left="5" right="5" top="5" bottom="5"/>
+			</BackgroundInsets>
+		</Backdrop>
+		<Layers>
+			<Layer level="HEADER">
+				<FontString name="$parentTitle" inherits="Slacker_TitleFont" justifyH="LEFT" text="Edit Loot Player">
+					<Size>
+						<AbsDimension x="290" y="11"/>
+					</Size>
+					<Anchors>
+						<Anchor point="TOP">
+							<Offset>
+								<AbsDimension x="0" y="-5"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+			</Layer>
+		</Layers>
+		<Frames>
+			<EditBox name="$parentPlayer" letters="1023">
+				<Size>
+					<AbsDimension x="280" y="32"></AbsDimension>
+				</Size>
+				<Anchors>
+					<Anchor point="LEFT">
+						<Offset>
+							<AbsDimension x="10" y="0"></AbsDimension>
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Scripts>
+				<OnEnterPressed>
+					Slacker_DKP_EditWindow_Save();
+				</OnEnterPressed>
+				<OnEscapePressed>
+					this:GetParent():Hide();
+				</OnEscapePressed>
+				</Scripts>
+				<FontString inherits="ChatFontNormal"></FontString>
+			</EditBox>
+			
+			<Button name="$parent_btnSave" inherits="UIPanelButtonTemplate" text="SAVE">
+				<Size>
+					<AbsDimension x="90" y="18"/>
+				</Size>
+				<Anchors>
+					<Anchor point="BOTTOMLEFT">
+						<Offset>
+							<AbsDimension x="8" y="-8" />
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnClick>
+						Slacker_DKP_EditWindow_Save();
+					</OnClick>
+				</Scripts>
+			</Button>
+			
+			<Button name="$parent_btnCancel" inherits="UIPanelButtonTemplate" text="CANCEL">
+				<Size>
+					<AbsDimension x="90" y="18"/>
+				</Size>
+				<Anchors>
+					<Anchor point="BOTTOMRIGHT">
+						<Offset>
+							<AbsDimension x="-8" y="-8" />
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnClick>
+						this:GetParent():Hide();
+					</OnClick>
+				</Scripts>
+			</Button>
+			
+		</Frames>
+
+		<Scripts>
+			<OnLoad>
+				this:SetBackdropColor(0, 0, 0, 0.75);
+				this:RegisterForDrag("LeftButton");
+			</OnLoad>
+			<OnDragStart>
+				if (IsAltKeyDown()) then
+					this:StartMoving();
+				end
+			</OnDragStart>
+			<OnDragStop>
+				this:StopMovingOrSizing();
+			</OnDragStop>
+			<OnEscapePressed>
+				this:ClearFocus();
+			</OnEscapePressed>
+		</Scripts>
+		
+	</Frame>
+
+</Ui>
