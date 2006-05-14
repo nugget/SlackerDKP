@@ -40,6 +40,7 @@ SLACKER_SETTING['mapalts']				= "Map players to primary for attendance is "
 SLACKER_SETTING['debug']				= "Display of debugging info is "
 SLACKER_SETTING['active']				= "SlackerDKP Logging is "
 SLACKER_SETTING['rarity']				= "Loot logging level set to "
+SLACKER_SETTING['dkpplayer']			= "Meta player 'DKP' added to bosskill snapshots is "
 
 SLACKER_ITEM_RARITY = {};
 SLACKER_ITEM_RARITY['0'] = 'Poor';

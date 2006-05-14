@@ -559,6 +559,10 @@ function Slacker_DKP_BossKillLog(bossname,parms)
 		return 0;
 	end
 
+	if(SLACKER_SAVED_SETTINGS['dkpplayer'] == 'yes') then
+		PlayerList = PlayerList..'DKP ';
+	end
+
 	local entries = getn (SLACKER_SAVED_EVENTLOG);
 	SLACKER_SAVED_EVENTLOG[entries+1] = {
 		["ts"] = ts,
