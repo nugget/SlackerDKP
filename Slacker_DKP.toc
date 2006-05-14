@@ -5,7 +5,7 @@
 ## OptionalDeps: Nurfed_DKP
 ## Author: David McNett (Rumpus - Aberration Guild, Whisperwind Alliance)
 ## eMail: nugget@slacker.com
-## Version: 1.09
+## Version: 1.10
 ## URL: http://slacker.com/~nugget/projects/slackerdkp/
 Slacker_DKP.xml
 Slacker_DKP_EventLog.xml
