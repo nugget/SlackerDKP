@@ -4,7 +4,7 @@
 -- $Id$
 -- 
 
-local version = "1.10ß";
+local version = "1.10ß-Hydra";
 local builddate = "4-Nov-1970";
 local buildnum = 0;
 local cvsversion = '$Id$';
@@ -41,6 +41,8 @@ function Slacker_DKP_OnLoad()
 		
 	SlashCmdList["SLACKERDKP"] = Slacker_DKP_CommandHandler;
 	SLASH_SLACKERDKP1 = "/sdkp";
+	
+	Slacker_DKP_LoadAltList();
 end
 
 function Slacker_DKP_OnEvent()
