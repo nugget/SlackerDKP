@@ -84,7 +84,9 @@ function Slacker_DKP_OnEvent()
 		local mob;
 		local _, _, mob = string.find(arg1, "(.+) dies.");
 		if (mob) then
-			if(not mob == 'Majordomo Executus') then
+			if(mob == 'Majordomo Executus') then
+				Slacker_DKP_Debug('Ignoring Majordomo kill');
+			else
 				if(SLACKER_SAVED_BOSSES[mob]) then
 					Slacker_DKP_BossKillLog(mob,"auto-logged");
 				end
