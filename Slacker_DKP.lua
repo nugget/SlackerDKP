@@ -4,7 +4,7 @@
 -- $Id$
 -- 
 
-local version = "1.10ß-Hydra";
+local version = "1.12";
 local builddate = "4-Nov-1970";
 local buildnum = 0;
 local cvsversion = '$Id$';
@@ -214,6 +214,7 @@ function Slacker_DKP_EventLogBar_Update()
 	
 		if eid <= entries then
 			local color = "|cffFFFFFF";
+			local tscolor = "|cffFFFFFF";
 			local etype = SLACKER_SAVED_EVENTLOG[eid]['type'];
 			local ets = SLACKER_SAVED_EVENTLOG[eid]['ts'];
 			if(ets) then
@@ -223,6 +224,7 @@ function Slacker_DKP_EventLogBar_Update()
 				elseif(etype == 'LOOT') then
 					local elink = SLACKER_SAVED_LOOTLOG[ets]['link'];
 					local loottype = 'bid';
+					tscolor = "|cff7F7F7F";
 					if(SLACKER_SAVED_LOOTLOG[ets]['type']) then
 						loottype = SLACKER_SAVED_LOOTLOG[ets]['type'];
 					end
@@ -236,7 +238,7 @@ function Slacker_DKP_EventLogBar_Update()
 					description = "Attendance ("..SLACKER_SAVED_ATTLOG[ets]['comments']..")";
 				end
 
-				time:SetText(date("%H:%M",SLACKER_SAVED_EVENTLOG[eid]['ts']));
+				time:SetText(tscolor..date("%H:%M",SLACKER_SAVED_EVENTLOG[eid]['ts']));
 				comments:SetText(color..description);
 				eventrow:Show();
 				if(selected_eid == eid) then
