@@ -177,18 +177,23 @@ function Slacker_DKP_EventLogBar_Update()
 		Slacker_DKP_EventLogBar:Show();
 	end
 	
-	if(selected_eid == 0) then
-		Event_DownItem:Hide();
-		Event_BidItem:Hide();
-		Event_DeleteEntry:Hide();
-		Event_Edit:Hide();
-	else
+	Event_DownItem:Hide();
+	Event_BidItem:Hide();
+	Event_DeleteEntry:Hide();
+	Event_Edit:Hide();
+	Event_Up:Hide();		
+	Event_Down:Hide();		
+
+	if(selected_eid > 0) then
 		local ets = SLACKER_SAVED_EVENTLOG[selected_eid]['ts'];
-		
+
+		Event_Edit:Show();	
 		Event_DeleteEntry:Show();
 		
 		if(SLACKER_SAVED_EVENTLOG[selected_eid]['type'] == 'LOOT') then
-			Event_Edit:Hide();
+			Event_Down:Show();
+			Event_Up:Show();
+		
 			if(SLACKER_SAVED_LOOTLOG[ets]['type'] == 'down') then
 				Event_DownItem:Hide();
 				Event_BidItem:Show();
@@ -196,11 +201,8 @@ function Slacker_DKP_EventLogBar_Update()
 				Event_BidItem:Hide();								
 				Event_DownItem:Show();
 			end	
-		else
-			Event_BidItem:Hide();								
-			Event_DownItem:Hide();
+						
 		end
-		Event_Edit:Show();
 	end
 	
 	FauxScrollFrame_Update(Slacker_DKP_EventLogBar,entries,10,17);
@@ -368,7 +370,7 @@ function Slacker_DKP_EventLog_Edit()
 	if(selected_eid > 0) then
 		local etype = SLACKER_SAVED_EVENTLOG[selected_eid]['type'];
 		local ets = SLACKER_SAVED_EVENTLOG[selected_eid]['ts'];
-				
+
 		edit_eid = selected_eid;
 		
 		if(etype == 'BOSSKILL') then
@@ -384,6 +386,32 @@ function Slacker_DKP_EventLog_Edit()
 	end
 end
 
+function Slacker_DKP_EventLog_Bump(direction)
+	local entries;
+	entries = getn (SLACKER_SAVED_EVENTLOG);
+
+	if(selected_eid > 0) then
+		local etype = SLACKER_SAVED_EVENTLOG[selected_eid]['type'];
+		local ets = SLACKER_SAVED_EVENTLOG[selected_eid]['ts'];
+
+		if(direction == 'U') then
+			target_eid = selected_eid + 1;
+		else
+			target_eid = selected_eid - 1;
+		end
+		
+		if(target_eid > 0 and target_eid <= entries) then
+			SLACKER_SAVED_EVENTLOG[selected_eid]['type'] = SLACKER_SAVED_EVENTLOG[target_eid]['type'];
+			SLACKER_SAVED_EVENTLOG[selected_eid]['ts'] = SLACKER_SAVED_EVENTLOG[target_eid]['ts'];
+
+			SLACKER_SAVED_EVENTLOG[target_eid]['type'] = etype;
+			SLACKER_SAVED_EVENTLOG[target_eid]['ts'] = ets;			
+		end
+
+		selected_eid = target_eid;
+		Slacker_DKP_EventLogBar_Update();		
+	end
+end
 
 function Slacker_DKP_EditWindow_Save()
 	if(edit_eid > 0) then
@@ -495,8 +523,8 @@ function Slacker_DKP_LogLoot(name,item,link)
 
 	local entries = getn (SLACKER_SAVED_EVENTLOG);
 	SLACKER_SAVED_EVENTLOG[entries+1] = {
-		["ts"] = ts;
-		["type"] = 'LOOT';
+		["ts"] = ts,
+		["type"] = 'LOOT',
 	}
 	
 	SLACKER_SAVED_LOOTLOG[ts] = {

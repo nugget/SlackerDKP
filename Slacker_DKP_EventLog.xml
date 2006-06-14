@@ -358,7 +358,42 @@
 			</Scripts>
 		</Button>		
 		
-				
+		<Button name="Event_Up" inherits="UIPanelButtonTemplate" text="+" hidden="true">
+			<Size>
+				<AbsDimension x="18" y="18"/>
+			</Size>
+			<Anchors>
+				<Anchor point="TOPLEFT" relativeTo="Event_Edit" relativePoint="TOPRIGHT">
+					<Offset>
+						<AbsDimension x="2" y="0"/>
+					</Offset>
+				</Anchor>
+			</Anchors>
+			<Scripts>
+				<OnClick>
+					Slacker_DKP_EventLog_Bump('U');
+				</OnClick>
+			</Scripts>
+		</Button>
+
+		<Button name="Event_Down" inherits="UIPanelButtonTemplate" text="-" hidden="true">
+			<Size>
+				<AbsDimension x="18" y="18"/>
+			</Size>
+			<Anchors>
+				<Anchor point="TOPLEFT" relativeTo="Event_Up" relativePoint="TOPRIGHT">
+					<Offset>
+						<AbsDimension x="2" y="0"/>
+					</Offset>
+				</Anchor>
+			</Anchors>
+			<Scripts>
+				<OnClick>
+					Slacker_DKP_EventLog_Bump('D');
+				</OnClick>
+			</Scripts>
+		</Button>
+		
 		</Frames>
 		
 		<Scripts>

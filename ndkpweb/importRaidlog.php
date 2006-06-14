@@ -18,6 +18,7 @@ $bosskills = array();
 $lootlog = array();
 $attlog = array();
 $raiddata = array();
+$eventlog = array();
 
 $unknown_player = array();
 $unknown_item = array();
@@ -45,7 +46,7 @@ foreach($ifbuf as $buf) {
 		$data = $matches[2];
 		$raiddata[$block][$name] = $data;
 		# print "<p>" . $block . ":" . $name . " = " . $raiddata[$block][$name] . "</p>";
-	} elseif(preg_match('/^\t\t\["?([^"\]]+)"?\] = "([^"\]]+)"?,/', $buf, $matches)) {
+	} elseif(preg_match('/^\t\t\["?([^"\]]+)"?\] = "?([^"\]]+)"?,/', $buf, $matches)) {
 		$fieldname = $matches[1];
 		$data = $matches[2];
 		# print "<pre>\$raiddata[$block][$ts][$fieldname] = $data</pre>\n";
@@ -81,7 +82,7 @@ sort($bosskills);
 sort($lootlog);
 sort($attlog);
 
-update_alts();
+$playercount = update_alts();
 for($i=0; $i<count($meta_attend); $i++) {
 	$meta_attend[$i] = alt_map_to_main($meta_attend[$i]);
 }
@@ -116,7 +117,9 @@ function update_alts() {
 	$sql = "update NDKP_members set alt_of = 0";
 	$result = mysql_query($sql);
 
+        $playercount = 0;
 	while (list($key,$val) = each($raiddata)) {
+		# print "<p>$key</p>";
 		if($key == 'alts') {
 			while (list($alt,$main) = each($val)) {
 				$sql = "select player_id from NDKP_members where name = '$main'";
@@ -126,9 +129,11 @@ function update_alts() {
 				mysql_query($sql);
 
 				$alt_lookup[$alt] = $main;
+				$playercount++;
 			}
 		}
 	}
+	return $playercount;
 }
 function player_exists($name) {
 	$sql = "select player_id from NDKP_members where name = '$name'";
@@ -187,6 +192,10 @@ function list_attlogs() {
 		$ts = strftime("%m/%d/%y %H:%M:%S",$attrec);
 		$plist = str_replace(' ', "\n", $raiddata[attlog][$attrec][playerlist]);
 		$type = 'start';
+
+		if($raiddata[attlog][$attrec][comments] == 'Meta Snapshot') {
+			$type = 'end';
+		}
 
 		print "<li>";
 		print $raiddata[attlog][$attrec][location] . " at " . $ts;
@@ -248,7 +257,8 @@ function list_bosskills() {
 
 		print "<li>";
 		print $raiddata[bosskills][$bossrec][bossname] . " at " . $ts;
-		if($record = boss_exists($bossrec)) {
+		#if($record = boss_exists($bossrec)) {
+		if(1==2) {
 			boss_edit_form($record);
 		} else {
 			boss_add_form($bossrec,$nextrec,$ts,
@@ -280,21 +290,37 @@ function boss_add_form($epochlow,$epochhigh,$ts,$bossname,$location,$comments,$p
 function boss_loot_fields($low,$high) {
 	global $lootlog;
 	global $raiddata;
+	global $eventlog;
 
 	$items = 0; $known_items = 0;
+	$thiskill = 0;
 
-	foreach ($lootlog as $ts) {
-		if(($ts > $low) && ($ts < $high)) {
-			$items++;
-			if($item_id = item_exists($raiddata[lootlog][$ts][item])) {
-				$known_items++;
-				print "\n\n";
-				print '<input type="hidden" name="looters[]" value="' . player_exists($raiddata[lootlog][$ts][player]) . '">';
-				print '<input type="hidden" name="items[]" value="' . $item_id . '">';
-				print '<input type="hidden" name="fullprice[]" value="0">';
-				print "\n\n";
+        for ($i=0; $i<=count($eventlog); $i++) {
+		$ets = $raiddata[eventlog][$i][ts];
+		$etype = $raiddata[eventlog][$i][type];
+		if($etype == 'BOSSKILL') {
+			if($ets == $low) {
+				$thiskill = 1;
+			} else {
+				if($thiskill == 1) {
+					$thiskill = 0;
+				}
 			}
 		}
+		if($etype == 'LOOT') {
+			if($thiskill == 1) {
+				$items++;
+				if($item_id = item_exists($raiddata[lootlog][$ets][item])) {
+					$known_items++;
+					print "\n\n";
+					print '<input type="hidden" name="looters[]" value="' . player_exists($raiddata[lootlog][$ets][player]) . '">';
+					print '<input type="hidden" name="items[]" value="' . $item_id . '">';
+					print '<input type="hidden" name="fullprice[]" value="0">';
+					print "\n\n";
+				}
+			}
+		}
+		
 	}
 	print "<i>$items items ($known_items known)</i>";
 }
@@ -325,6 +351,7 @@ function boss_exists($bossrec) {
 			<div style="margin-left: 30px;">
 			<?php list_unknown_items(); ?>
 			</div>
+			<h1><?php print $playercount; ?> Players Mapped</h1>
 			<div class="break"></div>
 
 			<h1 class="titles">Attendance Records (<?php print count($attlog); ?>)</h1>
