@@ -999,6 +999,8 @@ function Slacker_DKP_ClearLogs()
 	edit_eid = 0;
 	
 	Slacker_DKP_EventLogBar_Update();
+	Slacker_DKP_WaitListBar_Update();
+	Slacker_DKP_BossListBar_Update();
 end
 
 function Slacker_DKP_Announce(context, buf)
