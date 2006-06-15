@@ -983,6 +983,7 @@ function Slacker_DKP_ClearLogs()
 	SLACKER_SAVED_BOSSKILLS = nil;
 	SLACKER_SAVED_LOOTLOG = nil;
 	SLACKER_SAVED_ATTLOG = nil;
+	SLACKER_SAVED_WAITLIST = nil;
 	
 	SLACKER_SAVED_DKP = {};
 	SLACKER_SAVED_GEAR = {};
@@ -990,9 +991,12 @@ function Slacker_DKP_ClearLogs()
 	SLACKER_SAVED_BOSSKILLS = {};
 	SLACKER_SAVED_LOOTLOG = {};
 	SLACKER_SAVED_ATTLOG = {};
+	SLACKER_SAVED_WAITLIST = {};
 	
 	selected_eid = 0;
-	edti_eid = 0;
+	selected_wl = 0;
+	selected_bname = '';
+	edit_eid = 0;
 	
 	Slacker_DKP_EventLogBar_Update();
 end
