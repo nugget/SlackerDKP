@@ -156,12 +156,12 @@ all feedback.
 
 ** CHANGELOG
 
-1.12 (14-June-2006):
+1.13 (14-June-2006):
   o Bugfix: Item threshhold applied to announceloot messages
   o Added window for editing saved bosses list
   o Added raid waiting list feature and corresponding window.
 
-1.11 (13-June-2006):
+1.12 (13-June-2006):
   o Added ability to move loot events up and down the list for better
     DKP award flexibility.
 
