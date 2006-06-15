@@ -167,6 +167,16 @@ function Slacker_DKP_AddBossKillOnClick()
 	end
 end
 
+function Slacker_DKP_PlayerRaidRank(player)
+	for i=1,GetNumRaidMembers() do
+  		local name, rank, grp, lvl, lclass, class, zone, online, dead = GetRaidRosterInfo(i);
+ 		if(name == player) then
+			return rank;
+		end
+	end
+	return 0;
+end
+
 function Slacker_DKP_List(action,player)
 	local ts = time();
 
@@ -212,10 +222,14 @@ function Slacker_DKP_List(action,player)
 				msgbuf = msgbuf..SLACKER_SAVED_WAITLIST[row]["player"].." ";
 			end
 			
-			if(pos > 0) then
-				SendChatMessage("sDKP: You're number "..pos.." on the list. ["..msgbuf.."]", "WHISPER", this.language, player);
+			if(Slacker_DKP_PlayerRaidRank(player) >= 1) then
+				SendChatMessage("sDKP: The list is "..msgbuf);
 			else
-				SendChatMessage("sDKP: You're not on the list. ["..msgbuf.."]", "WHISPER", this.language, player);
+				if(pos > 0) then
+					SendChatMessage("sDKP: You're number "..pos.." on the list.", "WHISPER", this.language, player);
+				else
+					SendChatMessage("sDKP: You're not on the list.", "WHISPER", this.language, player);
+				end
 			end
 			
 			Slacker_DKP_Message('sDKP: Sent waiting list to '..player);
