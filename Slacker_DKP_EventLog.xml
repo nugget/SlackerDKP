@@ -208,9 +208,36 @@
 				<PushedTexture file="Interface\Buttons\UI-MicroButton-Quest-Disabled"/>
 			</Button>	
 
-			
-			
-			
+			<Button name="$parentWaitList">
+				<Size>
+					<AbsDimension x="14" y="24"/>
+				</Size>
+				<Anchors>
+					<Anchor point="TOPRIGHT" relativeTo="$parentAddBossKill" relativePoint="TOPLEFT">
+						<Offset>
+							<AbsDimension x="-8" y="0"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnLoad>
+						this:RegisterForClicks("LeftButtonUp", "RightButtonUp");
+					</OnLoad>
+					<OnClick>
+						Slacker_DKP_WL_ToggleFrame();
+					</OnClick>
+					<OnEnter>
+						GameTooltip:SetOwner(this, "ANCHOR_RIGHT");
+						GameTooltip:SetText("View Waiting List");
+					</OnEnter>
+					<OnLeave>
+						GameTooltip:Hide();
+					</OnLeave>
+				</Scripts>
+				<NormalTexture file="Interface\Buttons\UI-MicroButton-Spellbook-Up"/>
+				<HighlightTexture file="Interface\Buttons\UI-MicroButton-Spellbook-Down" alphaMode="ADD"/>
+				<PushedTexture file="Interface\Buttons\UI-MicroButton-Spellbook-Disabled"/>
+			</Button>		
 			
 		<ScrollFrame name="Slacker_DKP_EventLogBar" inherits="FauxScrollFrameTemplate">
 			<Anchors>

@@ -12,3 +12,4 @@ Slacker_DKP_EventLog.xml
 Slacker_DKP_EditWindow.xml
 Slacker_DKP_EditLoot.xml
 Slacker_DKP_PlayerList.xml
+Slacker_DKP_WaitList.xml

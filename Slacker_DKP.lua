@@ -11,6 +11,7 @@ local cvsversion = '$Id$';
 _,_,buildnum,builddate = string.find(cvsversion, ",v 1.([^%s]+)% ([^%s]+) ");
 local selected_eid = 0;
 local edit_eid = 0;
+local selected_wl = 0;
 
 local Slacker_Orig_ChatFrame_OnEvent;
 local last_whisper_time = 0
@@ -167,6 +168,7 @@ end
 
 function Slacker_DKP_List(action,player)
 	local ts = time();
+
 	if(action == 'add') then
 		local pos = Slacker_DKP_List('position',player);
 		if(pos > 0) then
@@ -237,6 +239,7 @@ function Slacker_DKP_List(action,player)
 			
 		end
 	end
+	Slacker_DKP_WaitListBar_Update();
 end
 
 function Slacker_DKP_ItemInfo(link)
@@ -371,6 +374,61 @@ function Slacker_DKP_EventLogBar_Update()
 	end
 end
 
+function Slacker_DKP_WaitListBar_Update()
+	local row;
+	local entries;
+	
+	entries = getn (SLACKER_SAVED_WAITLIST);
+	Slacker_DKP_Debug("There are "..entries.." waiting list entries.");
+	
+	if(entries <= 10) then
+		Slacker_DKP_WaitListBar:Hide();
+	else 
+		Slacker_DKP_WaitListBar:Show();
+	end
+	
+	WL_DeleteEntry:Hide();
+	WL_Invite:Hide();
+	WL_Up:Hide();		
+	WL_Down:Hide();		
+
+	if(selected_wl > 0) then
+		WL_DeleteEntry:Show();
+		WL_Invite:Show();
+		WL_Down:Show();
+		WL_Up:Show();
+	end
+	
+	FauxScrollFrame_Update(Slacker_DKP_WaitListBar,entries,10,17);
+	for row=1,10 do
+		local time = getglobal("WaitList"..row.."FieldTime");
+		local player = getglobal("WaitList"..row.."FieldPlayer");
+		local highlight = getglobal("WaitList"..row.."FieldHighlight");
+		local eid = row + FauxScrollFrame_GetOffset(Slacker_DKP_WaitListBar);
+		local eventrow = getglobal("WaitList"..row);
+	
+		if eid <= entries then
+			local ets = SLACKER_SAVED_WAITLIST[eid]['ts'];
+			
+			local color = "|cffFFFFFF";
+			if(ets) then
+				time:SetText(color..date("%H:%M",SLACKER_SAVED_WAITLIST[eid]['ts']));
+				player:SetText(color..SLACKER_SAVED_WAITLIST[eid]['player']);
+				eventrow:Show();
+				if(selected_wl== eid) then
+					highlight:Show();
+				else
+					highlight:Hide();
+				end
+			else
+				eventrow:Hide();
+			end
+		else
+			eventrow:Hide();
+		end
+	end
+end
+
 function Slacker_DKP_LootWalk()
 	SLACKER_SAVED_LOOTLIST = nil;
 	SLACKER_SAVED_LOOTLIST = {};
@@ -414,6 +472,15 @@ function Slacker_DKP_EventLogOnClick(button)
 	selected_eid = eid;
 	
 	Slacker_DKP_EventLogBar_Update();
+end
+
+function Slacker_DKP_WaitListOnClick(button)
+	local row = this:GetID();
+	local eid = row + FauxScrollFrame_GetOffset(Slacker_DKP_WaitListBar);
+	
+	selected_wl = eid;
+	
+	Slacker_DKP_WaitListBar_Update();
 end
 
 function Slacker_DKP_EventLog_DeleteEntry()
@@ -466,6 +533,40 @@ function Slacker_DKP_EventLog_DeleteEntry()
 	PlaySound("INTERFACESOUND_CURSORDROPOBJECT");
 	
 	Slacker_DKP_EventLogBar_Update();
+end
+
+function Slacker_DKP_WaitList_DeleteEntry()
+	local eid = selected_wl;
+	local count = getn (SLACKER_SAVED_WAITLIST);
+	
+	if(eid > 0) then
+		for i=1,count do
+			local eplayer = SLACKER_SAVED_WAITLIST[i]['player'];
+			local ets = SLACKER_SAVED_WAITLIST[i]['ts'];
+		
+			if (i > eid) then
+				if(i > 1) then
+					local j=i-1;
+					SLACKER_SAVED_WAITLIST[j] = SLACKER_SAVED_WAITLIST[i];
+				end
+			end
+		end
+		SLACKER_SAVED_WAITLIST[count] = nil;
+	end
+
+	selected_wl = 0;
+
+	PlaySound("INTERFACESOUND_CURSORDROPOBJECT");
+	
+	Slacker_DKP_WaitListBar_Update();
+end
+
+function Slacker_DKP_WaitList_Invite()
+	local eid = selected_wl;
+ 
+	if(eid > 0) then
+		InviteByName(SLACKER_SAVED_WAITLIST[eid]['player']);
+	end
 end
 
 function Slacker_DKP_EventLog_EntryType(type)
@@ -527,6 +628,33 @@ function Slacker_DKP_EventLog_Bump(direction)
 	end
 end
 
+function Slacker_DKP_WaitList_Bump(direction)
+	local entries;
+	entries = getn (SLACKER_SAVED_WAITLIST);
+
+	if(selected_wl > 0) then
+		local eplayer = SLACKER_SAVED_WAITLIST[selected_wl]['player'];
+		local ets = SLACKER_SAVED_WAITLIST[selected_wl]['ts'];
+
+		if(direction == 'U') then
+			target_wl = selected_wl + 1;
+		else
+			target_wl = selected_wl - 1;
+		end
+		
+		if(target_wl > 0 and target_wl <= entries) then
+			SLACKER_SAVED_WAITLIST[selected_wl]['player'] = SLACKER_SAVED_WAITLIST[target_wl]['player'];
+			SLACKER_SAVED_WAITLIST[selected_wl]['ts'] = SLACKER_SAVED_WAITLIST[target_wl]['ts'];
+
+			SLACKER_SAVED_WAITLIST[target_wl]['player'] = eplayer;
+			SLACKER_SAVED_WAITLIST[target_wl]['ts'] = ets;			
+		end
+
+		selected_wl = target_wl;
+		Slacker_DKP_WaitListBar_Update();		
+	end
+end
+
 function Slacker_DKP_EditWindow_Save()
 	if(edit_eid > 0) then
 		local etype = SLACKER_SAVED_EVENTLOG[edit_eid]['type'];
@@ -564,6 +692,15 @@ function Slacker_DKP_ToggleFrame()
 		selected_eid = 0;
 	else
 		Slacker_DKP_EventLogFrame:Show();
+	end
+end
+
+function Slacker_DKP_WL_ToggleFrame()
+	if (Slacker_DKP_WaitListFrame:IsVisible()) then
+		Slacker_DKP_WaitListFrame:Hide();
+		selected_wl = 0;
+	else
+		Slacker_DKP_WaitListFrame:Show();
 	end
 end
 
@@ -757,7 +894,7 @@ function Slacker_DKP_ClearLogs()
 	selected_eid = 0;
 	edti_eid = 0;
 	
-	Slacker_DKP_EventLogBar_Update();	
+	Slacker_DKP_EventLogBar_Update();
 end
 
 function Slacker_DKP_Announce(context, buf)

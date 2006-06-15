@@ -2,6 +2,9 @@
 	<Binding name="SLACKERDKP" description="Toggle Slacker DKP Main Window" header="SLACKERDKPHEADER">
 		Slacker_DKP_ToggleFrame();
 	</Binding>
+	<Binding name="SLACKERDKPWL" description="Toggle Slacker DKP Waitlist Window" header="SLACKERDKPHEADER">
+		Slacker_DKP_WL_ToggleFrame();
+	</Binding>
 	<Binding name="SLACKERDKPATT" description="Add new Attendance Snapshot" header="SLACKERDKPHEADER">
 		Slacker_DKP_AddAttendanceOnClick();
 	</Binding>
