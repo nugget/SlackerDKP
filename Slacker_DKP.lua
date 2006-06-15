@@ -493,20 +493,21 @@ function Slacker_DKP_LootWalk()
 	
 	for index = 1, GetNumLootItems(), 1 do
 		if (LootSlotIsItem(index)) then
-			items = items + 1;
-			
 			local texture,item,quantity,quality = GetLootSlotInfo(index);
-			local iteminfo = GetLootSlotLink(index);
-			
-			if(iteminfo) then
+			local itemlink = GetLootSlotLink(index);
+			local info = Slacker_DKP_ItemInfo(itemlink);
+
+			if(info.rarity >= tonumber(SLACKER_SAVED_SETTINGS['rarity'])) then
+				items = items + 1;
+
 				Slacker_DKP_Debug("Tracking item "..items.." ("..item..")");
 	
 				SLACKER_SAVED_LOOTLIST[items] = {
 					["name"] = item,
-					["link"] = iteminfo,
+					["link"] = itemlink,
 				};
-				
-				msgbuf = msgbuf.." "..iteminfo;
+		
+				msgbuf = msgbuf.." "..itemlink;
 			end
 		end
 	end
