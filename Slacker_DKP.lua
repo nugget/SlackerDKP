@@ -12,6 +12,10 @@ _,_,buildnum,builddate = string.find(cvsversion, ",v 1.([^%s]+)% ([^%s]+) ");
 local selected_eid = 0;
 local edit_eid = 0;
 
+local Slacker_Orig_ChatFrame_OnEvent;
+local last_whisper_time = 0
+local last_whisper_event = '';
+
 SLACKER_SAVED_DKP = {};
 SLACKER_SAVED_GEAR = {};
 
@@ -29,20 +33,25 @@ SLACKER_SAVED_LOOTLIST = {};
 SLACKER_SAVED_ALTS = {};
 SLACKER_SAVED_CLASSES = {};
 
+SLACKER_SAVED_WAITLIST = {};
+
 function Slacker_DKP_OnLoad()
 	this:RegisterEvent("PLAYER_LOGIN");
-	this:RegisterEvent("CHAT_MSG_WHISPER");
 	this:RegisterEvent("CHAT_MSG_SYSTEM");
 	this:RegisterEvent("LOOT_OPENED");
 	this:RegisterEvent("CHAT_MSG_LOOT");
 	this:RegisterEvent("ADDON_LOADED");
 	this:RegisterEvent("CHAT_MSG_COMBAT_HOSTILE_DEATH");
 	this:RegisterEvent("CHAT_MSG_MONSTER_YELL");	
+	this:RegisterEvent("RAID_ROSTER_UPDATE");
 		
 	SlashCmdList["SLACKERDKP"] = Slacker_DKP_CommandHandler;
 	SLASH_SLACKERDKP1 = "/sdkp";
 	
 	Slacker_DKP_LoadAltList();
+
+	Slacker_Orig_ChatFrame_OnEvent = ChatFrame_OnEvent;
+	ChatFrame_OnEvent = Slacker_ChatFrame_OnEvent;
 end
 
 function Slacker_DKP_OnEvent()
@@ -98,6 +107,37 @@ function Slacker_DKP_OnEvent()
 		end
 	elseif (event == "LOOT_OPENED") then
 		Slacker_DKP_LootWalk();
+	elseif (event == "RAID_ROSTER_UPDATE") then
+		Slacker_DKP_List('verify');
+	end
+end
+
+function Slacker_ChatFrame_OnEvent(event)
+	if( event == "CHAT_MSG_WHISPER" ) then
+		if( last_whisper_time > (time() - 2) and last_whisper_event == arg2..arg1) then
+			Slacker_DKP_Debug("Ignoring duplicate request");
+		else
+			last_whisper_time = time();
+			last_whisper_event = arg2..arg1;
+			
+			Slacker_DKP_Debug(arg2..' whispered "'..arg1..'"');
+			
+			if( string.lower(arg1) == "!addme" ) then
+				Slacker_DKP_List('add',arg2);
+			elseif( string.lower(arg1) == "!waitlist" ) then
+				Slacker_DKP_List('show',arg2);
+			elseif( string.lower(arg1) == "!dropme" ) then
+				Slacker_DKP_List('drop',arg2);
+			else
+				Slacker_Orig_ChatFrame_OnEvent(event);
+			end
+		end
+	elseif( event == "CHAT_MSG_WHISPER_INFORM" ) then
+		if ( string.find(arg1,'sDKP') == nil) then
+			Slacker_Orig_ChatFrame_OnEvent(event);
+		end
+	else
+		Slacker_Orig_ChatFrame_OnEvent(event);
 	end
 end
 
@@ -122,6 +162,80 @@ function Slacker_DKP_AddBossKillOnClick()
 		selected_eid = getn(SLACKER_SAVED_EVENTLOG);
 		Slacker_DKP_EventLogBar_Update();
 		Slacker_DKP_EventLog_Edit();
+	end
+end
+
+function Slacker_DKP_List(action,player)
+	local ts = time();
+	if(action == 'add') then
+		local pos = Slacker_DKP_List('position',player);
+		if(pos > 0) then
+			SendChatMessage("sDKP: You were already on the list, silly cow.  You're number "..pos..".", "WHISPER", this.language, player);
+		else
+			local pos = (getn (SLACKER_SAVED_WAITLIST)+1);
+			SLACKER_SAVED_WAITLIST[pos] = {
+				["ts"] = ts,
+				["player"] = player,
+			};
+			SendChatMessage("sDKP: You're number "..pos.." on the list.", "WHISPER", this.language, player);
+			Slacker_DKP_Message("sDKP: Added "..player.." to waiting list ("..pos.." waiting)");
+		end		
+	elseif(action == 'drop') then
+		local pos = Slacker_DKP_List('position',player);
+		if(pos == 0) then
+			SendChatMessage("sDKP: You're not on the list!", "WHISPER", this.language, player);
+		else
+			local entries = getn (SLACKER_SAVED_WAITLIST);
+			for row=pos,entries do
+				if(row == entries) then
+					SLACKER_SAVED_WAITLIST[row] = nil;
+				else
+					SLACKER_SAVED_WAITLIST[row]["player"] = SLACKER_SAVED_WAITLIST[row+1]["player"];
+					SLACKER_SAVED_WAITLIST[row]["ts"] = SLACKER_SAVED_WAITLIST[row+1]["ts"];					
+				end
+			end
+			SendChatMessage("sDKP: You're off the list.", "WHISPER", this.language, player);
+			Slacker_DKP_Message('sDKP: Removed '..player..' from waiting list.');
+		end
+	elseif(action == 'show') then
+		local pos = Slacker_DKP_List('position',player);
+		local size = getn(SLACKER_SAVED_WAITLIST);
+		
+		if(size == 0) then
+			SendChatMessage("sDKP: The waiting list is empty.", "WHISPER", this.language, player);
+		else
+			local msgbuf = '';
+			for row=1,getn(SLACKER_SAVED_WAITLIST) do
+				msgbuf = msgbuf..SLACKER_SAVED_WAITLIST[row]["player"].." ";
+			end
+			
+			if(pos > 0) then
+				SendChatMessage("sDKP: You're number "..pos.." on the list. ["..msgbuf.."]", "WHISPER", this.language, player);
+			else
+				SendChatMessage("sDKP: You're not on the list. ["..msgbuf.."]", "WHISPER", this.language, player);
+			end
+			
+			Slacker_DKP_Message('sDKP: Sent waiting list to '..player);
+		end
+	elseif(action == 'position') then
+		for pos=1,getn (SLACKER_SAVED_WAITLIST) do
+			if( SLACKER_SAVED_WAITLIST[pos]["player"] == player) then
+				return pos;
+			end
+		end
+		return 0;
+	elseif(action == 'verify') then
+		local plist = " "..Slacker_DKPPlayerList();
+		local listcopy = SLACKER_SAVED_WAITLIST;
+		for row=1,getn(listcopy) do
+			local pname = listcopy[row]["player"];
+			
+			if not (string.find(plist,' '..pname..' ') == nil) then
+				Slacker_DKP_Debug(pname.." is in the party, removing from waiting list.");
+				Slacker_DKP_List('drop',pname);
+			end
+			
+		end
 	end
 end
 
