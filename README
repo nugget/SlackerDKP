@@ -138,6 +138,16 @@ normal NDKP method.  The supplied "site.php" page includes the changes we've
 made to NDKP to make it behave the way we want.  It's not suggested that you
 do anything with that file.
 
+** WAITING LIST
+
+SlackerDKP can also manage your raid waiting list, intended for use when a
+raid is full and some members are waiting to join the raid.  Players can
+whisper to the raid logger the following commands:
+
+  !addme - Add this player to the waiting list.
+  !dropme - Remove this player from the waiting list.
+  !waitlist - Report the player's position on the waiting list.
+
 ** FOLLOWUP
 
 Comments, problems, bug reports, suggestions, and feature requests are warmly
@@ -145,6 +155,11 @@ appreciated.  Please contact David McNett <nugget@slacker.com> with any and
 all feedback.
 
 ** CHANGELOG
+
+1.12 (14-June-2006):
+  o Bugfix: Item threshhold applied to announceloot messages
+  o Added window for editing saved bosses list
+  o Added raid waiting list feature and corresponding window.
 
 1.11 (13-June-2006):
   o Added ability to move loot events up and down the list for better

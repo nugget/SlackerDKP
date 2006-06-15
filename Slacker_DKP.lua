@@ -12,6 +12,7 @@ _,_,buildnum,builddate = string.find(cvsversion, ",v 1.([^%s]+)% ([^%s]+) ");
 local selected_eid = 0;
 local edit_eid = 0;
 local selected_wl = 0;
+local selected_bname = '';
 
 local Slacker_Orig_ChatFrame_OnEvent;
 local last_whisper_time = 0
@@ -379,7 +380,6 @@ function Slacker_DKP_WaitListBar_Update()
 	local entries;
 	
 	entries = getn (SLACKER_SAVED_WAITLIST);
-	Slacker_DKP_Debug("There are "..entries.." waiting list entries.");
 	
 	if(entries <= 10) then
 		Slacker_DKP_WaitListBar:Hide();
@@ -428,6 +428,61 @@ function Slacker_DKP_WaitListBar_Update()
 		end
 	end
 end
+
+function Slacker_DKP_BossListBar_Update()
+	local row;
+	local entries = 0;
+	local bosslist = {};
+	
+	for key,value in pairs(SLACKER_SAVED_BOSSES) do
+		entries = entries + 1;
+		bosslist[entries] = key;
+	end
+
+	sort(bosslist);
+	
+	if(entries <= 10) then
+		Slacker_DKP_BossListBar:Hide();
+	else 
+		Slacker_DKP_BossListBar:Show();
+	end
+	
+	BL_DeleteEntry:Hide();
+
+	if not (selected_bname == '') then
+		BL_DeleteEntry:Show();
+	end
+	
+	FauxScrollFrame_Update(Slacker_DKP_BossListBar,entries,10,17);
+	for row=1,10 do
+		local kills = getglobal("BossList"..row.."FieldKills");
+		local bossname = getglobal("BossList"..row.."FieldBossname");
+		local highlight = getglobal("BossList"..row.."FieldHighlight");
+		local eid = row + FauxScrollFrame_GetOffset(Slacker_DKP_BossListBar);
+		local eventrow = getglobal("BossList"..row);
+	
+		if eid <= entries then
+			local ebname = bosslist[eid];
+			local ekills = SLACKER_SAVED_BOSSES[ebname];
+			
+			if(ebname) then
+				kills:SetText(ekills);
+				bossname:SetText(ebname);
+				eventrow:Show();
+				if(selected_bname == ebname) then
+					highlight:Show();
+				else
+					highlight:Hide();
+				end
+			else
+				eventrow:Hide();
+			end
+		else
+			eventrow:Hide();
+		end
+	end
+end
+
 
 function Slacker_DKP_LootWalk()
 	SLACKER_SAVED_LOOTLIST = nil;
@@ -481,6 +536,16 @@ function Slacker_DKP_WaitListOnClick(button)
 	selected_wl = eid;
 	
 	Slacker_DKP_WaitListBar_Update();
+end
+
+function Slacker_DKP_BossListOnClick(button)
+	local row = this:GetID();
+	local bossname = getglobal("BossList"..row.."FieldBossname");
+	
+	selected_bname = bossname:GetText();
+	Slacker_DKP_Debug("You selected "..selected_bname);
+
+	Slacker_DKP_BossListBar_Update();
 end
 
 function Slacker_DKP_EventLog_DeleteEntry()
@@ -559,6 +624,17 @@ function Slacker_DKP_WaitList_DeleteEntry()
 	PlaySound("INTERFACESOUND_CURSORDROPOBJECT");
 	
 	Slacker_DKP_WaitListBar_Update();
+end
+
+function Slacker_DKP_BossList_DeleteEntry()
+
+	if not (selected_bname == '') then
+		PlaySound("INTERFACESOUND_CURSORDROPOBJECT");
+		SLACKER_SAVED_BOSSES[selected_bname] = nil;
+		selected_bname = '';
+	end
+	
+	Slacker_DKP_BossListBar_Update();
 end
 
 function Slacker_DKP_WaitList_Invite()
@@ -701,6 +777,15 @@ function Slacker_DKP_WL_ToggleFrame()
 		selected_wl = 0;
 	else
 		Slacker_DKP_WaitListFrame:Show();
+	end
+end
+
+function Slacker_DKP_BL_ToggleFrame()
+	if (Slacker_DKP_BossListFrame:IsVisible()) then
+		Slacker_DKP_BossListFrame:Hide();
+		selected_bname = '';
+	else
+		Slacker_DKP_BossListFrame:Show();
 	end
 end
 

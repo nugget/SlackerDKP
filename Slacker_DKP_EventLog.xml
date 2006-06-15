@@ -239,6 +239,37 @@
 				<PushedTexture file="Interface\Buttons\UI-MicroButton-Spellbook-Disabled"/>
 			</Button>		
 			
+			<Button name="$parentBossList">
+				<Size>
+					<AbsDimension x="14" y="24"/>
+				</Size>
+				<Anchors>
+					<Anchor point="TOPRIGHT" relativeTo="$parentWaitList" relativePoint="TOPLEFT">
+						<Offset>
+							<AbsDimension x="-2" y="0"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnLoad>
+						this:RegisterForClicks("LeftButtonUp", "RightButtonUp");
+					</OnLoad>
+					<OnClick>
+						Slacker_DKP_BL_ToggleFrame();
+					</OnClick>
+					<OnEnter>
+						GameTooltip:SetOwner(this, "ANCHOR_RIGHT");
+						GameTooltip:SetText("View Bosses List");
+					</OnEnter>
+					<OnLeave>
+						GameTooltip:Hide();
+					</OnLeave>
+				</Scripts>
+				<NormalTexture file="Interface\Buttons\UI-MicroButton-Talents-Up"/>
+				<HighlightTexture file="Interface\Buttons\UI-MicroButton-Talents-Down" alphaMode="ADD"/>
+				<PushedTexture file="Interface\Buttons\UI-MicroButton-Talents-Disabled"/>
+			</Button>		
+			
 		<ScrollFrame name="Slacker_DKP_EventLogBar" inherits="FauxScrollFrameTemplate">
 			<Anchors>
 				<Anchor point="TOPLEFT">

@@ -1,0 +1,284 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xsi:schemaLocation="http://www.blizzard.com/wow/ui/ ..\FrameXML\UI.xsd">
+
+ 	<Button name = "WaitListTemplate" virtual="true">
+		<Size>
+			<AbsDimension x="160" y="11" />
+		</Size>
+		<Frames>
+			<Frame name="$parentField" setAllPoints="true">
+				<Layers>
+					<Layer level="ARTWORK">
+						<Texture name="$parentHighlight" file="Interface\QuestFrame\UI-QuestTitleHighlight" alphaMode="ADD" setAllPoints="true" hidden="true">
+							<Size>
+								<AbsDimension x="144" y="11"/>
+							</Size>
+							<Anchors>
+								<Anchor point="TOP">
+									<Offset>
+										<AbsDimension x="-12" y="0"/>
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</Texture>
+					</Layer>
+					<Layer level="BACKGROUND">
+						<FontString name="$parentTime" inherits="Slacker_BodyFont" justifyH="RIGHT">
+							<Size>
+								<AbsDimension x="32" y="11"/>
+							</Size>
+							<Anchors>
+								<Anchor point="TOPLEFT" relativeTo="$parentHighlight" relativePoint="TOPLEFT">
+									<Offset>
+										<AbsDimension x="0" y="0"/>
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
+						<FontString name="$parentPlayer" inherits="Slacker_BodyFont" justifyH="LEFT">
+							<Size>
+								<AbsDimension x="110" y="11"/>
+							</Size>
+							<Anchors>
+								<Anchor point="TOPLEFT" relativeTo="$parentTime" relativePoint="TOPRIGHT">
+									<Offset>
+										<AbsDimension x="8" y="0"/>
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+			</Frame>
+		</Frames>
+		<Scripts>
+			<OnLoad>
+				this:RegisterForClicks("LeftButtonUp", "RightButtonUp");
+			</OnLoad>
+			<OnClick>
+				Slacker_DKP_WaitListOnClick(arg1);
+			</OnClick>
+		</Scripts>
+	</Button>
+
+	<Frame name="Slacker_DKP_WaitListFrame" frameStrata="BACKGROUND" parent="UIParent" movable="true" enableMouse="true" hidden="true">
+		<Size>
+			<AbsDimension x="160" y="140"/>
+		</Size>
+		<Anchors>
+			<Anchor point="CENTER">
+				<Offset>
+					<AbsDimension x="0" y="0"/>
+				</Offset>
+			</Anchor>
+		</Anchors>
+		<Backdrop name="$parentBackdrop" bgFile="Interface\Tooltips\UI-Tooltip-Background" edgeFile="Interface\Tooltips\UI-Tooltip-Border" tile="true">
+			<EdgeSize>
+				<AbsValue val="16"/>
+			</EdgeSize>
+			<TileSize>
+				<AbsValue val="16"/>
+			</TileSize>
+			<BackgroundInsets>
+				<AbsInset left="5" right="5" top="5" bottom="5"/>
+			</BackgroundInsets>
+		</Backdrop>
+		<Layers>
+			<Layer level="HEADER">
+				<FontString name="Slacker_DKP_WaitListTitle" inherits="Slacker_TitleFont" justifyH="LEFT" text="SlackerDKP Waiting List">
+					<Size>
+						<AbsDimension x="150" y="11"/>
+					</Size>
+					<Anchors>
+						<Anchor point="TOP">
+							<Offset>
+								<AbsDimension x="0" y="-5"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+			</Layer>
+		</Layers>
+		<Frames>
+			<Button name="$parentCloseButton" inherits="UIPanelCloseButton">
+				<Size>
+					<AbsDimension x="22" y="22"/>
+				</Size>
+				<Anchors>
+					<Anchor point="TOPRIGHT">
+						<Offset>
+							<AbsDimension x="0" y="0"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</Button>
+			
+		<ScrollFrame name="Slacker_DKP_WaitListBar" inherits="FauxScrollFrameTemplate">
+			<Anchors>
+				<Anchor point="TOPLEFT">
+					<Offset>
+						<AbsDimension x="8" y="-20"/>
+					</Offset>
+				</Anchor>
+				<Anchor point="BOTTOMRIGHT">
+					<Offset>
+						<AbsDimension x="-28" y="8"/>
+					</Offset>
+				</Anchor>
+			</Anchors>
+			<Scripts>
+				<OnVerticalScroll>
+					FauxScrollFrame_OnVerticalScroll(16, Slacker_DKP_WaitListBar_Update);
+				</OnVerticalScroll>
+				<OnShow>
+					Slacker_DKP_WaitListBar_Update();
+				</OnShow>
+			</Scripts>
+		</ScrollFrame>
+		
+		<Button name="WaitList1" inherits="WaitListTemplate" id="1">
+			<Anchors>
+				<Anchor point="TOPLEFT" relativeTo="Slacker_DKP_WaitListBar" relativePoint="TOPLEFT" />
+			</Anchors>
+		</Button>
+		<Button name="WaitList2" inherits="WaitListTemplate" id="2">
+			<Anchors>
+				<Anchor point="TOPLEFT" relativeTo="WaitList1" relativePoint="BOTTOMLEFT" />
+			</Anchors>
+		</Button>
+		<Button name="WaitList3" inherits="WaitListTemplate" id="3">
+			<Anchors>
+				<Anchor point="TOPLEFT" relativeTo="WaitList2" relativePoint="BOTTOMLEFT" />
+			</Anchors>
+		</Button>
+		<Button name="WaitList4" inherits="WaitListTemplate" id="4">
+			<Anchors>
+				<Anchor point="TOPLEFT" relativeTo="WaitList3" relativePoint="BOTTOMLEFT" />
+			</Anchors>
+		</Button>
+		<Button name="WaitList5" inherits="WaitListTemplate" id="5">
+			<Anchors>
+				<Anchor point="TOPLEFT" relativeTo="WaitList4" relativePoint="BOTTOMLEFT" />
+			</Anchors>
+		</Button>
+		<Button name="WaitList6" inherits="WaitListTemplate" id="6">
+			<Anchors>
+				<Anchor point="TOPLEFT" relativeTo="WaitList5" relativePoint="BOTTOMLEFT" />
+			</Anchors>
+		</Button>
+		<Button name="WaitList7" inherits="WaitListTemplate" id="7">
+			<Anchors>
+				<Anchor point="TOPLEFT" relativeTo="WaitList6" relativePoint="BOTTOMLEFT" />
+			</Anchors>
+		</Button>
+		<Button name="WaitList8" inherits="WaitListTemplate" id="8">
+			<Anchors>
+				<Anchor point="TOPLEFT" relativeTo="WaitList7" relativePoint="BOTTOMLEFT" />
+			</Anchors>
+		</Button>
+		<Button name="WaitList9" inherits="WaitListTemplate" id="9">
+			<Anchors>
+				<Anchor point="TOPLEFT" relativeTo="WaitList8" relativePoint="BOTTOMLEFT" />
+			</Anchors>
+		</Button>
+		<Button name="WaitList10" inherits="WaitListTemplate" id="10">
+			<Anchors>
+				<Anchor point="TOPLEFT" relativeTo="WaitList9" relativePoint="BOTTOMLEFT" />
+			</Anchors>
+		</Button>
+		
+		<Button name="WL_DeleteEntry" inherits="UIPanelButtonTemplate" text="Drop" hidden="true">
+			<Size>
+				<AbsDimension x="50" y="18"/>
+			</Size>
+			<Anchors>
+				<Anchor point="BOTTOMLEFT">
+					<Offset>
+						<AbsDimension x="8" y="-8" />
+					</Offset>
+				</Anchor>
+			</Anchors>
+			<Scripts>
+				<OnClick>
+					Slacker_DKP_WaitList_DeleteEntry();
+				</OnClick>
+			</Scripts>
+		</Button>
+				
+		<Button name="WL_Invite" inherits="UIPanelButtonTemplate" text="Invite" hidden="true">
+			<Size>
+				<AbsDimension x="50" y="18"/>
+			</Size>
+			<Anchors>
+				<Anchor point="TOPLEFT" relativeTo="WL_DeleteEntry" relativePoint="TOPRIGHT">
+					<Offset>
+						<AbsDimension x="2" y="0"/>
+					</Offset>
+				</Anchor>
+			</Anchors>
+			<Scripts>
+				<OnClick>
+					Slacker_DKP_WaitList_Invite();
+				</OnClick>
+			</Scripts>
+		</Button>
+
+		
+		<Button name="WL_Up" inherits="UIPanelButtonTemplate" text="+" hidden="true">
+			<Size>
+				<AbsDimension x="18" y="18"/>
+			</Size>
+			<Anchors>
+				<Anchor point="TOPLEFT" relativeTo="WL_Invite" relativePoint="TOPRIGHT">
+					<Offset>
+						<AbsDimension x="2" y="0"/>
+					</Offset>
+				</Anchor>
+			</Anchors>
+			<Scripts>
+				<OnClick>
+					Slacker_DKP_WaitList_Bump('U');
+				</OnClick>
+			</Scripts>
+		</Button>
+
+		<Button name="WL_Down" inherits="UIPanelButtonTemplate" text="-" hidden="true">
+			<Size>
+				<AbsDimension x="18" y="18"/>
+			</Size>
+			<Anchors>
+				<Anchor point="TOPLEFT" relativeTo="WL_Up" relativePoint="TOPRIGHT">
+					<Offset>
+						<AbsDimension x="2" y="0"/>
+					</Offset>
+				</Anchor>
+			</Anchors>
+			<Scripts>
+				<OnClick>
+					Slacker_DKP_WaitList_Bump('D');
+				</OnClick>
+			</Scripts>
+		</Button>
+		
+		</Frames>
+		
+		<Scripts>
+			<OnLoad>
+				this:SetBackdropColor(0, 0, 0, 0.75);
+				this:RegisterForDrag("LeftButton");
+			</OnLoad>
+			<OnDragStart>
+				if (IsAltKeyDown()) then
+					this:StartMoving();
+				end
+			</OnDragStart>
+			<OnDragStop>
+				this:StopMovingOrSizing();
+			</OnDragStop>
+			<OnEscapePressed>
+				this:ClearFocus();
+			</OnEscapePressed>
+		</Scripts>
+	</Frame>
+</Ui>
