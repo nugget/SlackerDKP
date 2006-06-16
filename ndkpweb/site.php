@@ -73,7 +73,7 @@ class NDKP {
 			mysql_query($sql);
 		}
 
-		$sql = 'select * from tempdkptable';	
+		$sql = 'select m.*, a.name as alt_name from tempdkptable m left join NDKP_members a on a.player_id = m.alt_of';	
 		if(isset($_GET[sortby]) && isset($_GET[sortorder])) {
 			$sql .= " order by ".$_GET[sortby]." ".$_GET[sortorder];
 		} else {
@@ -84,6 +84,8 @@ class NDKP {
 		$totalfound=mysql_num_rows($dbi);
 		$arrs[attendance]=array();
 		$arrs[player]=array();
+		$arrs[alt_of]=array();
+		$arrs[alt_name]=array();
 		$arrs[dkp]=array();
 		$arrs[earned]=array();
 		$arrs[spent]=array();
@@ -96,10 +98,14 @@ class NDKP {
 			$attendance = $full_attendance/$sixweeks*100;
 			array_push($arrs[attendance],$attendance);
 			array_push($arrs[player],$r->name);
+			array_push($arrs[alt_of],$r->alt_of);
+			array_push($arrs[alt_name],$r->alt_name);
 			array_push($arrs[dkp],$r->dkp);
 			array_push($arrs["class"],$r->class);
 			array_push($arrs[earned],$r->dkp_earned);
 			array_push($arrs[spent],$r->dkp_spent);
+			$sql = 'update NDKP_members set attendance = ' . $attendance . ' where player_id = ' . $r->player_id;
+			mysql_query($sql) or die(mysql_error());
 		}
 		return $arrs;
 	}
