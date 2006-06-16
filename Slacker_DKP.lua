@@ -4,7 +4,7 @@
 -- $Id$
 -- 
 
-local version = "1.13";
+local version = "1.14";
 local builddate = "4-Nov-1970";
 local buildnum = 0;
 local cvsversion = '$Id$';
@@ -244,7 +244,7 @@ function Slacker_DKP_List(action,player)
 		end
 		return 0;
 	elseif(action == 'verify') then
-		local plist = " "..Slacker_DKPPlayerList();
+		local plist = " "..Slacker_DKP_PlayerList();
 		local listcopy = SLACKER_SAVED_WAITLIST;
 		
 		for row=1,getn(listcopy) do
@@ -815,7 +815,7 @@ function Slacker_DKP_ToggleEdit()
 	end
 end
 
-function Slacker_DKPPlayerList()
+function Slacker_DKP_PlayerList()
 	local PlayerNames = "";
  
 	for i = 1, GetNumRaidMembers() do
@@ -848,6 +848,39 @@ function Slacker_DKPPlayerList()
 		end
 	end
 
+	return PlayerNames;
+end
+
+function Slacker_DKP_WaitList()
+	local PlayerNames = "";
+	
+	for row=1, getn (SLACKER_SAVED_WAITLIST) do
+		local name = SLACKER_SAVED_WAITLIST[row]["player"];
+		
+		local rank = Slacker_DKP_GetRank(name);
+		local primary = Slacker_DKP_GetPrimary(name);
+
+		if(rank) then
+			if(string.find(rank," Alt")) then
+				if(not primary) then
+					SendChatMessage("sDKP: You are an alt but your guild note does not indicate who your main is!  Please correct this.", "WHISPER", this.language, name);
+					Slacker_DKP_Message("Attendance Incomplete.  "..name.." has no main listed.");
+				end
+			end
+		end
+	
+		if(SLACKER_SAVED_SETTINGS['mapalts'] == 'yes') then
+
+			if(primary) then
+				PlayerNames = PlayerNames..primary.." ";
+			else
+				PlayerNames = PlayerNames..name.." ";
+			end
+		else
+			PlayerNames = PlayerNames..name.." ";
+		end
+	end
+	
 	return PlayerNames;
 end
 
@@ -892,11 +925,21 @@ end
 
 function Slacker_DKP_AttendanceLog(parms)
 	Slacker_DKP_LoadAltList();
-	local PlayerList = Slacker_DKPPlayerList();
+	local PlayerList = Slacker_DKP_PlayerList();
 	local ts = Slacker_NewTS();
+
+	local CountMsg = GetNumRaidMembers().." players";
 
 	if(SLACKER_SAVED_SETTINGS['active'] == 'no') then
 		return 0;
+	end
+
+	if(SLACKER_SAVED_SETTINGS['waitlista'] == 'yes') then
+		local listsize = getn (SLACKER_SAVED_WAITLIST);
+		if (listsize > 0) then
+			PlayerList = PlayerList..Slacker_DKP_WaitList();
+			CountMsg = CountMsg.." and "..listsize.." on the list";
+		end
 	end
 
 	local entries = getn (SLACKER_SAVED_EVENTLOG);
@@ -916,7 +959,7 @@ function Slacker_DKP_AttendanceLog(parms)
 	
 	Slacker_DKP_Message("Raid Attendance recorded at "..date("%H:%M").." on "..date("%d-%b-%Y"));
 	if(SLACKER_SAVED_SETTINGS['raidatt'] == 'yes') then
-		Slacker_DKP_Announce('RAID',"Raid Attendance recorded at "..date("%H:%M").." on "..date("%d-%b-%Y"));
+		Slacker_DKP_Announce('RAID',"Raid Attendance recorded at "..date("%H:%M").." on "..date("%d-%b-%Y")..". ("..CountMsg..")");
 	end
 	
 	return 1;
@@ -940,7 +983,7 @@ function Slacker_DKP_BossKillNew(parms)
 end
 
 function Slacker_DKP_BossKillLog(bossname,parms)
-	local PlayerList = Slacker_DKPPlayerList();
+	local PlayerList = Slacker_DKP_PlayerList();
 	local ts = Slacker_NewTS();
 
 	if(SLACKER_SAVED_SETTINGS['active'] == 'no') then
@@ -949,6 +992,13 @@ function Slacker_DKP_BossKillLog(bossname,parms)
 
 	if(SLACKER_SAVED_SETTINGS['dkpplayer'] == 'yes') then
 		PlayerList = PlayerList..'DKP ';
+	end
+
+	if(SLACKER_SAVED_SETTINGS['waitlistb'] == 'yes') then
+		local listsize = getn (SLACKER_SAVED_WAITLIST);
+		if (listsize > 0) then
+			PlayerList = PlayerList..Slacker_DKP_WaitList();
+		end
 	end
 
 	local entries = getn (SLACKER_SAVED_EVENTLOG);

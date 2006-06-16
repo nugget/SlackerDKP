@@ -1,7 +1,8 @@
 -- Version : English 
 
-BINDING_HEADER_SLACKERDKPHEADER				= "Slacker DKP";
+BINDING_HEADER_SLACKERDKPHEADER			= "Slacker DKP";
 BINDING_NAME_SLACKERDKP					= "Toggle Slacker DKP Window";
+BINDING_NAME_SLACKERDKPWL				= "Toggle Wait List Window"
 BINDING_NAME_SLACKERDKPATT				= "Add new Attendance Snapshot";
 BINDING_NAME_SLACKERDKPBOSS				= "Add new Boss Kill";
 
@@ -19,12 +20,14 @@ table.insert(SLACKERDKP_CHAT_COMMAND_USAGE, " ignore <itemname> - Add itemname t
 table.insert(SLACKERDKP_CHAT_COMMAND_USAGE, " unignore <itemname> - Remove itemname from list of ignored drops");
 table.insert(SLACKERDKP_CHAT_COMMAND_USAGE, " set <setting> <on|off> - Announce boss kills to guild chat");
 table.insert(SLACKERDKP_CHAT_COMMAND_USAGE, "Settings:");
+table.insert(SLACKERDKP_CHAT_COMMAND_USAGE, " active - Toggle all logging on/off");
 table.insert(SLACKERDKP_CHAT_COMMAND_USAGE, " announcekills - Send boss kill announcements to guild chat");
 table.insert(SLACKERDKP_CHAT_COMMAND_USAGE, " announceloot - Send loot item list to guild chat");
 table.insert(SLACKERDKP_CHAT_COMMAND_USAGE, " raidatt - Send attendance announements to raid chat");
 table.insert(SLACKERDKP_CHAT_COMMAND_USAGE, " raidloot - Send loot item list to raid chat");
 table.insert(SLACKERDKP_CHAT_COMMAND_USAGE, " rarity <#> - Set loot logging threshhold (rarity 1-6)");
-table.insert(SLACKERDKP_CHAT_COMMAND_USAGE, " active - Toggle all logging on/off");
+table.insert(SLACKERDKP_CHAT_COMMAND_USAGE, " waitlista - Include waitlisted players in attendance snapshots");
+table.insert(SLACKERDKP_CHAT_COMMAND_USAGE, " waitlistb - Include waitlisted players in bosskill snapshots");
 
 SLACKERDKP_UNKNOWN_COMMAND				= "Unknown Slacker DKP command";
 
@@ -36,11 +39,13 @@ SLACKER_SETTING['announcekills']		= "Boss kill announcements to guild chat are "
 SLACKER_SETTING['announceloot']			= "Loot item list to guild chat is ";
 SLACKER_SETTING['raidloot']				= "Loot item list to raid chat is ";
 SLACKER_SETTING['raidatt']				= "Attendance snapshot announcements to raid chat are ";
-SLACKER_SETTING['mapalts']				= "Map players to primary for attendance is "
-SLACKER_SETTING['debug']				= "Display of debugging info is "
-SLACKER_SETTING['active']				= "SlackerDKP Logging is "
-SLACKER_SETTING['rarity']				= "Loot logging level set to "
-SLACKER_SETTING['dkpplayer']			= "Meta player 'DKP' added to bosskill snapshots is "
+SLACKER_SETTING['mapalts']				= "Map players to primary for attendance is ";
+SLACKER_SETTING['debug']				= "Display of debugging info is ";
+SLACKER_SETTING['active']				= "SlackerDKP Logging is ";
+SLACKER_SETTING['rarity']				= "Loot logging level set to ";
+SLACKER_SETTING['dkpplayer']			= "Meta player 'DKP' added to bosskill snapshots is ";
+SLACKER_SETTING['waitlista']			= "Including Waitlist in attendance snapshots is ";
+SLACKER_SETTING['waitlistb']			= "Including Waitlist in bosskill snapshots is ";
 
 SLACKER_ITEM_RARITY = {};
 SLACKER_ITEM_RARITY['0'] = 'Poor';

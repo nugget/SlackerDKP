@@ -156,6 +156,11 @@ all feedback.
 
 ** CHANGELOG
 
+1.14 (16-June-2006):
+  o Integrated waitlist with snapshots 
+  o Minor bug fixes
+  o Added key binding for waitlist window toggle
+
 1.13 (14-June-2006):
   o Bugfix: Item threshhold applied to announceloot messages
   o Added window for editing saved bosses list
