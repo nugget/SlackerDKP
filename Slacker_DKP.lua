@@ -192,6 +192,7 @@ function Slacker_DKP_List(action,player)
 			};
 			SendChatMessage("sDKP: You're number "..pos.." on the list.", "WHISPER", this.language, player);
 			Slacker_DKP_Message("sDKP: Added "..player.." to waiting list ("..pos.." waiting)");
+			selected_wl = 0;
 		end		
 	elseif(action == 'drop') then
 		local pos = Slacker_DKP_List('position',player);
@@ -209,6 +210,7 @@ function Slacker_DKP_List(action,player)
 			end
 			SendChatMessage("sDKP: You're off the list.", "WHISPER", this.language, player);
 			Slacker_DKP_Message('sDKP: Removed '..player..' from waiting list.');
+			selected_wl = 0;
 		end
 	elseif(action == 'show') then
 		local pos = Slacker_DKP_List('position',player);
@@ -223,7 +225,7 @@ function Slacker_DKP_List(action,player)
 			end
 			
 			if(Slacker_DKP_PlayerRaidRank(player) >= 1) then
-				SendChatMessage("sDKP: The list is "..msgbuf);
+				SendChatMessage("sDKP: The list is: "..msgbuf, "WHISPER", this.language, player);
 			else
 				if(pos > 0) then
 					SendChatMessage("sDKP: You're number "..pos.." on the list.", "WHISPER", this.language, player);
@@ -244,14 +246,15 @@ function Slacker_DKP_List(action,player)
 	elseif(action == 'verify') then
 		local plist = " "..Slacker_DKPPlayerList();
 		local listcopy = SLACKER_SAVED_WAITLIST;
+		
 		for row=1,getn(listcopy) do
 			local pname = listcopy[row]["player"];
 			
 			if not (string.find(plist,' '..pname..' ') == nil) then
 				Slacker_DKP_Debug(pname.." is in the party, removing from waiting list.");
 				Slacker_DKP_List('drop',pname);
+				selected_wl = 0;
 			end
-			
 		end
 	end
 	Slacker_DKP_WaitListBar_Update();
