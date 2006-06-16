@@ -257,8 +257,7 @@ function list_bosskills() {
 
 		print "<li>";
 		print $raiddata[bosskills][$bossrec][bossname] . " at " . $ts;
-		#if($record = boss_exists($bossrec)) {
-		if(1==2) {
+		if($record = boss_exists($bossrec)) {
 			boss_edit_form($record);
 		} else {
 			boss_add_form($bossrec,$nextrec,$ts,
