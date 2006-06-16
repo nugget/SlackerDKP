@@ -80,11 +80,14 @@ add/edit comments for that log entry.
 All of these may be set using the sdkp set command:
   "/sdkp set <setting> on" or "/sdkp set <setting> off":
 
+active - Toggle all logging on/off"
 announcekills - Send boss kill announcements to guild chat"
 announceloot - Send loot item list to guild chat"
 raidatt - Send attendance announements to raid chat"
 raidloot - Send loot item list to raid chat"
-active - Toggle all logging on/off"
+waitlista - Include waiting list players in attendance snapshots
+waitlistb - Include waiting list players in bosskill snapshots
+dkpplayer - Add a user named "DKP" to snapshots
 
 This setting is not a toggle, but expects a value:
 
