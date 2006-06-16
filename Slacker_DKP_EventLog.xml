@@ -380,6 +380,24 @@
 			</Scripts>
 		</Button>
 
+		<Button name="Event_DEItem" inherits="UIPanelButtonTemplate" text="DE" hidden="true">
+			<Size>
+				<AbsDimension x="50" y="18"/>
+			</Size>
+			<Anchors>
+				<Anchor point="TOPLEFT" relativeTo="Event_DeleteEntry" relativePoint="TOPRIGHT">
+					<Offset>
+						<AbsDimension x="2" y="0"/>
+					</Offset>
+				</Anchor>
+			</Anchors>
+			<Scripts>
+				<OnClick>
+					Slacker_DKP_EventLog_EntryType('DE');
+				</OnClick>
+			</Scripts>
+		</Button>
+
 		<Button name="Event_BidItem" inherits="UIPanelButtonTemplate" text="!bid" hidden="true">
 			<Size>
 				<AbsDimension x="50" y="18"/>

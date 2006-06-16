@@ -329,14 +329,19 @@ function Slacker_DKP_EventLogBar_Update()
 			Event_Down:Show();
 			Event_Up:Show();
 		
-			if(SLACKER_SAVED_LOOTLOG[ets]['type'] == 'down') then
+			if(SLACKER_SAVED_LOOTLOG[ets]['type'] == 'DE') then
 				Event_DownItem:Hide();
 				Event_BidItem:Show();
+				Event_DEItem:Hide();
+			elseif(SLACKER_SAVED_LOOTLOG[ets]['type'] == 'down') then
+				Event_BidItem:Hide();								
+				Event_DownItem:Hide();
+				Event_DEItem:Show();
 			else
 				Event_BidItem:Hide();								
 				Event_DownItem:Show();
-			end	
-						
+				Event_DEItem:Hide();
+			end							
 		end
 	end
 	
@@ -369,6 +374,10 @@ function Slacker_DKP_EventLogBar_Update()
 						description = SLACKER_SAVED_LOOTLOG[ets]['player'].." "..loottype.." "..elink;
 					else
 						description = SLACKER_SAVED_LOOTLOG[ets]['player'].." "..loottype.." "..SLACKER_SAVED_LOOTLOG[ets]['item'];
+					end
+					if(loottype == 'DE') then
+						color = tscolor;
+						description = "Disenchanted "..SLACKER_SAVED_LOOTLOG[ets]['item'];
 					end
 				elseif(etype == 'ATT') then
 					color = "|cff00FFFF";
