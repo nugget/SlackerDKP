@@ -266,17 +266,15 @@ end
 
 function Slacker_DKP_ItemInfo(link)
 	local _, _, id = string.find(link, "item:(%d+):");
-	local itemName, itemLink, itemRarity, itemMinLevel, itemType, itemSubType, itemStackCount, itemEquipLoc, itemTexture = GetItemInfo(id);
+    local itemName, itemLink, itemRarity, itemMinLevel, itemType, itemSubType, itemStackCount, itemEquipLoc, itemTexture = GetItemInfo(id);
 	local info = {};
 
 	info.id = id;
-	info.name = name;
+	info.name = itemName;
 	info.link = itemLink;
 	info.rarity = itemRarity;
 	info.icon = itemTexture;
-	info.dkp = 0;
-	info.secdkp = 0;
-
+	
 	return info;
 end
 
