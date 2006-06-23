@@ -307,7 +307,11 @@ function boss_loot_fields($low,$high) {
 			}
 		}
 		if($etype == 'LOOT') {
-			if($thiskill == 1) {
+			$ltype = 'bid';
+			if(isset($raiddata[lootlog][$ets][type])) {
+				$ltype = $raiddata[lootlog][$ets][type];
+			}
+			if(($thiskill == 1) and ($ltype != 'DE') and ($ltype != 'bank')) {
 				$items++;
 				if($item_id = item_exists($raiddata[lootlog][$ets][item])) {
 					$known_items++;
