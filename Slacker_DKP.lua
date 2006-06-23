@@ -265,7 +265,7 @@ function Slacker_DKP_List(action,player)
 end
 
 function Slacker_DKP_ItemInfo(link)
-	local _, _, id, name = string.find(link,"|Hitem:(%d+):%d+:%d+:%d+|h%[([^]]+)%]|h|r$");
+	local _, _, id = string.find(link, "item:(%d+):");
 	local itemName, itemLink, itemRarity, itemMinLevel, itemType, itemSubType, itemStackCount, itemEquipLoc, itemTexture = GetItemInfo(id);
 	local info = {};
 
