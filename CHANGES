@@ -1,4 +1,4 @@
-1.15 (22-Jun-2006):
+1.15 (23-Jun-2006):
   o You can now flag loot in-game as "disenchanted" and it will be ignored
     during import.  This is a little less risky than just deleting the line
     entirely and leaves open the possibility of more flexible handling of 
