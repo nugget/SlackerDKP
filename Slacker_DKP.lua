@@ -245,10 +245,13 @@ function Slacker_DKP_List(action,player)
 		return 0;
 	elseif(action == 'verify') then
 		local plist = " "..Slacker_DKP_PlayerList();
-		local listcopy = SLACKER_SAVED_WAITLIST;
+		local sdkplistcopy = SLACKER_SAVED_WAITLIST;
 		
-		for row=1,getn(listcopy) do
-			local pname = listcopy[row]["player"];
+		Slacker_DKP_Debug('Looping to verify wait list');
+		for row=1,getn(sdkplistcopy) do
+			Slacker_DKP_Debug('Item '..row..' of '..getn(sdkplistcopy)..': pname = sdkplistcopy['..row..']["player"]');
+			local pname = sdkplistcopy[row]["player"];
+			Slacker_DKP_Debug('pname == '..pname);
 			
 			if not (string.find(plist,' '..pname..' ') == nil) then
 				Slacker_DKP_Debug(pname.." is in the party, removing from waiting list.");
@@ -256,6 +259,7 @@ function Slacker_DKP_List(action,player)
 				selected_wl = 0;
 			end
 		end
+		Slacker_DKP_Debug('Looping finished');
 	end
 	Slacker_DKP_WaitListBar_Update();
 end
