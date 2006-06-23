@@ -1,0 +1,81 @@
+<?php
+#
+#  $Id$
+#
+
+function ndkp_help($section='') {
+  $output = '';
+
+  switch($section) {
+    case "admin/modules#description":
+      $output = t("Display a user's NDKP statistics");
+      break;
+  }
+
+  return $output;
+}
+
+function ndkp_perm(){
+    return array ('view ndkp');
+}
+
+function ndkp_access($op, $node) {
+  global $user;
+
+  if($op == 'view') {
+    return user_access('view ndkp');
+  }
+}
+
+function ndkp_block($op = 'list', $delta = 0, $edit = array()) {
+  global $user;
+
+  profile_load_profile($user);
+
+  if($user->profile_main) {
+    $charname = $user->profile_main;
+  } else {
+    $charname = $user->name;
+  }
+
+  switch ($op) {
+    case 'list':
+      $block[0]['info'] = t('NDKP Statistics');
+      return $block;
+ 
+    case 'view':
+      if(user_access('view ndkp')) {
+        $block['subject'] = t($charname . '\'s NDKP');
+        $block['content'] = t('Your statistics here.');
+
+        if(!$dh = mysql_pconnect('localhost', 'username', 'password')) {
+          $block['content'] = t('Unable to connect to database.');
+        } else {
+          if(!mysql_select_db('ndkp', $dh)) {
+            $block['content'] = t('Unable to connect to NDKP database.');
+          } else {
+            $result = mysql_query('SELECT * from NDKP_members where name = \'' . $charname . '\'', $dh);
+
+            if(mysql_num_rows($result) <> 1) {
+              $block['content'] = t('Unable to find ' . $charname . ' in the NDKP database. Have you raided yet?');
+            } else {
+              $playerstats = mysql_fetch_assoc($result);
+
+              $block['content'] = '<table style="width: 100%;">';
+              $block['content'] .= '<tr><td>Attendance:</td><td align="right">' . $playerstats['attendance'] . '</td><td align="center">%</td></tr>';
+              $block['content'] .= '<tr><td>NDKP Earned:</td><td align="right">' . sprintf('%0.3f',$playerstats['dkp_earned']) . '</td><td align="center">+</td></tr>';
+              $block['content'] .= '<tr><td>NDKP Spent:</td><td align="right">' . sprintf('%0.3f',$playerstats['dkp_spent']) . '</td><td align="center">-</td></tr>';
+              $block['content'] .= '<tr><td>Total NDKP:</td><td align="right"><b>' . sprintf('%0.3f',$playerstats['dkp']) . '</b></td><td align="center">&nbsp;</td></tr>';
+              $block['content'] .= '</table>';
+              $block['content'] .= '<div class="more-link"><a href="http://ndkp.slacker.com/player.php?player=' . $charname . '">more</a></div>';
+
+            }
+          }
+        }
+
+        return $block;
+      }
+  }
+}
+
+?>
