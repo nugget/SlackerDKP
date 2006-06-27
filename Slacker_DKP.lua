@@ -4,7 +4,7 @@
 -- $Id$
 -- 
 
-local version = "1.15";
+local version = "1.16";
 local builddate = "4-Nov-1970";
 local buildnum = 0;
 local cvsversion = '$Id$';
@@ -445,6 +445,11 @@ function Slacker_DKP_WaitListBar_Update()
 		WL_Up:Show();
 	end
 	
+	local color = "|cffFFFFFF";
+	if(GetNumRaidMembers() < 40) then
+		color = "|cffFF7F7F";
+	end
+	
 	FauxScrollFrame_Update(Slacker_DKP_WaitListBar,entries,10,17);
 	for row=1,10 do
 		local time = getglobal("WaitList"..row.."FieldTime");
@@ -456,7 +461,6 @@ function Slacker_DKP_WaitListBar_Update()
 		if eid <= entries then
 			local ets = SLACKER_SAVED_WAITLIST[eid]['ts'];
 			
-			local color = "|cffFFFFFF";
 			if(ets) then
 				time:SetText(color..date("%H:%M",SLACKER_SAVED_WAITLIST[eid]['ts']));
 				player:SetText(color..SLACKER_SAVED_WAITLIST[eid]['player']);
