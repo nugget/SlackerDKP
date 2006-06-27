@@ -211,6 +211,9 @@ function Slacker_DKP_List(action,player)
 			SendChatMessage("sDKP: You're off the list.", "WHISPER", this.language, player);
 			Slacker_DKP_Message('sDKP: Removed '..player..' from waiting list.');
 			selected_wl = 0;
+			if(pos <= 3) then
+				Slacker_DKP_List('remind');
+			end
 		end
 	elseif(action == 'show') then
 		local pos = Slacker_DKP_List('position',player);
@@ -263,6 +266,17 @@ function Slacker_DKP_List(action,player)
 			for row=1,purgecount do
 				Slacker_DKP_List('drop',purges[purgecount]);
 			end
+			Slacker_DKP_List('remind');
+		end
+	elseif(action == 'remind') then
+		local limit = getn(SLACKER_SAVED_WAITLIST);
+		if(limit > 3) then
+			limit = 3;
+		end
+		for row=1,limit do
+			local player = SLACKER_SAVED_WAITLIST[row]["player"];
+			Slacker_DKP_Message('sDKP: Reminded '..player..' to be near the entrance.');
+			SendChatMessage("sDKP: You're number "..row.." on the list.  You should be near the entrance in case a spot opens up soon.", "WHISPER", this.language, player);
 		end
 	end
 	Slacker_DKP_WaitListBar_Update();
