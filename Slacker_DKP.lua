@@ -857,15 +857,6 @@ function Slacker_DKP_PlayerList()
 		
 			local rank = Slacker_DKP_GetRank(name);
 			local primary = Slacker_DKP_GetPrimary(name);
-
-			if(rank) then
-				if(string.find(rank," Alt")) then
-					if(not primary) then
-						SendChatMessage("sDKP: You are an alt but your guild note does not indicate who your main is!  Please correct this.", "WHISPER", this.language, name);
-						Slacker_DKP_Message("Attendance Incomplete.  "..name.." has no main listed.");
-					end
-				end
-			end
 		
 			if(SLACKER_SAVED_SETTINGS['mapalts'] == 'yes') then
 
