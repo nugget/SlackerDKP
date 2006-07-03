@@ -337,11 +337,12 @@ function Slacker_DKP_EventLogBar_Update()
 	
 	Event_DownItem:Hide();
 	Event_BidItem:Hide();
+	Event_DEItem:Hide();		
 	Event_DeleteEntry:Hide();
 	Event_Edit:Hide();
 	Event_Up:Hide();		
 	Event_Down:Hide();		
-
+	
 	if(selected_eid > 0) then
 		local ets = SLACKER_SAVED_EVENTLOG[selected_eid]['ts'];
 
