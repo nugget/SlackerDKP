@@ -64,7 +64,7 @@
 
 	<Frame name="Slacker_DKP_EventLogFrame" frameStrata="BACKGROUND" parent="UIParent" movable="true" enableMouse="true" hidden="true">
 		<Size>
-			<AbsDimension x="400" y="190"/>
+			<AbsDimension x="400" y="196"/>
 		</Size>
 		<Anchors>
 			<Anchor point="TOPLEFT">
@@ -337,83 +337,47 @@
 		</Button>
 		<Button name="EventLog2" inherits="EventLogTemplate" id="2">
 			<Anchors>
-				<Anchor point="TOPLEFT" relativeTo="EventLog1" relativePoint="BOTTOMLEFT">
-					<Offset>
-						<AbsDimension x="0" y="-1"/>
-					</Offset>
-				</Anchor>
+				<Anchor point="TOPLEFT" relativeTo="EventLog1" relativePoint="BOTTOMLEFT" />
 			</Anchors>
 		</Button>
 		<Button name="EventLog3" inherits="EventLogTemplate" id="3">
 			<Anchors>
-				<Anchor point="TOPLEFT" relativeTo="EventLog2" relativePoint="BOTTOMLEFT">
-					<Offset>
-						<AbsDimension x="0" y="-1"/>
-					</Offset>
-				</Anchor>
+				<Anchor point="TOPLEFT" relativeTo="EventLog2" relativePoint="BOTTOMLEFT" />
 			</Anchors>
 		</Button>
 		<Button name="EventLog4" inherits="EventLogTemplate" id="4">
 			<Anchors>
-				<Anchor point="TOPLEFT" relativeTo="EventLog3" relativePoint="BOTTOMLEFT">
-					<Offset>
-						<AbsDimension x="0" y="-1"/>
-					</Offset>
-				</Anchor>
+				<Anchor point="TOPLEFT" relativeTo="EventLog3" relativePoint="BOTTOMLEFT" />
 			</Anchors>
 		</Button>
 		<Button name="EventLog5" inherits="EventLogTemplate" id="5">
 			<Anchors>
-				<Anchor point="TOPLEFT" relativeTo="EventLog4" relativePoint="BOTTOMLEFT">
-					<Offset>
-						<AbsDimension x="0" y="-1"/>
-					</Offset>
-				</Anchor>
+				<Anchor point="TOPLEFT" relativeTo="EventLog4" relativePoint="BOTTOMLEFT" />
 			</Anchors>
 		</Button>
 		<Button name="EventLog6" inherits="EventLogTemplate" id="6">
 			<Anchors>
-				<Anchor point="TOPLEFT" relativeTo="EventLog5" relativePoint="BOTTOMLEFT">
-					<Offset>
-						<AbsDimension x="0" y="-1"/>
-					</Offset>
-				</Anchor>
+				<Anchor point="TOPLEFT" relativeTo="EventLog5" relativePoint="BOTTOMLEFT" />
 			</Anchors>
 		</Button>
 		<Button name="EventLog7" inherits="EventLogTemplate" id="7">
 			<Anchors>
-				<Anchor point="TOPLEFT" relativeTo="EventLog6" relativePoint="BOTTOMLEFT">
-					<Offset>
-						<AbsDimension x="0" y="-1"/>
-					</Offset>
-				</Anchor>
+				<Anchor point="TOPLEFT" relativeTo="EventLog6" relativePoint="BOTTOMLEFT" />
 			</Anchors>
 		</Button>
 		<Button name="EventLog8" inherits="EventLogTemplate" id="8">
 			<Anchors>
-				<Anchor point="TOPLEFT" relativeTo="EventLog7" relativePoint="BOTTOMLEFT">
-					<Offset>
-						<AbsDimension x="0" y="-1"/>
-					</Offset>
-				</Anchor>
+				<Anchor point="TOPLEFT" relativeTo="EventLog7" relativePoint="BOTTOMLEFT" />
 			</Anchors>
 		</Button>
 		<Button name="EventLog9" inherits="EventLogTemplate" id="9">
 			<Anchors>
-				<Anchor point="TOPLEFT" relativeTo="EventLog8" relativePoint="BOTTOMLEFT">
-					<Offset>
-						<AbsDimension x="0" y="-1"/>
-					</Offset>
-				</Anchor>
+				<Anchor point="TOPLEFT" relativeTo="EventLog8" relativePoint="BOTTOMLEFT" />
 			</Anchors>
 		</Button>
 		<Button name="EventLog10" inherits="EventLogTemplate" id="10">
 			<Anchors>
-				<Anchor point="TOPLEFT" relativeTo="EventLog9" relativePoint="BOTTOMLEFT">
-					<Offset>
-						<AbsDimension x="0" y="-1"/>
-					</Offset>
-				</Anchor>
+				<Anchor point="TOPLEFT" relativeTo="EventLog9" relativePoint="BOTTOMLEFT" />
 			</Anchors>
 		</Button>
 		

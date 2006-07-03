@@ -1137,19 +1137,10 @@ function Slacker_DKP_ReScale(scale)
 	end
 	
 	scale = scale / 100;
-
-	local left = Slacker_DKP_EventLogFrame:GetLeft();
-	local top = Slacker_DKP_EventLogFrame:GetTop();
 	
 	Slacker_DKP_EventLogFrame:SetScale(scale);
-	
-	if ((top ~= nil) and (right ~= nil)) then
-		Slacker_DKP_EventLogFrame:ClearAllPoints();
-		Slacker_DKP_EventLogFrame:SetPoint("TOPLEFT", UIParent, "BOTTOMLEFT", left, top);
-	else
-		Slacker_DKP_EventLogFrame:ClearAllPoints();
-		Slacker_DKP_EventLogFrame:SetPoint("CENTER", UIParent, "CENTER", 0, 0);
-	end
+	Slacker_DKP_WaitListFrame:SetScale(scale);
+	Slacker_DKP_BossListFrame:SetScale(scale);	
 end
 
 function Slacker_DKP_GetPrimary(playername)
