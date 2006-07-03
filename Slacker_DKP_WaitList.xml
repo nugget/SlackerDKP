@@ -4,7 +4,7 @@
 
  	<Button name = "WaitListTemplate" virtual="true">
 		<Size>
-			<AbsDimension x="160" y="11" />
+			<AbsDimension x="160" y="16" />
 		</Size>
 		<Frames>
 			<Frame name="$parentField" setAllPoints="true">
@@ -12,7 +12,7 @@
 					<Layer level="ARTWORK">
 						<Texture name="$parentHighlight" file="Interface\QuestFrame\UI-QuestTitleHighlight" alphaMode="ADD" setAllPoints="true" hidden="true">
 							<Size>
-								<AbsDimension x="144" y="11"/>
+								<AbsDimension x="144" y="15"/>
 							</Size>
 							<Anchors>
 								<Anchor point="TOP">
@@ -26,7 +26,7 @@
 					<Layer level="BACKGROUND">
 						<FontString name="$parentTime" inherits="Slacker_BodyFont" justifyH="RIGHT">
 							<Size>
-								<AbsDimension x="32" y="11"/>
+								<AbsDimension x="32" y="15"/>
 							</Size>
 							<Anchors>
 								<Anchor point="TOPLEFT" relativeTo="$parentHighlight" relativePoint="TOPLEFT">
@@ -38,7 +38,7 @@
 						</FontString>
 						<FontString name="$parentPlayer" inherits="Slacker_BodyFont" justifyH="LEFT">
 							<Size>
-								<AbsDimension x="110" y="11"/>
+								<AbsDimension x="110" y="15"/>
 							</Size>
 							<Anchors>
 								<Anchor point="TOPLEFT" relativeTo="$parentTime" relativePoint="TOPRIGHT">

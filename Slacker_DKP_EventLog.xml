@@ -4,7 +4,7 @@
 
  	<Button name = "EventLogTemplate" virtual="true">
 		<Size>
-			<AbsDimension x="256" y="11" />
+			<AbsDimension x="364" y="16" />
 		</Size>
 		<Frames>
 			<Frame name="$parentField" setAllPoints="true">
@@ -12,7 +12,7 @@
 					<Layer level="ARTWORK">
 						<Texture name="$parentHighlight" file="Interface\QuestFrame\UI-QuestTitleHighlight" alphaMode="ADD" setAllPoints="true" hidden="true">
 							<Size>
-								<AbsDimension x="240" y="11"/>
+								<AbsDimension x="364" y="15"/>
 							</Size>
 							<Anchors>
 								<Anchor point="TOP">
@@ -26,7 +26,7 @@
 					<Layer level="BACKGROUND">
 						<FontString name="$parentTime" inherits="Slacker_BodyFont" justifyH="RIGHT">
 							<Size>
-								<AbsDimension x="32" y="11"/>
+								<AbsDimension x="36" y="15"/>
 							</Size>
 							<Anchors>
 								<Anchor point="TOPLEFT" relativeTo="$parentHighlight" relativePoint="TOPLEFT">
@@ -38,7 +38,7 @@
 						</FontString>
 						<FontString name="$parentComments" inherits="Slacker_BodyFont" justifyH="LEFT">
 							<Size>
-								<AbsDimension x="220" y="11"/>
+								<AbsDimension x="320" y="15"/>
 							</Size>
 							<Anchors>
 								<Anchor point="TOPLEFT" relativeTo="$parentTime" relativePoint="TOPRIGHT">
@@ -64,10 +64,10 @@
 
 	<Frame name="Slacker_DKP_EventLogFrame" frameStrata="BACKGROUND" parent="UIParent" movable="true" enableMouse="true" hidden="true">
 		<Size>
-			<AbsDimension x="256" y="140"/>
+			<AbsDimension x="400" y="190"/>
 		</Size>
 		<Anchors>
-			<Anchor point="CENTER">
+			<Anchor point="TOPLEFT">
 				<Offset>
 					<AbsDimension x="0" y="0"/>
 				</Offset>
@@ -88,12 +88,12 @@
 			<Layer level="HEADER">
 				<FontString name="Slacker_DKP_EventLogTitle" inherits="Slacker_TitleFont" justifyH="LEFT" text="SlackerDKP Event Log">
 					<Size>
-						<AbsDimension x="246" y="11"/>
+						<AbsDimension x="300" y="16"/>
 					</Size>
 					<Anchors>
-						<Anchor point="TOP">
+						<Anchor point="TOPLEFT">
 							<Offset>
-								<AbsDimension x="0" y="-5"/>
+								<AbsDimension x="6" y="-5"/>
 							</Offset>
 						</Anchor>
 					</Anchors>
@@ -103,12 +103,12 @@
 		<Frames>
 			<Button name="$parentCloseButton" inherits="UIPanelCloseButton">
 				<Size>
-					<AbsDimension x="22" y="22"/>
+					<AbsDimension x="32" y="32"/>
 				</Size>
 				<Anchors>
 					<Anchor point="TOPRIGHT">
 						<Offset>
-							<AbsDimension x="0" y="0"/>
+							<AbsDimension x="2" y="2"/>
 						</Offset>
 					</Anchor>
 				</Anchors>
@@ -116,12 +116,12 @@
 			
 			<Button name="$parentHelp">
 				<Size>
-					<AbsDimension x="14" y="24"/>
+					<AbsDimension x="18" y="28"/>
 				</Size>
 				<Anchors>
 					<Anchor point="TOPRIGHT" relativeTo="$parentCloseButton" relativePoint="TOPLEFT">
 						<Offset>
-							<AbsDimension x="-8" y="4"/>
+							<AbsDimension x="-7" y="3"/>
 						</Offset>
 					</Anchor>
 				</Anchors>
@@ -148,7 +148,7 @@
 			
 			<Button name="$parentAddAttendance">
 				<Size>
-					<AbsDimension x="14" y="24"/>
+					<AbsDimension x="18" y="28"/>
 				</Size>
 				<Anchors>
 					<Anchor point="TOPRIGHT" relativeTo="$parentHelp" relativePoint="TOPLEFT">
@@ -179,12 +179,12 @@
 
 			<Button name="$parentAddBossKill">
 				<Size>
-					<AbsDimension x="14" y="24"/>
+					<AbsDimension x="18" y="28"/>
 				</Size>
 				<Anchors>
 					<Anchor point="TOPRIGHT" relativeTo="$parentAddAttendance" relativePoint="TOPLEFT">
 						<Offset>
-							<AbsDimension x="-2" y="0"/>
+							<AbsDimension x="0" y="0"/>
 						</Offset>
 					</Anchor>
 				</Anchors>
@@ -210,7 +210,7 @@
 
 			<Button name="$parentWaitList">
 				<Size>
-					<AbsDimension x="14" y="24"/>
+					<AbsDimension x="18" y="28"/>
 				</Size>
 				<Anchors>
 					<Anchor point="TOPRIGHT" relativeTo="$parentAddBossKill" relativePoint="TOPLEFT">
@@ -241,12 +241,12 @@
 			
 			<Button name="$parentBossList">
 				<Size>
-					<AbsDimension x="14" y="24"/>
+					<AbsDimension x="18" y="28"/>
 				</Size>
 				<Anchors>
 					<Anchor point="TOPRIGHT" relativeTo="$parentWaitList" relativePoint="TOPLEFT">
 						<Offset>
-							<AbsDimension x="-2" y="0"/>
+							<AbsDimension x="0" y="0"/>
 						</Offset>
 					</Anchor>
 				</Anchors>
@@ -269,17 +269,50 @@
 				<HighlightTexture file="Interface\Buttons\UI-MicroButton-Talents-Down" alphaMode="ADD"/>
 				<PushedTexture file="Interface\Buttons\UI-MicroButton-Talents-Disabled"/>
 			</Button>		
+
+			<Button name="$parentConfigWindow">
+				<Size>
+					<AbsDimension x="18" y="28"/>
+				</Size>
+				<Anchors>
+					<Anchor point="TOPRIGHT" relativeTo="$parentBossList" relativePoint="TOPLEFT">
+						<Offset>
+							<AbsDimension x="0" y="0"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnLoad>
+						this:RegisterForClicks("LeftButtonUp", "RightButtonUp");
+					</OnLoad>
+					<OnClick>
+						Slacker_DKP_Config_ToggleFrame();
+					</OnClick>
+					<OnEnter>
+						GameTooltip:SetOwner(this, "ANCHOR_RIGHT");
+						GameTooltip:SetText("Open Configuration Window");
+					</OnEnter>
+					<OnLeave>
+						GameTooltip:Hide();
+					</OnLeave>
+				</Scripts>
+				<NormalTexture file="Interface\Buttons\UI-MicroButton-MainMenu-Up"/>
+				<HighlightTexture file="Interface\Buttons\UI-MicroButton-MainMenu-Down" alphaMode="ADD"/>
+				<PushedTexture file="Interface\Buttons\UI-MicroButton-MainMenu-Disabled"/>
+			</Button>		
+
+
 			
 		<ScrollFrame name="Slacker_DKP_EventLogBar" inherits="FauxScrollFrameTemplate">
 			<Anchors>
 				<Anchor point="TOPLEFT">
 					<Offset>
-						<AbsDimension x="8" y="-20"/>
+						<AbsDimension x="0" y="-26"/>
 					</Offset>
 				</Anchor>
 				<Anchor point="BOTTOMRIGHT">
 					<Offset>
-						<AbsDimension x="-28" y="8"/>
+						<AbsDimension x="-28" y="6"/>
 					</Offset>
 				</Anchor>
 			</Anchors>
@@ -295,52 +328,92 @@
 		
 		<Button name="EventLog1" inherits="EventLogTemplate" id="1">
 			<Anchors>
-				<Anchor point="TOPLEFT" relativeTo="Slacker_DKP_EventLogBar" relativePoint="TOPLEFT" />
+				<Anchor point="TOPRIGHT" relativeTo="Slacker_DKP_EventLogBar" relativePoint="TOPLEFT">
+					<Offset>
+						<AbsDimension x="380" y="0"/>
+					</Offset>
+				</Anchor>
 			</Anchors>
 		</Button>
 		<Button name="EventLog2" inherits="EventLogTemplate" id="2">
 			<Anchors>
-				<Anchor point="TOPLEFT" relativeTo="EventLog1" relativePoint="BOTTOMLEFT" />
+				<Anchor point="TOPLEFT" relativeTo="EventLog1" relativePoint="BOTTOMLEFT">
+					<Offset>
+						<AbsDimension x="0" y="-1"/>
+					</Offset>
+				</Anchor>
 			</Anchors>
 		</Button>
 		<Button name="EventLog3" inherits="EventLogTemplate" id="3">
 			<Anchors>
-				<Anchor point="TOPLEFT" relativeTo="EventLog2" relativePoint="BOTTOMLEFT" />
+				<Anchor point="TOPLEFT" relativeTo="EventLog2" relativePoint="BOTTOMLEFT">
+					<Offset>
+						<AbsDimension x="0" y="-1"/>
+					</Offset>
+				</Anchor>
 			</Anchors>
 		</Button>
 		<Button name="EventLog4" inherits="EventLogTemplate" id="4">
 			<Anchors>
-				<Anchor point="TOPLEFT" relativeTo="EventLog3" relativePoint="BOTTOMLEFT" />
+				<Anchor point="TOPLEFT" relativeTo="EventLog3" relativePoint="BOTTOMLEFT">
+					<Offset>
+						<AbsDimension x="0" y="-1"/>
+					</Offset>
+				</Anchor>
 			</Anchors>
 		</Button>
 		<Button name="EventLog5" inherits="EventLogTemplate" id="5">
 			<Anchors>
-				<Anchor point="TOPLEFT" relativeTo="EventLog4" relativePoint="BOTTOMLEFT" />
+				<Anchor point="TOPLEFT" relativeTo="EventLog4" relativePoint="BOTTOMLEFT">
+					<Offset>
+						<AbsDimension x="0" y="-1"/>
+					</Offset>
+				</Anchor>
 			</Anchors>
 		</Button>
 		<Button name="EventLog6" inherits="EventLogTemplate" id="6">
 			<Anchors>
-				<Anchor point="TOPLEFT" relativeTo="EventLog5" relativePoint="BOTTOMLEFT" />
+				<Anchor point="TOPLEFT" relativeTo="EventLog5" relativePoint="BOTTOMLEFT">
+					<Offset>
+						<AbsDimension x="0" y="-1"/>
+					</Offset>
+				</Anchor>
 			</Anchors>
 		</Button>
 		<Button name="EventLog7" inherits="EventLogTemplate" id="7">
 			<Anchors>
-				<Anchor point="TOPLEFT" relativeTo="EventLog6" relativePoint="BOTTOMLEFT" />
+				<Anchor point="TOPLEFT" relativeTo="EventLog6" relativePoint="BOTTOMLEFT">
+					<Offset>
+						<AbsDimension x="0" y="-1"/>
+					</Offset>
+				</Anchor>
 			</Anchors>
 		</Button>
 		<Button name="EventLog8" inherits="EventLogTemplate" id="8">
 			<Anchors>
-				<Anchor point="TOPLEFT" relativeTo="EventLog7" relativePoint="BOTTOMLEFT" />
+				<Anchor point="TOPLEFT" relativeTo="EventLog7" relativePoint="BOTTOMLEFT">
+					<Offset>
+						<AbsDimension x="0" y="-1"/>
+					</Offset>
+				</Anchor>
 			</Anchors>
 		</Button>
 		<Button name="EventLog9" inherits="EventLogTemplate" id="9">
 			<Anchors>
-				<Anchor point="TOPLEFT" relativeTo="EventLog8" relativePoint="BOTTOMLEFT" />
+				<Anchor point="TOPLEFT" relativeTo="EventLog8" relativePoint="BOTTOMLEFT">
+					<Offset>
+						<AbsDimension x="0" y="-1"/>
+					</Offset>
+				</Anchor>
 			</Anchors>
 		</Button>
 		<Button name="EventLog10" inherits="EventLogTemplate" id="10">
 			<Anchors>
-				<Anchor point="TOPLEFT" relativeTo="EventLog9" relativePoint="BOTTOMLEFT" />
+				<Anchor point="TOPLEFT" relativeTo="EventLog9" relativePoint="BOTTOMLEFT">
+					<Offset>
+						<AbsDimension x="0" y="-1"/>
+					</Offset>
+				</Anchor>
 			</Anchors>
 		</Button>
 		
@@ -361,15 +434,51 @@
 				</OnClick>
 			</Scripts>
 		</Button>
+
+		<Button name="Event_Edit" inherits="UIPanelButtonTemplate" text="Edit" hidden="true">
+			<Size>
+				<AbsDimension x="60" y="18"/>
+			</Size>
+			<Anchors>
+				<Anchor point="TOPLEFT" relativeTo="Event_DeleteEntry" relativePoint="TOPRIGHT">
+					<Offset>
+						<AbsDimension x="1" y="0"/>
+					</Offset>
+				</Anchor>
+			</Anchors>
+			<Scripts>
+				<OnClick>
+					Slacker_DKP_EventLog_Edit();
+				</OnClick>
+			</Scripts>
+		</Button>		
+		
+		<Button name="Event_BidItem" inherits="UIPanelButtonTemplate" text="!bid" hidden="true">
+			<Size>
+				<AbsDimension x="50" y="18"/>
+			</Size>
+			<Anchors>
+				<Anchor point="TOPLEFT" relativeTo="Event_Edit" relativePoint="TOPRIGHT">
+					<Offset>
+						<AbsDimension x="8" y="0"/>
+					</Offset>
+				</Anchor>
+			</Anchors>
+			<Scripts>
+				<OnClick>
+					Slacker_DKP_EventLog_EntryType('bid');
+				</OnClick>
+			</Scripts>
+		</Button>	
 				
 		<Button name="Event_DownItem" inherits="UIPanelButtonTemplate" text="!down" hidden="true">
 			<Size>
 				<AbsDimension x="50" y="18"/>
 			</Size>
 			<Anchors>
-				<Anchor point="TOPLEFT" relativeTo="Event_DeleteEntry" relativePoint="TOPRIGHT">
+				<Anchor point="TOPLEFT" relativeTo="Event_BidItem" relativePoint="TOPRIGHT">
 					<Offset>
-						<AbsDimension x="2" y="0"/>
+						<AbsDimension x="1" y="0"/>
 					</Offset>
 				</Anchor>
 			</Anchors>
@@ -385,9 +494,9 @@
 				<AbsDimension x="50" y="18"/>
 			</Size>
 			<Anchors>
-				<Anchor point="TOPLEFT" relativeTo="Event_DeleteEntry" relativePoint="TOPRIGHT">
+				<Anchor point="TOPLEFT" relativeTo="Event_DownItem" relativePoint="TOPRIGHT">
 					<Offset>
-						<AbsDimension x="2" y="0"/>
+						<AbsDimension x="1" y="0"/>
 					</Offset>
 				</Anchor>
 			</Anchors>
@@ -398,50 +507,14 @@
 			</Scripts>
 		</Button>
 
-		<Button name="Event_BidItem" inherits="UIPanelButtonTemplate" text="!bid" hidden="true">
-			<Size>
-				<AbsDimension x="50" y="18"/>
-			</Size>
-			<Anchors>
-				<Anchor point="TOPLEFT" relativeTo="Event_DeleteEntry" relativePoint="TOPRIGHT">
-					<Offset>
-						<AbsDimension x="2" y="0"/>
-					</Offset>
-				</Anchor>
-			</Anchors>
-			<Scripts>
-				<OnClick>
-					Slacker_DKP_EventLog_EntryType('bid');
-				</OnClick>
-			</Scripts>
-		</Button>
-			
-		<Button name="Event_Edit" inherits="UIPanelButtonTemplate" text="Edit" hidden="true">
-			<Size>
-				<AbsDimension x="50" y="18"/>
-			</Size>
-			<Anchors>
-				<Anchor point="TOPLEFT" relativeTo="Event_BidItem" relativePoint="TOPRIGHT">
-					<Offset>
-						<AbsDimension x="2" y="0"/>
-					</Offset>
-				</Anchor>
-			</Anchors>
-			<Scripts>
-				<OnClick>
-					Slacker_DKP_EventLog_Edit();
-				</OnClick>
-			</Scripts>
-		</Button>		
-		
 		<Button name="Event_Up" inherits="UIPanelButtonTemplate" text="+" hidden="true">
 			<Size>
 				<AbsDimension x="18" y="18"/>
 			</Size>
 			<Anchors>
-				<Anchor point="TOPLEFT" relativeTo="Event_Edit" relativePoint="TOPRIGHT">
+				<Anchor point="TOPLEFT" relativeTo="Event_DEItem" relativePoint="TOPRIGHT">
 					<Offset>
-						<AbsDimension x="2" y="0"/>
+						<AbsDimension x="8" y="0"/>
 					</Offset>
 				</Anchor>
 			</Anchors>
@@ -459,7 +532,7 @@
 			<Anchors>
 				<Anchor point="TOPLEFT" relativeTo="Event_Up" relativePoint="TOPRIGHT">
 					<Offset>
-						<AbsDimension x="2" y="0"/>
+						<AbsDimension x="1" y="0"/>
 					</Offset>
 				</Anchor>
 			</Anchors>

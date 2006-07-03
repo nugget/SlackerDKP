@@ -348,20 +348,9 @@ function Slacker_DKP_EventLogBar_Update()
 		if(SLACKER_SAVED_EVENTLOG[selected_eid]['type'] == 'LOOT') then
 			Event_Down:Show();
 			Event_Up:Show();
-		
-			if(SLACKER_SAVED_LOOTLOG[ets]['type'] == 'DE') then
-				Event_DownItem:Hide();
-				Event_BidItem:Show();
-				Event_DEItem:Hide();
-			elseif(SLACKER_SAVED_LOOTLOG[ets]['type'] == 'down') then
-				Event_BidItem:Hide();								
-				Event_DownItem:Hide();
-				Event_DEItem:Show();
-			else
-				Event_BidItem:Hide();								
-				Event_DownItem:Show();
-				Event_DEItem:Hide();
-			end							
+			Event_DownItem:Show();
+			Event_BidItem:Show();
+			Event_DEItem:Show();		
 		end
 	end
 	
@@ -1122,6 +1111,44 @@ function Slacker_DKP_Toggle(buf)
 		else
 			Slacker_DKP_Message(SLACKER_SETTING[setting]..value);	
 		end
+	end
+	if(setting == 'scale') then
+		SLACKER_SAVED_SETTINGS[setting] = tonumber(SLACKER_SAVED_SETTINGS[setting]);
+		if((SLACKER_SAVED_SETTINGS[setting] > 120) or (SLACKER_SAVED_SETTINGS[setting] < 1)) then
+			SLACKER_SAVED_SETTINGS[setting] = 100;
+		end
+		Slacker_DKP_ReScale(SLACKER_SAVED_SETTINGS[setting]);
+	end
+end
+
+function Slacker_DKP_Config_ToggleFrame()
+	Slacker_DKP_Print("Sorry, this feature is not implemented.");
+end
+
+function Slacker_DKP_ReScale(scale)
+	
+	scale = tonumber(scale);
+	
+	if (scale == nil) then
+		return;
+	end
+	if((scale < 1) or (scale > 120)) then
+		return;
+	end
+	
+	scale = scale / 100;
+
+	local left = Slacker_DKP_EventLogFrame:GetLeft();
+	local top = Slacker_DKP_EventLogFrame:GetTop();
+	
+	Slacker_DKP_EventLogFrame:SetScale(scale);
+	
+	if ((top ~= nil) and (right ~= nil)) then
+		Slacker_DKP_EventLogFrame:ClearAllPoints();
+		Slacker_DKP_EventLogFrame:SetPoint("TOPLEFT", UIParent, "BOTTOMLEFT", left, top);
+	else
+		Slacker_DKP_EventLogFrame:ClearAllPoints();
+		Slacker_DKP_EventLogFrame:SetPoint("CENTER", UIParent, "CENTER", 0, 0);
 	end
 end
 

@@ -28,6 +28,7 @@ table.insert(SLACKERDKP_CHAT_COMMAND_USAGE, " raidloot - Send loot item list to 
 table.insert(SLACKERDKP_CHAT_COMMAND_USAGE, " rarity <#> - Set loot logging threshhold (rarity 1-6)");
 table.insert(SLACKERDKP_CHAT_COMMAND_USAGE, " waitlista - Include waitlisted players in attendance snapshots");
 table.insert(SLACKERDKP_CHAT_COMMAND_USAGE, " waitlistb - Include waitlisted players in bosskill snapshots");
+table.insert(SLACKERDKP_CHAT_COMMAND_USAGE, " scale <#> - Set UI scale (1-100%)");
 
 SLACKERDKP_UNKNOWN_COMMAND				= "Unknown Slacker DKP command";
 
@@ -42,10 +43,13 @@ SLACKER_SETTING['raidatt']				= "Attendance snapshot announcements to raid chat 
 SLACKER_SETTING['mapalts']				= "Map players to primary for attendance is ";
 SLACKER_SETTING['debug']				= "Display of debugging info is ";
 SLACKER_SETTING['active']				= "SlackerDKP Logging is ";
-SLACKER_SETTING['rarity']				= "Loot logging level set to ";
 SLACKER_SETTING['dkpplayer']			= "Meta player 'DKP' added to bosskill snapshots is ";
 SLACKER_SETTING['waitlista']			= "Including Waitlist in attendance snapshots is ";
 SLACKER_SETTING['waitlistb']			= "Including Waitlist in bosskill snapshots is ";
+
+SLACKER_SETTING['rarity']				= "Loot logging level set to ";
+SLACKER_SETTING['scale']				= "SlackerDKP UI Scale set to "
+
 
 SLACKER_ITEM_RARITY = {};
 SLACKER_ITEM_RARITY['0'] = 'Poor';
