@@ -4,7 +4,7 @@
 -- $Id$
 -- 
 
-local version = "1.16";
+local version = "1.17";
 local builddate = "4-Nov-1970";
 local buildnum = 0;
 local cvsversion = '$Id$';
@@ -51,7 +51,7 @@ function Slacker_DKP_OnLoad()
 	SLASH_SLACKERDKP1 = "/sdkp";
 	
 	Slacker_DKP_LoadAltList();
-
+	
 	Slacker_Orig_ChatFrame_OnEvent = ChatFrame_OnEvent;
 	ChatFrame_OnEvent = Slacker_ChatFrame_OnEvent;
 end
@@ -61,6 +61,9 @@ function Slacker_DKP_OnEvent()
 		Slacker_DKP_Version();
 		if(SLACKER_SAVED_SETTINGS['rarity'] == nil) then
 			Slacker_DKP_Toggle('rarity 4');
+		end
+		if(SLACKER_SAVED_SETTINGS['scale'] == nil) then
+			Slacker_DKP_Toggle('scale 100');
 		end
 	elseif	(event == "CHAT_MSG_LOOT") then
 		local name, itemlink;
@@ -807,6 +810,7 @@ function Slacker_DKP_ToggleFrame()
 		Slacker_DKP_EventLogFrame:Hide();
 		selected_eid = 0;
 	else
+		Slacker_DKP_ReScale(SLACKER_SAVED_SETTINGS['scale']);
 		Slacker_DKP_EventLogFrame:Show();
 	end
 end
@@ -1112,9 +1116,10 @@ function Slacker_DKP_Toggle(buf)
 			Slacker_DKP_Message(SLACKER_SETTING[setting]..value);	
 		end
 	end
+	
 	if(setting == 'scale') then
 		SLACKER_SAVED_SETTINGS[setting] = tonumber(SLACKER_SAVED_SETTINGS[setting]);
-		if((SLACKER_SAVED_SETTINGS[setting] > 120) or (SLACKER_SAVED_SETTINGS[setting] < 1)) then
+		if((SLACKER_SAVED_SETTINGS[setting] > 120) or (SLACKER_SAVED_SETTINGS[setting] < 40)) then
 			SLACKER_SAVED_SETTINGS[setting] = 100;
 		end
 		Slacker_DKP_ReScale(SLACKER_SAVED_SETTINGS[setting]);
@@ -1122,10 +1127,12 @@ function Slacker_DKP_Toggle(buf)
 end
 
 function Slacker_DKP_Config_ToggleFrame()
-	Slacker_DKP_Print("Sorry, this feature is not implemented.");
+	Slacker_DKP_Message("Sorry, this feature is not implemented.");
 end
 
 function Slacker_DKP_ReScale(scale)
+	
+	Slacker_DKP_Debug("Setting scaling to "..scale.."%");
 	
 	scale = tonumber(scale);
 	
@@ -1135,7 +1142,7 @@ function Slacker_DKP_ReScale(scale)
 	if((scale < 1) or (scale > 120)) then
 		return;
 	end
-	
+
 	scale = scale / 100;
 	
 	Slacker_DKP_EventLogFrame:SetScale(scale);

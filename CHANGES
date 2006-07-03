@@ -1,3 +1,8 @@
+1.17 (3-Jul-2006):
+  o Added a UI scaling function (/sdkp set scale <#>)
+  o Temporarily disabled "unlisted alt" warnings until I can arrange a
+    better way of handling that.
+
 1.16 (27-Jun-2006):
   o Bugfix: Fixed error dialog that appeared when a person on the list 
     made it into the raid.
@@ -37,4 +42,3 @@
   o Added ability to edit player name for loot log entries
   o Added log throttling to prevent errors if two loot entries occur
     in the same second.
-

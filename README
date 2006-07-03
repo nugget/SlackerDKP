@@ -85,9 +85,10 @@ waitlista - Include waiting list players in attendance snapshots
 waitlistb - Include waiting list players in bosskill snapshots
 dkpplayer - Add a user named "DKP" to snapshots
 
-This setting is not a toggle, but expects a value:
+These settings are not a toggle, but expect a value:
 
 rarity <#> - Set loot logging threshhold (rarity 1-6)
+scale <#> - Set UI size from 50 - 120%
 
 ** POST RAID
 

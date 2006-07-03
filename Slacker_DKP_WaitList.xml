@@ -26,7 +26,7 @@
 					<Layer level="BACKGROUND">
 						<FontString name="$parentTime" inherits="Slacker_BodyFont" justifyH="RIGHT">
 							<Size>
-								<AbsDimension x="32" y="15"/>
+								<AbsDimension x="40" y="15"/>
 							</Size>
 							<Anchors>
 								<Anchor point="TOPLEFT" relativeTo="$parentHighlight" relativePoint="TOPLEFT">
@@ -38,7 +38,7 @@
 						</FontString>
 						<FontString name="$parentPlayer" inherits="Slacker_BodyFont" justifyH="LEFT">
 							<Size>
-								<AbsDimension x="110" y="15"/>
+								<AbsDimension x="104" y="15"/>
 							</Size>
 							<Anchors>
 								<Anchor point="TOPLEFT" relativeTo="$parentTime" relativePoint="TOPRIGHT">
