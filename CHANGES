@@ -1,3 +1,9 @@
+1.17 (30-Jul-2006):
+  o Aberration (my guild) has disbanded, so it's unlikely that I will be
+    continuing to update this AddOn.  If anyone would like to fork it or
+    take over development, that might be a good idea.  I'm happy to help
+    however I can.
+
 1.17 (3-Jul-2006):
   o Added a UI scaling function (/sdkp set scale <#>)
   o Temporarily disabled "unlisted alt" warnings until I can arrange a
