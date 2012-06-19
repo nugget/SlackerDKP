@@ -1,12 +1,13 @@
-SlackerDKP
-http://slacker.com/~nugget/projects/slackerdkp/
+# SlackerDKP #
+
+This is abandonware, published purely for archival purposes. 
+It is a pre-Burning Crusade WoW AddOn for DKP-style Guild loot
+management.  I wrote this for Aberration Guild on Whisperwind
+and we used it in 2006.
+
 David McNett <nugget@slacker.com>
 
-Please visit the project page for more information about Slacker DKP's goals
-and features.  This document is just a bare-bones installation guide intended
-to help you get up and running with sDKP.
-
-** INSTALLTION BASICS
+## INSTALLTION BASICS
 
 This entire Slacker_DKP folder should be placed into your Interface/AddOns/
 folder just like any other AddOn.  This will add the Slacker DKP user
@@ -143,9 +144,3 @@ whisper to the raid logger the following commands:
   !addme - Add this player to the waiting list.
   !dropme - Remove this player from the waiting list.
   !waitlist - Report the player's position on the waiting list.
-
-** FOLLOWUP
-
-Comments, problems, bug reports, suggestions, and feature requests are warmly
-appreciated.  Please contact David McNett <nugget@slacker.com> with any and
-all feedback.
