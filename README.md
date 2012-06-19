@@ -31,7 +31,7 @@ Slacker DKP after you've first installed it:
 /sdkp set raidatt on
 
 
-** LIMITATIONS
+## LIMITATIONS
 
 Aberration does not make use of NDKP's Main/Alt system so it's unlikely
 that SlackerDKP will work for you if your guild is using NDKP's alt
@@ -40,7 +40,7 @@ not a factor for us.  If your guild uses NDKP's alt support and you'd like
 to help code/test support for it, let me know.
 
 
-** IN GAME USAGE
+## IN GAME USAGE
 
 At the start of each raid, issue the command "/sdkp clear" to clear
 the sDKP raid log.
@@ -72,7 +72,7 @@ Loot Monger and then awarded at a later time.
 You can highlight any attendance or bosskill log entry and click edit to
 add/edit comments for that log entry.
 
-** Available Settings
+## Available Settings
 
 All of these may be set using the sdkp set command:
   "/sdkp set <setting> on" or "/sdkp set <setting> off":
@@ -91,7 +91,7 @@ These settings are not a toggle, but expect a value:
 rarity <#> - Set loot logging threshhold (rarity 1-6)
 scale <#> - Set UI size from 50 - 120%
 
-** POST RAID
+## POST RAID
 
 Exit WoW, or issue the command "/console reloadui" to cause sDKP to write 
 its log files to disk.
@@ -123,19 +123,19 @@ to add that item, then hitting "back" in your browser and then "refresh"
 on the importRaidLog page.  Once you're out of buttons, the entire raid's
 log is entered into NDKP.
 
-** NOTES
+## NOTES
 
 There's a hard-coded handler in the AddOn for Majordomo Executus that will
 log the bosskill at the appropriate time, not literally when he dies.
 
-** EXTRAS
+## EXTRAS
 
 Aberration Guild uses a modified method of handling alts, different from the
 normal NDKP method.  The supplied "site.php" page includes the changes we've
 made to NDKP to make it behave the way we want.  It's not suggested that you
 do anything with that file.
 
-** WAITING LIST
+## WAITING LIST
 
 SlackerDKP can also manage your raid waiting list, intended for use when a
 raid is full and some members are waiting to join the raid.  Players can
